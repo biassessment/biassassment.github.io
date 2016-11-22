@@ -1,0 +1,20 @@
+{
+  "name": "bi-assessment",
+  "version": "1.0.0",
+  "description": "BI-Assessment MT Sebastian Classen",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/tobias_domnik/bi-assessment.git"
+  },
+  "keywords": [
+    "bi",
+    "assessment"
+  ],
+  "author": "Sebastian Classen",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/tobias_domnik/bi-assessment#readme"
+}

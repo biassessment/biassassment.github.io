@@ -1,0 +1,21 @@
+{
+  "name": "bi-assessment",
+  "description": "BI-Assessment MT Sebastian Classen",
+  "main": "index.html",
+  "authors": [
+    "Sebastian Classen"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "bi",
+    "assessment"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
