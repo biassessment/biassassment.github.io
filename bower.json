@@ -17,5 +17,10 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "angular-surveys": "^0.9.1",
+    "angular-translate-loader-static-files": "^2.13.0",
+    "angular-translate": "^2.13.0"
+  }
 }
