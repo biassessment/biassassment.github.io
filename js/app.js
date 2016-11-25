@@ -1,451 +1,444 @@
 var app = angular.module('bi-assessment', ['ngMaterial', 'mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalprecht.translate', 'monospaced.elastic']);
 
-app.config(function($translateProvider){
-    $translateProvider.useStaticFilesLoader({
-        prefix: './lang/',
-        suffix: '/angular-surveys.json'
-    });
-    $translateProvider.preferredLanguage('en');
+app.config(function ($translateProvider) {
+  // diff languages not used yet
+  $translateProvider.useStaticFilesLoader({
+    prefix: './lang/',
+    suffix: '/angular-surveys.json'
+  });
+  $translateProvider.preferredLanguage('en');
 })
-  .controller('MainCtrl', ['$scope', '$q', '$http', '$translate', 'mwFormResponseUtils',  function ($scope, $q, $http, $translate, mwFormResponseUtils) {
+  .controller('MainCtrl', ['$scope', '$q', '$http', '$translate', 'mwFormResponseUtils', 'databaseService', function ($scope, $q, $http, $translate, mwFormResponseUtils, databaseService) {
     console.log("bi-assessment tool running");
+    $scope.showResults = false;
     var umfrage = {
-        "name": "form name",
-        "description": "description",
-        "pages": [
-            {
-                "id": "b8107c034ded6bf430488ca30d524bed",
-                "number": 1,
-                "name": null,
-                "description": null,
-                "pageFlow": {
+      "name": "Bastis Umfrage",
+      "description": "Dear Participant,\n\nthe survey is divided into four sections: In the first part, you are asked to give general information about yourself and your company (optional), the second part will capture your usage of BI Tools and their capabilities, and the third part will categorize the decisions and processes that you support with the tool. The last section will then assess your satisfaction. \n\n\nYour honest response to each question is extremely important to the outcome of this project. You can be assured of complete confidentiality. The survey is completely anonymous, and only aggregate results will be published.\n\nIf you like, you will receive a feedback report after completing the survey. Therefore, please don't forget to enter your email address on the last page of the survey.\n\n\nThank you for your consideration and support,\n\nSincerely,\n\nSebastian Classen",
+      "pages": [
+      {
+        "id": "4625fd3a9bea5374555253cb009623f8",
+        "number": 1,
+        "name": "Section 1. Questions about yourself and your Organization",
+        "description": null,
+        "pageFlow": {
+          "nextPage": true,
+          "label": "mwForm.pageFlow.goToNextPage"
+        },
+        "elements": [
+          {
+            "id": "31acc8c3b845edc2771142642ab23dd8",
+            "orderNo": 1,
+            "type": "question",
+            "question": {
+              "id": "3cd1b9c393efb559c4a0cd25d1ce28f7",
+              "text": "Please specify your age",
+              "type": "radio",
+              "required": true,
+              "offeredAnswers": [
+                {
+                  "id": "f65af8dbbeaa2e41062bc53b5d83f817",
+                  "orderNo": 1,
+                  "value": "<30",
+                  "pageFlow": {
                     "nextPage": true,
                     "label": "mwForm.pageFlow.goToNextPage"
+                  }
                 },
-                "elements": [
-                    {
-                        "id": "7180d9e3d0c341bb99c91c73d5b97351",
-                        "orderNo": 1,
-                        "type": "question",
-                        "question": {
-                            "id": "ed9a53e5ebc4fd4cdf84686743c0b939",
-                            "text": "short text",
-                            "type": "text",
-                            "required": true,
-                            "pageFlowModifier": false
-                        }
-                    },
-                    {
-                        "id": "3f215923f068d5355ce9dcc61aa340c7",
-                        "orderNo": 2,
-                        "type": "question",
-                        "question": {
-                            "id": "46d605c6b29161e49918733ea2c21b10",
-                            "text": "long text",
-                            "type": "textarea",
-                            "required": true,
-                            "pageFlowModifier": false
-                        }
-                    },
-                    {
-                        "id": "2da74f344ce74b0c9c501f05dd27b94a",
-                        "orderNo": 3,
-                        "type": "question",
-                        "question": {
-                            "id": "16a37f04b1f2c4ed9ccad0f90c202f3e",
-                            "text": "radio question",
-                            "type": "radio",
-                            "required": true,
-                            "offeredAnswers": [
-                                {
-                                    "id": "c1860469d05cb0be1ef6c254809c207e",
-                                    "orderNo": 2,
-                                    "value": "bbbb",
-                                    "pageFlow": {
-                                        "nextPage": true,
-                                        "label": "mwForm.pageFlow.goToNextPage"
-                                    }
-                                }
-                            ],
-                            "otherAnswer": true
-                        }
-                    },
-                    {
-                        "id": "a720b9734f64a7fd728df4cd5d995117",
-                        "orderNo": 4,
-                        "type": "question",
-                        "question": {
-                            "id": "3ba201eb2562dca36a5257ef3ff2be2d",
-                            "text": "checkbox",
-                            "type": "checkbox",
-                            "required": true,
-                            "offeredAnswers": [
-                                {
-                                    "id": "16eddc288f7e58b5c3407de778f933a1",
-                                    "orderNo": 1,
-                                    "value": "aaaa",
-                                    "pageFlow": {
-                                        "nextPage": true,
-                                        "label": "mwForm.pageFlow.goToNextPage"
-                                    }
-                                },
-                                {
-                                    "id": "567678e87b794541a9e6f7e1376b562c",
-                                    "orderNo": 2,
-                                    "value": "bbb",
-                                    "pageFlow": {
-                                        "nextPage": true,
-                                        "label": "mwForm.pageFlow.goToNextPage"
-                                    }
-                                },
-                                {
-                                    "id": "1e27b677f96d2d08ce0fb0d5723607da",
-                                    "orderNo": 3,
-                                    "value": "cccc",
-                                    "pageFlow": {
-                                        "nextPage": true,
-                                        "label": "mwForm.pageFlow.goToNextPage"
-                                    }
-                                }
-                            ],
-                            "pageFlowModifier": false,
-                            "otherAnswer": true
-                        }
-                    },
-                    {
-                        "id": "24490cf9c495cb33d4c8d2a0f813b817",
-                        "orderNo": 5,
-                        "type": "question",
-                        "question": {
-                            "id": "edb85ee7c9da14ffeb15bb9f8cfaffd3",
-                            "text": "Is {{price}} a fair price?",
-                            "type": "radio",
-                            "required": true,
-                            "offeredAnswers": [
-                                {
-                                    "id": "68a49a4f13203098f0fc6a744c1fe704",
-                                    "orderNo": 1,
-                                    "value": "yes",
-                                    "pageFlow": {
-                                        "nextPage": true,
-                                        "label": "mwForm.pageFlow.goToNextPage"
-                                    }
-                                },
-                                {
-                                    "id": "53e006974790df5099ab26e9f2ce9c06",
-                                    "orderNo": 2,
-                                    "value": "{{noAnswer}}",
-                                    "pageFlow": {
-                                        "nextPage": true,
-                                        "label": "mwForm.pageFlow.goToNextPage"
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "id": "ee297f58ceec1470c9db35559409755c",
-                        "orderNo": 6,
-                        "type": "question",
-                        "question": {
-                            "id": "a7106ec0fba810a84899b8579f5fd924",
-                            "text": "Is {{person.name}} age {{person.age}}?",
-                            "type": "radio",
-                            "required": true,
-                            "offeredAnswers": [
-                                {
-                                    "id": "ae38733fc632753099f430b1c1ffcefc",
-                                    "orderNo": 1,
-                                    "value": "yes",
-                                    "pageFlow": {
-                                        "nextPage": true,
-                                        "label": "mwForm.pageFlow.goToNextPage"
-                                    }
-                                },
-                                {
-                                    "id": "61a226f242d86522a49b786c654c4165",
-                                    "orderNo": 2,
-                                    "value": "no",
-                                    "pageFlow": {
-                                        "nextPage": true,
-                                        "label": "mwForm.pageFlow.goToNextPage"
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "id": "d3c87dfb2945a84ad79e9c4b888d7df3",
-                        "orderNo": 7,
-                        "type": "question",
-                        "question": {
-                            "id": "f9c1586e1f1f40705e1eefbd00224218",
-                            "text": "range",
-                            "type": "range",
-                            "required": true,
-                            "pageFlowModifier": false,
-                            "min": 1,
-                            "max": 10
-                        }
-                    },
-                    {
-                        "id": "1b183679857291f8ad46c03c3173e64d",
-                        "orderNo": 8,
-                        "type": "question",
-                        "question": {
-                            "id": "10b08afca4dff80e975f4910ee85ef3f",
-                            "text": "grid question",
-                            "type": "grid",
-                            "required": true,
-                            "grid": {
-                                "cellInputType": "radio",
-                                "rows": [
-                                    {
-                                        "id": "48b09d72e6fb0d2a63985eef4018346e",
-                                        "orderNo": 1,
-                                        "label": "row 1"
-                                    },
-                                    {
-                                        "id": "f35a6e5d1ce9407b5ece224198032cb6",
-                                        "orderNo": 2,
-                                        "label": "row 2"
-                                    }
-                                ],
-                                "cols": [
-                                    {
-                                        "id": "ace63d4001112c28e97b00ff67ceeeca",
-                                        "orderNo": 1,
-                                        "label": "col 1"
-                                    },
-                                    {
-                                        "id": "24062ae1fc97dead41d337ede7f2e55e",
-                                        "orderNo": 2,
-                                        "label": "col2"
-                                    }
-                                ]
-                            },
-                            "pageFlowModifier": false
-                        }
-                    }
-                ],
-                "namedPage": false,
-                "isFirst": true,
-                "isLast": false
-            },
-            {
-                "id": "d7b158cc2aff4c00b3d452006d79368d",
-                "number": 2,
-                "name": null,
-                "description": null,
-                "pageFlow": {
+                {
+                  "id": "d4cdd4c3e22e78af537e046aa80a9501",
+                  "orderNo": 2,
+                  "value": "30-40",
+                  "pageFlow": {
                     "nextPage": true,
                     "label": "mwForm.pageFlow.goToNextPage"
+                  }
                 },
-                "elements": [
-                    {
-                        "id": "82332304478a82ee69f2d60157930e0a",
-                        "orderNo": 1,
-                        "type": "question",
-                        "question": {
-                            "id": "dc640ed493ba5a00d4a44f3a216cfa34",
-                            "text": "priority list",
-                            "type": "priority",
-                            "required": true,
-                            "priorityList": [
-                                {
-                                    "id": "c389bfb386b59483c7592719d9968d35",
-                                    "orderNo": 1,
-                                    "value": "aaaaaaaaaaaa"
-                                },
-                                {
-                                    "id": "66a28c757482c280b30db318b5922201",
-                                    "orderNo": 2,
-                                    "value": "bbbbbbbbbb"
-                                },
-                                {
-                                    "id": "14629777a4bda0e1d40044429aaf63f9",
-                                    "orderNo": 3,
-                                    "value": "cccccccccccccc"
-                                }
-                            ],
-                            "pageFlowModifier": false
-                        }
-                    },
-                    {
-                        "id": "358c65a9f3590235b3b9d019722f2372",
-                        "orderNo": 2,
-                        "type": "question",
-                        "question": {
-                            "id": "8666ad943291900f0e5b34bc14bb18dc",
-                            "text": "division",
-                            "type": "division",
-                            "required": true,
-                            "divisionList": [
-                                {
-                                    "id": "dc3c109e947b736c49415faf0b595091",
-                                    "orderNo": 1,
-                                    "value": "aaaaaa"
-                                },
-                                {
-                                    "id": "476d950019a69252524ac00d2a39ef54",
-                                    "orderNo": 2,
-                                    "value": "bbbbb"
-                                },
-                                {
-                                    "id": "d9b54b9da75bdfe78d4cbc41d0cdf9e0",
-                                    "orderNo": 3,
-                                    "value": "cccccccc"
-                                }
-                            ],
-                            "pageFlowModifier": false,
-                            "quantity": 100,
-                            "unit": "%"
-                        }
-                    }
-                ],
-                "namedPage": false,
-                "isFirst": false,
-                "isLast": false
-            },
-            {
-                "id": "5d9fc08eaac5739f574db0e5b86a6a36",
-                "number": 3,
-                "name": "Page name",
-                "description": null,
-                "pageFlow": {
+                {
+                  "id": "4de454bc366df70c571c9934081ede71",
+                  "orderNo": 3,
+                  "value": "41-50",
+                  "pageFlow": {
                     "nextPage": true,
                     "label": "mwForm.pageFlow.goToNextPage"
+                  }
                 },
-                "elements": [
-                    {
-                        "id": "99f0e2587c29cde3abb2ab2076fc375c",
-                        "orderNo": 1,
-                        "type": "paragraph",
-                        "paragraph": {
-                            "id": "12448073a8702376af0b427b63022926",
-                            "html": "Lorem {{templateData}} ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis nunc quis nisi lacinia commodo quis in urna. Maecenas dictum urna eget fringilla vehicula. Morbi congue id dolor vel volutpat. Aenean suscipit lectus velit, eget eleifend massa pretium quis. Cras quis pharetra nulla. Proin porttitor fermentum est, eu aliquam velit porttitor quis. Sed non bibendum odio, a pellentesque neque. Donec eu lectus vitae nisl ornare aliquet. Donec ornare felis non elit malesuada tincidunt. Praesent ipsum augue, venenatis in auctor vel, aliquet et augue. Ut efficitur elit eu elit fringilla, imperdiet suscipit libero consequat. Ut in metus libero. Nullam vestibulum, augue nec varius elementum, erat orci iaculis neque, quis varius ante leo eu lectus. Vestibulum eget ante enim. Nulla lobortis, felis sed mattis posuere, urna leo pharetra mi, ut elementum augue erat sed odio. In mattis, orci nec maximus fermentum, tellus lacus porta purus, sed scelerisque massa justo id nunc."
-                        }
-                    },
-                    {
-                        "id": "2d9145a0b749ca85959268737c90029c",
-                        "orderNo": 2,
-                        "type": "image",
-                        "image": {
-                            "id": "e94d4dcdbc45d90d0561116518e13b77",
-                            "align": "center",
-                            "src": "lena.gif",
-                            "caption": "Image caption"
-                        }
-                    },
-                    {
-                        "id": "1dfa4dc8242f7b98b5449d380fee1785",
-                        "orderNo": 3,
-                        "type": "question",
-                        "question": {
-                            "id": "7d8826e84a398532fbe78be646214eab",
-                            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
-                            "type": "textarea",
-                            "required": true,
-                            "pageFlowModifier": false
-                        }
-                    }
-                ],
-                "namedPage": true,
-                "isFirst": false,
-                "isLast": true
+                {
+                  "id": "707c3a4733ed60d09f73731bf6cbca18",
+                  "orderNo": 4,
+                  "value": ">50",
+                  "pageFlow": {
+                    "nextPage": true,
+                    "label": "mwForm.pageFlow.goToNextPage"
+                  }
+                }
+              ]
             }
-        ]
-    };
-    var antworten = {
-        "6f96cba23e2c8eab2c7f30e29a90d24a": {
-            "selectedAnswer": "e0c514f3b7c62f470cc0c7c45f2c2bac"
-        }
+          },
+          {
+            "id": "417b79c393b5860008702230891fa767",
+            "orderNo": 2,
+            "type": "question",
+            "question": {
+              "id": "e2be555c04c1e649021670f0482ae3a8",
+              "text": "What industry does your organization belong to?",
+              "type": "radio",
+              "required": true,
+              "offeredAnswers": [
+                {
+                  "id": "a6e633790105676882bf52e8793ea8e9",
+                  "orderNo": 1,
+                  "value": "Manufacturing",
+                  "pageFlow": {
+                    "nextPage": true,
+                    "label": "mwForm.pageFlow.goToNextPage"
+                  }
+                },
+                {
+                  "id": "323ccbaac8502124b9f9374c58f09de7",
+                  "orderNo": 2,
+                  "value": "Healthcare",
+                  "pageFlow": {
+                    "nextPage": true,
+                    "label": "mwForm.pageFlow.goToNextPage"
+                  }
+                },
+                {
+                  "id": "e3896cd91c97c7978e3172f322f051a4",
+                  "orderNo": 3,
+                  "value": "Retail / Wholesale",
+                  "pageFlow": {
+                    "nextPage": true,
+                    "label": "mwForm.pageFlow.goToNextPage"
+                  }
+                },
+                {
+                  "id": "80b65c5235441fdc014be6ca582a641e",
+                  "orderNo": 4,
+                  "value": "Telecommunications",
+                  "pageFlow": {
+                    "nextPage": true,
+                    "label": "mwForm.pageFlow.goToNextPage"
+                  }
+                },
+                {
+                  "id": "c85bf6ad06adff67f3126295a6a6edfa",
+                  "orderNo": 5,
+                  "value": "Financial Services / Banking",
+                  "pageFlow": {
+                    "nextPage": true,
+                    "label": "mwForm.pageFlow.goToNextPage"
+                  }
+                },
+                {
+                  "id": "e5ce80f43baf2a67058b62b3701e65bd",
+                  "orderNo": 6,
+                  "value": "Insurance",
+                  "pageFlow": {
+                    "nextPage": true,
+                    "label": "mwForm.pageFlow.goToNextPage"
+                  }
+                },
+                {
+                  "id": "fa6c93d48c3316db33e15bcfcf7dcec9",
+                  "orderNo": 7,
+                  "value": "Utilities",
+                  "pageFlow": {
+                    "nextPage": true,
+                    "label": "mwForm.pageFlow.goToNextPage"
+                  }
+                },
+                {
+                  "id": "0bf66de9135207c920cd4e900d339ea7",
+                  "orderNo": 8,
+                  "value": "Education / Publishing",
+                  "pageFlow": {
+                    "nextPage": true,
+                    "label": "mwForm.pageFlow.goToNextPage"
+                  }
+                }
+              ],
+              "otherAnswer": true
+            }
+          }
+        ],
+        "namedPage": true
+      },
+      {
+        "id": "4ab49ae24c6e3db7ab7ce8603fc2622c",
+        "number": 2,
+        "name": "Section 2. BI Tool and Capabilities (1/2)",
+        "description": null,
+        "pageFlow": {
+          "nextPage": true,
+          "label": "mwForm.pageFlow.goToNextPage"
+        },
+        "elements": [
+          {
+            "id": "7f440b5f330ea1ea5b9615fd3d20b893",
+            "orderNo": 1,
+            "type": "question",
+            "question": {
+              "id": "1605e2bb313158d4c38cc48b870207ce",
+              "text": "Please select the BI Tool that is most important to you",
+              "type": "select",
+              "required": true,
+              "offeredAnswers": [
+                {
+                  "id": "75d9b392364e3c642fe51a5f32f64e8c",
+                  "orderNo": 1,
+                  "value": "1001Data",
+                  "pageFlow": {
+                    "nextPage": true,
+                    "label": "mwForm.pageFlow.goToNextPage"
+                  }
+                },
+                {
+                  "id": "033ab927b2bb557c136a740da42d5f3b",
+                  "orderNo": 2,
+                  "value": "acplanEdge",
+                  "pageFlow": {
+                    "nextPage": true,
+                    "label": "mwForm.pageFlow.goToNextPage"
+                  }
+                },
+                {
+                  "id": "57f4160c1ee7fc9c6a70c3be88441a4a",
+                  "orderNo": 3,
+                  "value": "arcplanEngage",
+                  "pageFlow": {
+                    "nextPage": true,
+                    "label": "mwForm.pageFlow.goToNextPage"
+                  }
+                }
+              ],
+              "pageFlowModifier": false
+            }
+          },
+          {
+            "id": "c002e7298fba22684c6bb0ceeb8874b5",
+            "orderNo": 2,
+            "type": "question",
+            "question": {
+              "id": "7ce52357561014e3362874ab095c94b9",
+              "text": "Please select the answer that best describes your skills.",
+              "type": "grid",
+              "required": true,
+              "grid": {
+                "rows": [
+                  {
+                    "id": "4f8ebd0e9549803b65179f395e902b6d",
+                    "orderNo": 1,
+                    "label": "I have the necessary skills for using the tool"
+                  },
+                  {
+                    "id": "75d94f58c1a071254595b31ce0734415",
+                    "orderNo": 2,
+                    "label": "I would rate my computer proficiency as high"
+                  },
+                  {
+                    "id": "9604541e147b79c38a1e65804e658a76",
+                    "orderNo": 3,
+                    "label": "I frequently show others how to use the tool"
+                  },
+                  {
+                    "id": "df7b26a935142bc73e33b3f8a7ea37d5",
+                    "orderNo": 4,
+                    "label": "I have very good analytical capabilities"
+                  }
+                ],
+                "cols": [
+                  {
+                    "id": "52b500063e0b103c1316bae81c6e9a46",
+                    "orderNo": 1,
+                    "label": "disagree"
+                  },
+                  {
+                    "id": "79307448a9109ca49f58ea36da41a272",
+                    "orderNo": 2,
+                    "label": "somewhat disagree"
+                  },
+                  {
+                    "id": "17f097d2a119f9ffec0d65a78b0dd996",
+                    "orderNo": 3,
+                    "label": "neutral"
+                  },
+                  {
+                    "id": "23241ac2d6c70c5284c94d604cee5d95",
+                    "orderNo": 4,
+                    "label": "somewhat agree"
+                  },
+                  {
+                    "id": "319e3c7c0d6b3b402ba790adefc42114",
+                    "orderNo": 5,
+                    "label": "agree"
+                  }
+                ],
+                "cellInputType": "radio"
+              },
+              "pageFlowModifier": false
+            }
+          }
+        ],
+        "namedPage": true
+      },
+      {
+        "id": "0f169f90a8ea799d172fc7483c7e71a3",
+        "number": 3,
+        "name": null,
+        "description": null,
+        "pageFlow": {
+          "nextPage": true,
+          "label": "mwForm.pageFlow.goToNextPage"
+        },
+        "elements": [
+          {
+            "id": "3987b068793c4c2a079fd7aa91860076",
+            "orderNo": 1,
+            "type": "question",
+            "question": {
+              "id": "a3176530787e137be5fd7903ec3f0844",
+              "text": "Enter you Mail-Adress to look up your results later",
+              "type": "text",
+              "required": true,
+              "pageFlowModifier": false
+            }
+          }
+        ],
+        "namedPage": false
+      }
+    ],
+      "confirmationMessage": "Sehen Sie hier ihre Ergebnisse ein: Link zu Ergebnissen"
     };
 
+    // Settings for Survey
     var ctrl = this;
-    ctrl.mergeFormWithResponse = true;
-    ctrl.cgetQuestionWithResponseList = true;
-    ctrl.cgetResponseSheetHeaders = true;
-    ctrl.cgetResponseSheetRow = true;
-    ctrl.cgetResponseSheet = true;
+    ctrl.cmergeFormWithResponse = false;
+    ctrl.cgetQuestionWithResponseList = false;
+    ctrl.cgetResponseSheetHeaders = false;
+    ctrl.cgetResponseSheetRow = false;
+    ctrl.cgetResponseSheet = false;
     ctrl.headersWithQuestionNumber = true;
-    ctrl.builderReadOnly = false;
-    ctrl.viewerReadOnly = false;
-    ctrl.languages = ['en', 'de'];
 
     ctrl.formData = umfrage;
-    ctrl.formBuilder={};
-    ctrl.formViewer = {};
-    ctrl.formOptions = { autoStart: false };
-    ctrl.optionsBuilder ={
-        /*elementButtons:   [{title: 'My title tooltip', icon: 'fa fa-database', text: '', callback: ctrl.callback, filter: ctrl.filter, showInOpen: true}],
-         customQuestionSelects:  [
-         {key:"category", label: 'Category', options: [{key:"1", label:"Uno"},{key:"2", label:"dos"},{key:"3", label:"tres"},{key:"4", label:"4"}], required: false},
-         {key:"category2", label: 'Category2', options: [{key:"1", label:"Uno"},{key:"2", label:"dos"},{key:"3", label:"tres"},{key:"4", label:"4"}]}
-         ],
-         elementTypes: ['question', 'image']*/
-    };
+    ctrl.templateData = {};
     ctrl.formStatus = {};
-    ctrl.responseData = antworten;
-    ctrl.showResponseRata = false;
+    ctrl.formOptions = {autoStart: false};
+    ctrl.formViewer = {};
+    ctrl.responseData = {};
+    ctrl.viewerReadOnly = false;
 
-    ctrl.saveResponse = function(){
-        var d = $q.defer();
-        var res = confirm("Response save success?");
-        if(res){
-            d.resolve(true);
-        }else{
-            d.reject();
-        }
-        return d.promise;
+    //How to use mwFormResponseUtils
+    ctrl.getMerged = function () {
+      return mwFormResponseUtils.mergeFormWithResponse(ctrl.formData, ctrl.responseData);
+    };
+    ctrl.getQuestionWithResponseList = function () {
+      return mwFormResponseUtils.getQuestionWithResponseList(ctrl.formData, ctrl.responseData);
+    };
+    ctrl.getResponseSheetRow = function () {
+      return mwFormResponseUtils.getResponseSheetRow(ctrl.formData, ctrl.responseData);
+    };
+    ctrl.getResponseSheetHeaders = function () {
+      return mwFormResponseUtils.getResponseSheetHeaders(ctrl.formData, ctrl.headersWithQuestionNumber);
+    };
+    ctrl.getResponseSheet = function () {
+      return mwFormResponseUtils.getResponseSheet(ctrl.formData, ctrl.responseData, ctrl.headersWithQuestionNumber);
     };
 
-    /*
-    ctrl.onImageSelection = function (){
-        var d = $q.defer();
-        var src = prompt("Please enter image src");
-        if(src !=null){
-            d.resolve(src);
-        }else{
-            d.reject();
-        }
-        return d.promise;
-    };
-    */
+    // Save Response to Database
+    ctrl.saveResponse = function () {
+      var response = ctrl.getResponseSheet();
+      console.log("Erhaltene Antworten: ", response);
 
-    ctrl.resetViewer = function(){
-        if(ctrl.formViewer.reset){
-            ctrl.formViewer.reset();
-        }
-    };
+      var adjustedResponse = {};
+      adjustedResponse["alias"] = response[1][response[1].length - 1];
+      adjustedResponse["answers"] = JSON.stringify(response, null, 2);
 
-    ctrl.resetBuilder= function(){
-        if(ctrl.formBuilder.reset){
-            ctrl.formBuilder.reset();
-        }
+      // TODO Further calculation with single Response
+      /*
+       *
+       *
+       *
+       */
+
+      //save survey response to database
+      databaseService.saveResponse(adjustedResponse).then(function(res) {
+        console.log("Antwort gespeichert!", res);
+      });
     };
 
-    ctrl.changeLanguage = function (languageKey) {
-        $translate.use(languageKey);
+    // Get all Answers
+    $scope.calcAndShowResults = function () {
+      $scope.showResults = true;
+      databaseService.getAllResponses().then(function(res) {
+        console.log("all Results so far", res);
+        $scope.allResults = res.data;
+
+        // TODO Further calculation with all Responses and creation of figures
+        /*
+         *
+         *
+         *
+         */
+
+      })
     };
 
-    ctrl.getMerged=function(){
-        return mwFormResponseUtils.mergeFormWithResponse(ctrl.formData, ctrl.responseData);
+    $scope.getPersonalResult = function (alias) {
+      $scope.personalResult = $scope.allResults.filter(function(res) {
+        return res.alias === alias;
+      })
     };
 
-    ctrl.getQuestionWithResponseList=function(){
-        return mwFormResponseUtils.getQuestionWithResponseList(ctrl.formData, ctrl.responseData);
+    // Empty DB
+    $scope.emptyDB = function () {
+      databaseService.emptyDB().then(function() {
+        console.log("DB cleared!");
+      })
     };
-    ctrl.getResponseSheetRow=function(){
-        return mwFormResponseUtils.getResponseSheetRow(ctrl.formData, ctrl.responseData);
+  }])
+
+  .service('databaseService', function ($http, $q) {
+    this.saveResponse = function (response) {
+      var deferred = $q.defer();
+      $http({
+        url: '/saveResponse',
+        method: "POST",
+        data: response
+      })
+        .then(function (res) {
+            deferred.resolve(res);
+          },
+          function (res) { // optional
+            console.log("Answer save failure! ", res);
+          });
+      return deferred.promise;
     };
-    ctrl.getResponseSheetHeaders=function(){
-        return mwFormResponseUtils.getResponseSheetHeaders(ctrl.formData, ctrl.headersWithQuestionNumber);
+    this.getAllResponses = function () {
+      var deferred = $q.defer();
+      $http({
+        method: 'GET',
+        url: '/getAllResponses'
+      }).success(function (data) {
+        console.log("GET Answers", data);
+        deferred.resolve({'data': data});
+      }).error(function () {
+        window.alert("GetAnswers GET failure!");
+      });
+      return deferred.promise;
     };
 
-    ctrl.getResponseSheet=function(){
-        return mwFormResponseUtils.getResponseSheet(ctrl.formData, ctrl.responseData, ctrl.headersWithQuestionNumber);
+
+    this.emptyDB = function () {
+      console.log("dbservice empty db");
+      var deferred = $q.defer();
+      $http({
+        method: 'GET',
+        url: '/emptyDB'
+      }).success(function (data) {
+        deferred.resolve({'data': data});
+      }).error(function () {
+        window.alert("EmptyDB GET failure!");
+      });
+      return deferred.promise;
     };
-
-
-}]);
+  });

@@ -48,11 +48,15 @@
 </head>
 <body>
 <div ng-controller="MainCtrl as ctrl">
-    <header><h2>UMFRAGE für Bastis Master Thesis</h2></header>
+    <header><h2>UMFRAGE für Bastis Master Thesis</h2>
+        <button class="md-button md-raised" ng-click="calcAndShowResults()">Ergebnisse abfragen</button>
+    </header>
 
-    <div ng-include="'html/survey.html'"></div>
+    <div ng-hide="showResults" ng-include="'html/survey.html'"></div>
 
-    <footer><span>by Basti Classen</span></footer>
+    <div ng-show="showResults" ng-include="'html/results.html'"></div>
+
+    <footer><h3>by Basti Classen</h3><button ng-click="emptyDB()" class="md-button md-raised">Empty DB</button></footer>
 </div>
 </body>
 </html>

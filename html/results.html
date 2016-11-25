@@ -1,0 +1,19 @@
+<div class="content">
+    <div class="results">
+        <h2>Results</h2>
+        <h3>Anzahl der Antworten: {{allResults.length}}</h3>
+        <h3>Plain Data:</h3>
+        {{allResults}}
+    </div>
+
+    <div class="personalResult">
+        <h3>Abfrage Ihres persönlichen Ergebnisses:</h3>
+        <label>Alias: </label>
+        <form ng-submit="getPersonalResult(alias)">
+            <input id="alias" class="form-control" ng-model="alias" type="text"/>
+            <button class="btn" type="submit">Ergebnis abfragen</button>
+        </form>
+        <span>{{personalResult}}</span>
+    </div>
+
+</div>

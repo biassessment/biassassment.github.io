@@ -18,7 +18,9 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/tobias_domnik/bi-assessment#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "sqlite3": "^3.1.8"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
