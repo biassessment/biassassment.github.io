@@ -1,39 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="bi-assessment">
 <head>
     <meta charset="utf-8"/>
     <title>BI Assessment</title>
+    <meta name="viewport" content="width=device-width">
     <!-- Import der CSS-Dateien -->
-    <link type="text/css" rel="stylesheet" href="./bower_components/font-awesome/css/font-awesome.css" media="all">
-    <link type="text/css" rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css" media="all">
-    <link type="text/css" rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap-theme.css" media="all">
-    <link type="text/css" rel="stylesheet" href="./bower_components/angular/angular-csp.css" media="all">
-    <link type="text/css" rel="stylesheet" href="./bower_components/angular-bootstrap/ui-bootstrap-csp.css" media="all">
-    <link type="text/css" rel="stylesheet" href="./bower_components/angular-surveys/dist/form-builder.min.css" media="all">
-    <link type="text/css" rel="stylesheet" href="./bower_components/angular-surveys/dist/form-builder-bootstrap.min.css" media="all">
-    <link type="text/css" rel="stylesheet" href="./bower_components/angular-surveys/dist/form-viewer.min.css" media="all">
-    <link type="text/css" rel="stylesheet" href="./bower_components/angular-surveys/dist/form-viewer-bootstrap.min.css" media="all">
+    <link type="text/css" rel="stylesheet" href="./bower_components/angular/angular-csp.css">
+    <link type="text/css" rel="stylesheet" href="./bower_components/font-awesome/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="./bower_components/angular-material/angular-material.min.css">
+    <link type="text/css" rel="stylesheet" href="./bower_components/angular-surveys/dist/form-builder-material.min.css">
+    <link type="text/css" rel="stylesheet" href="./bower_components/angular-surveys/dist/form-viewer-material.min.css">
+    <link type="text/css" rel="stylesheet" href="css/main.css">
 
-    <!--
-    <link type="text/css" rel="stylesheet" href="bower_components/angular-surveys/dist/form-builder.min.css">
-    <link type="text/css" rel="stylesheet" href="bower_components/angular-surveys/dist/form-builder-bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="bower_components/angular-surveys/dist/form-builder-material.min.css">
-    <link type="text/css" rel="stylesheet" href="bower_components/angular-surveys/dist/form-viewer.min.css">
-    <link type="text/css" rel="stylesheet" href="bower_components/angular-surveys/dist/form-viewer-bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="bower_components/angular-surveys/dist/form-viewer-material.min.css">
-    <link type="text/css" rel="stylesheet" href="bower_components/angular-surveys/dist/material-data-table.min.css">
-    -->
-    <link type="text/css" rel="stylesheet" href="./css/form-viewer.css">
-    <link type="text/css" rel="stylesheet" href="./css/form-viewer-bootstrap.css">
-    <link type="text/css" rel="stylesheet" href="./css/main.css">
     <!-- Import der Bibliotheken -->
-    <!-- jquery -->
-    <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
-    <script src="bower_components/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-    <!-- bootstrap, Sortable -->
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- angular -->
-    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="bower_components/angular-translate/angular-translate.min.js"></script>
     <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
@@ -41,36 +25,34 @@
     <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/Sortable/Sortable.min.js"></script>
-    <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
-    <!-- angular-surveys -->
     <script src="bower_components/angular-surveys/vendor/angular-legacy-sortable.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/angular-material/angular-material-mocks.js"></script>
+    <!-- angular-surveys -->
     <script src="bower_components/angular-surveys/dist/form-utils.min.js"></script>
     <script src="bower_components/angular-surveys/dist/form-builder.min.js"></script>
-    <script src="bower_components/angular-surveys/dist/form-builder-bootstrap-tpls.min.js"></script>
     <script src="bower_components/angular-surveys/dist/form-builder-material-tpls.min.js"></script>
     <script src="bower_components/angular-surveys/dist/form-viewer.min.js"></script>
-    <script src="bower_components/angular-surveys/dist/form-viewer-bootstrap-tpls.min.js"></script>
     <script src="bower_components/angular-surveys/dist/form-viewer-material-tpls.min.js"></script>
     <!-- app -->
+    <script type="text/javascript">
+        //hack to remove ARIA warinings
+        console.realWarn = console.warn;
+        console.warn = function (message) {
+            if (message.indexOf("ARIA") == -1) {
+                console.realWarn.apply(console, arguments);
+            }
+        };
+    </script>
     <script src="js/app.js"></script>
 </head>
 <body>
-<div ng-app="bi-assessment" ng-controller="MainCtrl as ctrl">
+<div ng-controller="MainCtrl as ctrl">
+    <header><h2>UMFRAGE für Bastis Master Thesis</h2></header>
 
-    <div class="survey">
+    <div ng-include="'html/survey.html'"></div>
 
-        <mw-form-viewer
-                form-data="ctrl.formData"
-                template-data="ctrl.templateData"
-                form-status="ctrl.formStatus"
-                options="ctrl.formOptions"
-                api="ctrl.formViewer"
-                response-data="ctrl.responseData"
-                read-only="ctrl.viewerReadOnly"
-                on-submit="ctrl.saveResponse()">
-        </mw-form-viewer>
-
-    </div>
+    <footer><span>by Basti Classen</span></footer>
 </div>
 </body>
 </html>

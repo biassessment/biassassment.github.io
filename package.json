@@ -16,5 +16,14 @@
   ],
   "author": "Sebastian Classen",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/tobias_domnik/bi-assessment#readme"
+  "homepage": "https://bitbucket.org/tobias_domnik/bi-assessment#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-less": "^1.4.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "jit-grunt": "^0.10.0"
+  }
 }
