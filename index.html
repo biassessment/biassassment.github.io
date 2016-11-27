@@ -50,8 +50,21 @@
 </head>
 <body>
 <div ng-controller="MainCtrl as ctrl">
-    <header><h2>UMFRAGE für Bastis Master Thesis</h2>
+    <header>
+        <h2>UMFRAGE</h2>
+        <!--
+        <h2>Ergebnisse:
+            Skill: {{skillScore.toFixed(2)}} -
+            DecisionType: {{decisionTypeScore.toFixed(2)}} -
+            Usage: {{usageScore.toFixed(2)}} -
+            Benefit: {{benefitScore.toFixed(2)}} -
+            Usefulness: {{usefulnessScore.toFixed(2)}} -
+            easOfUse: {{easeOfUseScore.toFixed(2)}} -
+            OverallScore: {{score.toFixed(2)}}
+        </h2>
+        -->
         <button class="md-button md-raised" ng-click="calcAndShowResults()">Ergebnisse abfragen</button>
+        <button class="md-button md-raised" ng-click="ctrl.saveResponse()">Berechnung ausführen</button>
     </header>
 
     <div ng-hide="showResults" ng-include="'html/survey.html'"></div>

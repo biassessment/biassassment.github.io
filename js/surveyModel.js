@@ -93,7 +93,7 @@ var surveyModel = {
                                 {
                                     "id": "bdc09f6dee599525bc598038c31e1d9b",
                                     "orderNo": 3,
-                                    "value": "Retail / Wholesale",
+                                    "value": "Retail  and  Wholesale",
                                     "pageFlow": {
                                         "nextPage": true,
                                         "label": "mwForm.pageFlow.goToNextPage"
@@ -111,7 +111,7 @@ var surveyModel = {
                                 {
                                     "id": "84ebf13edd61336b8088ce9c2ec225d6",
                                     "orderNo": 5,
-                                    "value": "Financial Services / Banking",
+                                    "value": "Financial Services  and  Banking",
                                     "pageFlow": {
                                         "nextPage": true,
                                         "label": "mwForm.pageFlow.goToNextPage"
@@ -147,7 +147,7 @@ var surveyModel = {
                                 {
                                     "id": "9a169dd79e6989e5ea57511dad81ee5c",
                                     "orderNo": 9,
-                                    "value": "Education / Publishing",
+                                    "value": "Education  and  Publishing",
                                     "pageFlow": {
                                         "nextPage": true,
                                         "label": "mwForm.pageFlow.goToNextPage"
@@ -331,7 +331,7 @@ var surveyModel = {
                                 {
                                     "id": "fec1edf8fb05dfb721025be76bce61dd",
                                     "orderNo": 5,
-                                    "value": "Entry Level (Analyst / Conultant / Associate, etc.)",
+                                    "value": "Entry Level (Analyst  and  Conultant  and  Associate, etc.)",
                                     "pageFlow": {
                                         "nextPage": true,
                                         "label": "mwForm.pageFlow.goToNextPage"
@@ -404,7 +404,7 @@ var surveyModel = {
             {
                 "id": "4ab49ae24c6e3db7ab7ce8603fc2622c",
                 "number": 2,
-                "name": "Section 2. BI Tool and Capabilities (1/2)",
+                "name": "Section 2. BI Tool and Capabilities (1 and 2)",
                 "description": null,
                 "pageFlow": {
                     "nextPage": true,
@@ -451,7 +451,7 @@ var surveyModel = {
                                 {
                                     "id": "01da7a1b4573454ad2eb650dd0b46558",
                                     "orderNo": 4,
-                                    "value": "arcplan Enterprise/Edge",
+                                    "value": "arcplan Enterprise and Edge",
                                     "pageFlow": {
                                         "nextPage": true,
                                         "label": "mwForm.pageFlow.goToNextPage"
@@ -631,7 +631,7 @@ var surveyModel = {
                                 {
                                     "id": "fe9b103f1d4f65c824d4fa3643737512",
                                     "orderNo": 24,
-                                    "value": "IBM Cognos BI / IBM Cognos Analytics",
+                                    "value": "IBM Cognos BI  and  IBM Cognos Analytics",
                                     "pageFlow": {
                                         "nextPage": true,
                                         "label": "mwForm.pageFlow.goToNextPage"
@@ -1419,7 +1419,7 @@ var surveyModel = {
                                 {
                                     "id": "b6033386f7f343d990ff9e7123e570f8",
                                     "orderNo": 1,
-                                    "value": "Regular Financial/Tax Reporting (External Reporting)",
+                                    "value": "Regular Financial and Tax Reporting (External Reporting)",
                                     "pageFlow": {
                                         "nextPage": true,
                                         "label": "mwForm.pageFlow.goToNextPage"
@@ -1482,7 +1482,7 @@ var surveyModel = {
                                 {
                                     "id": "64c8a55af81e9e3800810fbeec5ace51",
                                     "orderNo": 8,
-                                    "value": "Market/Sales Planning/Analysis",
+                                    "value": "Market and Sales Planning and Analysis",
                                     "pageFlow": {
                                         "nextPage": true,
                                         "label": "mwForm.pageFlow.goToNextPage"
@@ -1980,104 +1980,200 @@ var surveyModel = {
             }
         ],
         "confirmationMessage": "Sehen Sie hier ihre Ergebnisse ein: Link zu Ergebnissen"
-    }
-};
-var fakeResponse = {
-    "3cd1b9c393efb559c4a0cd25d1ce28f7": {
-        "selectedAnswer": "d4cdd4c3e22e78af537e046aa80a9501"
     },
-    "e9368d6301d5b1d91ae19fc655352ff4": {
-        "selectedAnswer": "579cad967093e6448c7765d4864ab55d"
-    },
-    "4bebb9a040bfbcce0d91d4345f08c860": {},
-    "e2be555c04c1e649021670f0482ae3a8": {
-        "selectedAnswer": "0bf66de9135207c920cd4e900d339ea7"
-    },
-    "4e203cb9c9df343912155dfb4f3c6fd5": {
-        "selectedAnswer": "b161191197f5865cb7b2e50e93d74a3c"
-    },
-    "0a46d84af975929bd09070cd9e6254d6": {
-        "selectedAnswer": "c01b1cbd1ff8173951062745fd1c4180"
-    },
-    "1605e2bb313158d4c38cc48b870207ce": {
-        "selectedAnswer": "6d17c060cc3c5fca5f59e9d5a0c239ae"
-    },
-    "280dbe16e07ff89473dd101e1521bc2c": {
-        "answer": "3.4"
-    },
-    "7ed01e772469a65382aa19ad39c8c61b": {
-        "selectedAnswer": "bba65a4bca8918069fead65a2d3a6617"
-    },
-    "07a2d08c8162339b4d188eb42fe4c9dd": {
-        "3f2d5562267ec44198b2f30276e31c76": "5859bcbb7c6e88ba4b1360ae10e2df51",
-        "4b8562aaa988466ab2bb31bf4a3ab948": "e325cfa4d67909d59f1c2f883091a7b0",
-        "155011d36ea6dd48113156c2c63ffd03": "5f0a059d4d40887b25f065753044c23a",
-        "faa32a1ded0c8c7a77c9a1b4b3a31991": "5859bcbb7c6e88ba4b1360ae10e2df51"
-    },
-    "1e8cb3837185c49e78a21d1f1b4905ef": {
-        "684f8efbe443c57857f88a2c6418a720": "eea4d87da8b17e0e1dcfc48aaa4b9dd5",
-        "abf1dd049b94159eef72c1b17ed57bc4": "b3478e66f6965d9f9bb2091324878543",
-        "ffea456ed80e5fb75e49a136313ab12c": "b3478e66f6965d9f9bb2091324878543",
-        "54299d83293708ca43567dc21760ae41": "2605f976a61e77e82f6bb4cad07d658f",
-        "8ebfe67e7f8a41ae57d0f044eeac616d": "b3478e66f6965d9f9bb2091324878543",
-        "8c90072f3d44de8996fc3e242040e471": "b3478e66f6965d9f9bb2091324878543",
-        "70d8acd4cdcaf44cd0c5cd031298962e": "b3478e66f6965d9f9bb2091324878543",
-        "e6be76386a158ca608929eb5855b93e2": "be32eb8bf28374ee28d1cb1f3d4f3df5",
-        "0af69f6eec3b470aedec09fc8657044d": "eea4d87da8b17e0e1dcfc48aaa4b9dd5",
-        "b30418c323c30438e6f666a9f50fe3b0": "b3478e66f6965d9f9bb2091324878543",
-        "051f3a2e063adb344b2bff7a0cd56f39": "be32eb8bf28374ee28d1cb1f3d4f3df5",
-        "aa65dac7ec51a145f64b0aa3425a214f": "b3478e66f6965d9f9bb2091324878543",
-        "8812f9b75179d624dad3f1303532dd2b": "2605f976a61e77e82f6bb4cad07d658f",
-        "ed19edfa88cda62a359e06ee886e6431": "b3478e66f6965d9f9bb2091324878543",
-        "664c139123723961cb7e68ab77b32632": "be32eb8bf28374ee28d1cb1f3d4f3df5"
-    },
-    "5ee73cb5a7da0e676386d6e32078e2c1": {
-        "selectedAnswers": [
-            "821c9824e8a75fe809a61b8c8bd09122",
-            "0df7f170a956b88edd99376ec05e4e50"
+    "fakeResponse": [
+        [
+            ["1. Please specify your age",
+                "2. What industry does your organization belong to?",
+                "3. Which company do you work for? (optional)",
+                "4. Which business function best describes what you do at work?",
+                "5. What organizational level do you belong into?",
+                "6. How many years have you been working for the company?",
+                "7. Please select your main front-end BI Tool that you use for querying and analyzing the data.",
+                "8. Please enter the release version of your BI product (optional)",
+                "9. How many years have you been using the tool?",
+                "10.1. Please select the answer that best describes your skills. [I have the necessary skills for using the tool]",
+                "10.2. Please select the answer that best describes your skills. [I would rate my computer proficiency as high]",
+                "10.3. Please select the answer that best describes your skills. [I frequently show others how to use the tool]",
+                "10.4. Please select the answer that best describes your skills. [I have very good analytical capabilities]",
+                "11.1. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [Business Query and Reporting: create own reports without the help of IT department, includes creating tables and adding graphics, etc.]",
+                "11.2. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [Visual Data Discovery: discover patterns and trends through the analysis and interaction with visual graphics rather than tables]",
+                "11.3. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [Interactive Reports: sort, filter, or change the rendering from a tabular data set to a chart]",
+                "11.4. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [Dashboards: monitor what is currently going on in the business in a visual and interactive way, using charts, graphs, and gauges]",
+                "11.5. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [Advanced Visualization Techniques: e.g. scatter plots, heat maps, geospatial mapping]",
+                "11.6. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [Statistical Methods: e.g. Regression, Multivariate analysis, Time Series Calculations, etc.]",
+                "11.7. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [Drill-Down, Slice and Dice, or Drill Through: change the level of detail of data presentation or view information from different angles]",
+                "11.8. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [Calculations: e.g. ranks, sums, percent of totals, this-year vs last-year etc.]",
+                "11.9. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [Spreadsheet / Microsoft Office Integration: Add-Ins, e.g. for Excel, not just the export of reports to Excel]",
+                "11.10. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [Collaboration and Social BI: share and discuss information, analysis, analytic content and decisions via discussion threads, chats and annotations within the application]",
+                "11.11. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [Scheduled Reporting: set specific times and schedules to receive reports in an email or other format]",
+                "11.12. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [Mobile BI: use of the BI application on mobile devices]",
+                "11.13. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [ETL: extract data from multiple sources, transform it into a single format, and load the data into a target database]",
+                "11.14. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [In-Memory-Analysis: run queries on data residing in your computer's RAM without a connection to the server]",
+                "11.15. How often do you use the following capabilities of the previously selected BI Tool in the direct support of your job? [Predictive Analysis: use of predictive models to estimate future events / trends]",
+                "12. Which basic business functions or processes do you directly support with the BI Tool?",
+                "13.1. The decisions I make... [...are routine, repetitive decisions.]",
+                "13.2. The decisions I make... [...could be automated.]",
+                "13.3. The decisions I make... [...require judgement and intuition.]",
+                "13.4. The decisions I make... [...are based on computational models that provide optimal solutions.]",
+                "13.5. The decisions I make... [...are influenced only by variables that are clearly identified.]",
+                "14.1. The information that I use for decision-making... [...comes rather from internal than from external sources]", "14.2. The information that I use for decision-making... [...is rather detailed than aggregate]",
+                "14.3. The information that I use for decision-making... [...has rather a well defined scope than a wide scope]",
+                "14.4. The information that I use for decision-making... [...is rather historic than future (predicted/estimated)]",
+                "14.5. The information that I use for decision-making... [...is rather recently produced than old]",
+                "14.6. The information that I use for decision-making... [...needs to be very accurate for my decisions to make sense]",
+                "14.7. The information that I use for decision-making... [...is reused frequently]",
+                "15.1. The BI Tool... […has changed my job significantly]",
+                "15.2. The BI Tool... […has reduced the time it takes to support decision-making]",
+                "15.3. The BI Tool... […has reduced the effort it takes to support decision-making]",
+                "16.1. Using the BI Tool... [...enables me to accomplish my tasks more quickly]",
+                "16.2. Using the BI Tool... [...enables me to improve my performance]",
+                "16.3. Using the BI Tool... [...enables me to increase my productivity]",
+                "16.4. Using the BI Tool... [...enables me to enhance my effectiveness]",
+                "16.5. Using the BI Tool... [...makes it easier to do my work]",
+                "17.1. Please indicate your level of agreement to the following statements [It is easy to learn how to use the BI tool]",
+                "17.2. Please indicate your level of agreement to the following statements [The BI Tool I use is convenient and easy to use]",
+                "17.3. Please indicate your level of agreement to the following statements [The BI Tool often behaves in unexpected ways]",
+                "17.4. Please indicate your level of agreement to the following statements [I find it easy to get the BI Tool to do what I want it to do]",
+                "18.1. Please indicate your level of agreement to the following statements [I intend to use information provided by the BI tool as a routine part of my job over the next year]",
+                "18.2. Please indicate your level of agreement to the following statements [I intend to use information provided by the BI tool at every opportunity over the next year]",
+                "18.3. Please indicate your level of agreement to the following statements [I plan to increase my use of information provided by the BI tool over the next year]",
+                "19. Enter you Mail-Adress to look up your results later"],
+            [
+                "<30",
+                "Manufacturing",
+                "BI",
+                "Executive Management",
+                "Executive Management",
+                "4-7",
+                "Alteryx",
+                "3.4",
+                "4-7",
+                "somewhat disagree",
+                "neutral",
+                "somewhat agree",
+                "neutral",
+                "never",
+                "rarely",
+                "sometimes",
+                "frequently",
+                "all the time",
+                "frequently",
+                "sometimes",
+                "sometimes",
+                "frequently",
+                "frequently",
+                "sometimes",
+                "sometimes",
+                "sometimes",
+                "frequently",
+                "frequently",
+                "Group Consolidation",
+                "somewhat disagree",
+                "neutral",
+                "somewhat agree",
+                "neutral",
+                "neutral",
+                "somewhat agree",
+                "somewhat agree",
+                "neutral",
+                "neutral",
+                "neutral",
+                "neutral",
+                "neutral",
+                "somewhat agree",
+                "somewhat agree",
+                "neutral",
+                "somewhat agree",
+                "neutral",
+                "neutral",
+                "neutral",
+                "somewhat disagree",
+                "neutral",
+                "somewhat agree",
+                "neutral",
+                "somewhat agree",
+                "somewhat disagree",
+                "neutral",
+                "neutral",
+                "basti@basti.de"]
         ]
-    },
-    "967c45aabe08ffe3b64cd27b6c267793": {
-        "9444a876037dc75a26f759dfbaa19e02": "138c69519df694247d6638702569cff1",
-        "bdfadfb2ad20f5256bf5a4639c664d4e": "71d65bb4e195a835028a28b53f5194fe",
-        "113361132f11f501da94f97e73095a6c": "754c0c7d58d5798563644e21a5807322",
-        "d7f2f9001668ebab3c40452ee00d4b6b": "71d65bb4e195a835028a28b53f5194fe",
-        "16f0ba8186357f48f617068f349bb2e3": "71d65bb4e195a835028a28b53f5194fe"
-    },
-    "e5bfa1f5290b3167ccd9d9afe3e77f60": {
-        "691bdb34fa4382d546187c284d24b246": "eb960fd7fc0fd965a9426a90133ebdf3",
-        "800f0da6bbb0a9a063c55ad30e7f8b20": "eb960fd7fc0fd965a9426a90133ebdf3",
-        "ce9f78cb9b16509837353850817eaa35": "b474ad241285df2fcf3b0c0da5aa9cf1",
-        "bfa74d07fe13af49c2e09b7bf0542e88": "b474ad241285df2fcf3b0c0da5aa9cf1",
-        "d2f1a2d804a53934fe84126b62cbe5a6": "4b3a38938913c0582c67d9836e984db7",
-        "7c44beaec2321432f920dcd9e007980a": "4b3a38938913c0582c67d9836e984db7",
-        "2d7f4426e37a14ae0cfb3fd04751c74b": "4b3a38938913c0582c67d9836e984db7"
-    },
-    "aea501f565f3ee4741a594b8fcb73328": {
-        "e6aa0d9fc875b682f6c610746073b9ee": "7d9630bcab291f3531539174f3fc97bf",
-        "7038f319da3a2fe5096192d645090b55": "7d9630bcab291f3531539174f3fc97bf",
-        "91db5e27b8044618100a124b45682aa8": "6c9a42480cfeec77914b295c75b25d88"
-    },
-    "e2fe3172c2c80c37a3c54d37018a8af3": {
-        "f75ec83d22010b1d8e68119e5baa539e": "976a4f71b9c6fffb2ffeb3ed9824d74b",
-        "2112cd131777e9bdf2f54448c489ffe4": "976a4f71b9c6fffb2ffeb3ed9824d74b",
-        "1d75a629e81df4a391e87e7ddba67ae7": "02ec504a9971a5f8344d8df59bbe0a36",
-        "908b1a5e45205e25c3f32e6d9bcca059": "8a7b0eed25ee4c3f0dbd29afed106d6c",
-        "0aaac171b1eadfddee4f9c6dad161d38": "71fafa0dcbb884124cacd8b3f374446e"
-    },
-    "13917301a0c878ebccfe80fb4aa7fd7b": {
-        "36287f0ae95bcdd6fc33f907edca7efa": "c0d92f832371b6d0f27ea9b0ecaed4ed",
-        "6561e33dd5250ebcbed7ddad2245c85b": "1156862a9fae06fedf61f8224005c0dd",
-        "8e25625f1388584ab0c895b333de9e01": "8deaf2d74d4bbc9b8f669a51814074da",
-        "ccba4ea75af7fbb9d00a35b32748973e": "5bf301f6893927b9f5aa0003afa9e3e3"
-    },
-    "7ce52357561014e3362874ab095c94b9": {
-        "757267697640c6c4067fc702e0bf63e5": "52b500063e0b103c1316bae81c6e9a46",
-        "f7252eaf1dc524a5fe47dbe0c00d67f6": "319e3c7c0d6b3b402ba790adefc42114",
-        "0a566619d9449e658a1f7c20e3bf0323": "23241ac2d6c70c5284c94d604cee5d95"
-    },
-    "a3176530787e137be5fd7903ec3f0844": {
-        "answer": "bla@blub.de"
+    ],
+    "fakeAusgefuellt": {
+        "3cd1b9c393efb559c4a0cd25d1ce28f7": {"selectedAnswer": "f65af8dbbeaa2e41062bc53b5d83f817"},
+        "e9368d6301d5b1d91ae19fc655352ff4": {"selectedAnswer": "89546ec389074778f6a0cceb2acd311b"},
+        "4bebb9a040bfbcce0d91d4345f08c860": {"answer": "BI"},
+        "e2be555c04c1e649021670f0482ae3a8": {"selectedAnswer": "a6e633790105676882bf52e8793ea8e9"},
+        "4e203cb9c9df343912155dfb4f3c6fd5": {"selectedAnswer": "d71df7d418c94dd2b31abb7e52331663"},
+        "0a46d84af975929bd09070cd9e6254d6": {"selectedAnswer": "815a9e39fcbd8f0814dcf1f677749ee1"},
+        "1605e2bb313158d4c38cc48b870207ce": {"selectedAnswer": "ddd0bcd4cd2aee4b41f74ef27167b747"},
+        "280dbe16e07ff89473dd101e1521bc2c": {"answer": "3.4"},
+        "7ed01e772469a65382aa19ad39c8c61b": {"selectedAnswer": "200df7e7f8d80e8ad5faf2ea4748ff39"},
+        "07a2d08c8162339b4d188eb42fe4c9dd": {
+            "3f2d5562267ec44198b2f30276e31c76": "e325cfa4d67909d59f1c2f883091a7b0",
+            "4b8562aaa988466ab2bb31bf4a3ab948": "5859bcbb7c6e88ba4b1360ae10e2df51",
+            "155011d36ea6dd48113156c2c63ffd03": "5f0a059d4d40887b25f065753044c23a",
+            "faa32a1ded0c8c7a77c9a1b4b3a31991": "5859bcbb7c6e88ba4b1360ae10e2df51"
+        },
+        "1e8cb3837185c49e78a21d1f1b4905ef": {
+            "684f8efbe443c57857f88a2c6418a720": "931720b7c5c91021a272ae768e188eff",
+            "abf1dd049b94159eef72c1b17ed57bc4": "eea4d87da8b17e0e1dcfc48aaa4b9dd5",
+            "ffea456ed80e5fb75e49a136313ab12c": "be32eb8bf28374ee28d1cb1f3d4f3df5",
+            "54299d83293708ca43567dc21760ae41": "b3478e66f6965d9f9bb2091324878543",
+            "8ebfe67e7f8a41ae57d0f044eeac616d": "2605f976a61e77e82f6bb4cad07d658f",
+            "8c90072f3d44de8996fc3e242040e471": "b3478e66f6965d9f9bb2091324878543",
+            "70d8acd4cdcaf44cd0c5cd031298962e": "be32eb8bf28374ee28d1cb1f3d4f3df5",
+            "0af69f6eec3b470aedec09fc8657044d": "be32eb8bf28374ee28d1cb1f3d4f3df5",
+            "e6be76386a158ca608929eb5855b93e2": "b3478e66f6965d9f9bb2091324878543",
+            "b30418c323c30438e6f666a9f50fe3b0": "b3478e66f6965d9f9bb2091324878543",
+            "051f3a2e063adb344b2bff7a0cd56f39": "be32eb8bf28374ee28d1cb1f3d4f3df5",
+            "aa65dac7ec51a145f64b0aa3425a214f": "be32eb8bf28374ee28d1cb1f3d4f3df5",
+            "8812f9b75179d624dad3f1303532dd2b": "be32eb8bf28374ee28d1cb1f3d4f3df5",
+            "ed19edfa88cda62a359e06ee886e6431": "b3478e66f6965d9f9bb2091324878543",
+            "664c139123723961cb7e68ab77b32632": "b3478e66f6965d9f9bb2091324878543"
+        },
+        "5ee73cb5a7da0e676386d6e32078e2c1": {"selectedAnswers": ["821c9824e8a75fe809a61b8c8bd09122"]},
+        "967c45aabe08ffe3b64cd27b6c267793": {
+            "9444a876037dc75a26f759dfbaa19e02": "138c69519df694247d6638702569cff1",
+            "bdfadfb2ad20f5256bf5a4639c664d4e": "71d65bb4e195a835028a28b53f5194fe",
+            "113361132f11f501da94f97e73095a6c": "754c0c7d58d5798563644e21a5807322",
+            "d7f2f9001668ebab3c40452ee00d4b6b": "71d65bb4e195a835028a28b53f5194fe",
+            "16f0ba8186357f48f617068f349bb2e3": "71d65bb4e195a835028a28b53f5194fe"
+        },
+        "e5bfa1f5290b3167ccd9d9afe3e77f60": {
+            "691bdb34fa4382d546187c284d24b246": "eb960fd7fc0fd965a9426a90133ebdf3",
+            "800f0da6bbb0a9a063c55ad30e7f8b20": "eb960fd7fc0fd965a9426a90133ebdf3",
+            "bfa74d07fe13af49c2e09b7bf0542e88": "4b3a38938913c0582c67d9836e984db7",
+            "ce9f78cb9b16509837353850817eaa35": "4b3a38938913c0582c67d9836e984db7",
+            "7c44beaec2321432f920dcd9e007980a": "4b3a38938913c0582c67d9836e984db7",
+            "d2f1a2d804a53934fe84126b62cbe5a6": "4b3a38938913c0582c67d9836e984db7",
+            "2d7f4426e37a14ae0cfb3fd04751c74b": "4b3a38938913c0582c67d9836e984db7"
+        },
+        "aea501f565f3ee4741a594b8fcb73328": {
+            "7038f319da3a2fe5096192d645090b55": "20213b92a5c805bfcaf5860786aeec70",
+            "e6aa0d9fc875b682f6c610746073b9ee": "20213b92a5c805bfcaf5860786aeec70",
+            "91db5e27b8044618100a124b45682aa8": "6c9a42480cfeec77914b295c75b25d88"
+        },
+        "e2fe3172c2c80c37a3c54d37018a8af3": {
+            "f75ec83d22010b1d8e68119e5baa539e": "8a7b0eed25ee4c3f0dbd29afed106d6c",
+            "2112cd131777e9bdf2f54448c489ffe4": "976a4f71b9c6fffb2ffeb3ed9824d74b",
+            "1d75a629e81df4a391e87e7ddba67ae7": "976a4f71b9c6fffb2ffeb3ed9824d74b",
+            "908b1a5e45205e25c3f32e6d9bcca059": "976a4f71b9c6fffb2ffeb3ed9824d74b",
+            "0aaac171b1eadfddee4f9c6dad161d38": "02ec504a9971a5f8344d8df59bbe0a36"
+        },
+        "13917301a0c878ebccfe80fb4aa7fd7b": {
+            "36287f0ae95bcdd6fc33f907edca7efa": "c0d92f832371b6d0f27ea9b0ecaed4ed",
+            "6561e33dd5250ebcbed7ddad2245c85b": "1156862a9fae06fedf61f8224005c0dd",
+            "8e25625f1388584ab0c895b333de9e01": "c0d92f832371b6d0f27ea9b0ecaed4ed",
+            "ccba4ea75af7fbb9d00a35b32748973e": "1156862a9fae06fedf61f8224005c0dd"
+        },
+        "7ce52357561014e3362874ab095c94b9": {
+            "757267697640c6c4067fc702e0bf63e5": "79307448a9109ca49f58ea36da41a272",
+            "0a566619d9449e658a1f7c20e3bf0323": "17f097d2a119f9ffec0d65a78b0dd996",
+            "f7252eaf1dc524a5fe47dbe0c00d67f6": "17f097d2a119f9ffec0d65a78b0dd996"
+        },
+        "a3176530787e137be5fd7903ec3f0844": {"answer": "basti@basti.de"}
     }
 };
+
 
