@@ -58,6 +58,7 @@ app.get('/getAllResponses', function (req, res) {
 });
 
 // Get all Names
+/*
 app.get('/getAllResponses', function (req, res) {
   db.all("SELECT alias FROM responses", function (err, rows) {
     if (err) {
@@ -69,7 +70,7 @@ app.get('/getAllResponses', function (req, res) {
     }
   });
 });
-
+*/
 
 // Empty DB
 app.get('/emptyDB', function (req, res) {
