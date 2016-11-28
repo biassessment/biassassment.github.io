@@ -2056,7 +2056,7 @@ var surveyModel = {
                 "never",
                 "rarely",
                 "sometimes",
-                "frequently",
+                "all the time",
                 "all the time",
                 "frequently",
                 "sometimes",

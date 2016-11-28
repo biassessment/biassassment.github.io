@@ -26,26 +26,41 @@ db.serialize(function () {
         "alias TEXT, " +
         "answers TEXT," +
         "tool TEXT," +
-        "decisionType FLOAT," +
-        "easeOfuse FLOAT," +
-        "usage FLOAT," +
-        "benefit FLOAT," +
-        "usefulness FLOAT," +
-        "overall FLOAT," +
-        "skill FLOAT," +
-        "RegularReporting INTEGER," +
-        "Assurance INTEGER," +
-        "CostAnalysis INTEGER," +
-        "GroupConsolidation INTEGER," +
-        "OperationalPlanning INTEGER," +
-        "OtherReporting INTEGER," +
-        "StrategicPlanning INTEGER," +
-        "MarketAnalysis INTEGER," +
-        "CampaignManagement INTEGER," +
-        "ProductionPlanning INTEGER," +
-        "SupplyChain INTEGER," +
-        "SupplierAnalysis INTEGER," +
-        "HRAnalysis INTEGER)"
+        "decisionType FLOAT, " +
+        "easeOfuse FLOAT, " +
+        "usage FLOAT, " +
+        "benefit FLOAT, " +
+        "usefulness FLOAT, " +
+        "overall FLOAT, " +
+        "skill FLOAT, " +
+        "RegularReporting INTEGER, " +
+        "Assurance INTEGER, " +
+        "CostAnalysis INTEGER, " +
+        "GroupConsolidation INTEGER, " +
+        "OperationalPlanning INTEGER, " +
+        "OtherReporting INTEGER, " +
+        "StrategicPlanning INTEGER, " +
+        "MarketAnalysis INTEGER, " +
+        "CampaignManagement INTEGER, " +
+        "ProductionPlanning INTEGER, " +
+        "SupplyChain INTEGER, " +
+        "SupplierAnalysis INTEGER, " +
+        "HRAnalysis INTEGER, " +
+        "BusinessQuery FLOAT, " +
+        "VisualDataDiscovery FLOAT, " +
+        "InteractiveReports FLOAT, " +
+        "Dashboards FLOAT,  " +
+        "AdvancedVisualization FLOAT, " +
+        "StatisticalMethods FLOAT, " +
+        "Drilling FLOAT, " +
+        "Calculations FLOAT, " +
+        "Spreadsheet FLOAT, " +
+        "Collaboration FLOAT, " +
+        "ScheduledReporting FLOAT, " +
+        "MobileBI FLOAT, " +
+        "ETL FLOAT, " +
+        "InMemoryAnalysis FLOAT, " +
+        "PredictiveAnalysis FLOAT)"
     );
     console.log("SQLite3 Database created");
 });
@@ -77,7 +92,22 @@ app.post('/saveResponse', function (req, res) {
         "ProductionPlanning, " +
         "SupplyChain, " +
         "SupplierAnalysis, " +
-        "HRAnalysis) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        "HRAnalysis, " +
+        "BusinessQuery, " +
+        "VisualDataDiscovery, " +
+        "InteractiveReports, " +
+        "Dashboards , " +
+        "AdvancedVisualization, " +
+        "StatisticalMethods, " +
+        "Drilling, " +
+        "Calculations, " +
+        "Spreadsheet, " +
+        "Collaboration, " +
+        "ScheduledReporting, " +
+        "MobileBI, " +
+        "ETL, " +
+        "InMemoryAnalysis, " +
+        "PredictiveAnalysis) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
         [
             req.body['alias'],
             req.body['answers'],
@@ -101,7 +131,22 @@ app.post('/saveResponse', function (req, res) {
             req.body['Production Planning & Control'],
             req.body['Supply-Chain-Analysis'],
             req.body['Supplier Analysis'],
-            req.body['HR Analysis']
+            req.body['HR Analysis'],
+            req.body['Business Query'],
+            req.body['Visual Data Discovery'],
+            req.body['Interactive Reports'],
+            req.body['Dashboards'],
+            req.body['Advanced Visualization'],
+            req.body['Statistical Methods'],
+            req.body['Drill-Down'],
+            req.body['Calculations'],
+            req.body['Spreadsheet'],
+            req.body['Collaboration'],
+            req.body['Scheduled Reporting'],
+            req.body['Mobile BI'],
+            req.body['ETL'],
+            req.body['In-Memory-Analysis'],
+            req.body['Predictive Analysis']
 
         ], function (err) {
             if (err) {

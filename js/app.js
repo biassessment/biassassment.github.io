@@ -14,6 +14,7 @@ app.config(function ($translateProvider) {
         var umfrage = surveyModel.model;
         var fakeResponse = surveyModel.fakeResponse;
         var businessProcesses = ["Regular financial & tax reporting (external reporting)", "Assurance & special compliance support (e.g. SOX)", "Cost Analysis", "Group Consolidation", "Operational Planning & Budgeting", "Other internal financial reporting", "Strategic Planning", "Market & Sales planning & analysis", "Campaign Management", "Production Planning & Control", "Supply-Chain-Analysis", "Supplier Analysis", "HR Analysis"];
+        var features = ["Business Query", "Visual Data Discovery", "Interactive Reports","Dashboards", "Advanced Visualization", "Statistical Methods", "Drill-Down", "Calculations", "Spreadsheet", "Collaboration", "Scheduled Reporting", "Mobile BI", "ETL", "In-Memory-Analysis", "Predictive Analysis"];
 
         // Settings for Survey
         var ctrl = this;
@@ -198,10 +199,20 @@ app.config(function ($translateProvider) {
                 "overall": $scope.score
             };
         };
+        //Neues Mapping für Features
+        var featureMapping = {
+            "never": 0,
+            "rarely": 1,
+            "sometimes": 2,
+            "frequently": 3,
+            "all the time": 4
+        };
 
         // Save Response to Database
         ctrl.saveResponse = function () {
             //var response = ctrl.getResponseSheet();
+
+
             var response = surveyModel.fakeResponse;
             console.log("Erhaltene Antworten: ", response);
             var fragen = response[0][0];
@@ -215,6 +226,17 @@ app.config(function ($translateProvider) {
             for (var score in scores) {
                 adjustedResponse[score] = scores[score];
             }
+            //Calculate Features
+            features.forEach(function (feature) {
+                fragen.forEach(function (frage, index) {
+                    if (frage.indexOf(feature) !== -1) {
+                        adjustedResponse[feature] = featureMapping[antworten[index]]/4;
+                        //console.log("answer: ", [antworten[index]], "featuremapping: ", featureMapping[antworten[index]], feature, $scope.feature);
+                    }
+                });
+
+            });
+            // Calculate Business Processes
             businessProcesses.forEach(function (businessProcess) {
                 if (adjustedResponse["answers"].indexOf(businessProcess) !== -1) {
                     console.log("Treffer! ", businessProcess);
@@ -223,9 +245,9 @@ app.config(function ($translateProvider) {
                     adjustedResponse[businessProcess] = 0;
                 }
             });
+
+
             console.log("Ergebnisse ", adjustedResponse);
-
-
 
             //save survey response to database
             databaseService.saveResponse(adjustedResponse).then(function (res) {
