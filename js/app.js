@@ -10,7 +10,7 @@ app.config(function ($translateProvider) {
 })
     .controller('MainCtrl', ['$scope', '$q', '$http', '$translate', 'mwFormResponseUtils', 'databaseService', function ($scope, $q, $http, $translate, mwFormResponseUtils, databaseService) {
         console.log("bi-assessment tool running");
-        $scope.showResults = false;
+        $scope.showResults = true; // false;
         var umfrage = surveyModel.model;
         var fakeResponse = surveyModel.fakeResponse;
         var businessProcesses = ["Regular financial & tax reporting (external reporting)", "Assurance & special compliance support (e.g. SOX)", "Cost Analysis", "Group Consolidation", "Operational Planning & Budgeting", "Other internal financial reporting", "Strategic Planning", "Market & Sales planning & analysis", "Campaign Management", "Production Planning & Control", "Supply-Chain-Analysis", "Supplier Analysis", "HR Analysis"];
@@ -52,8 +52,8 @@ app.config(function ($translateProvider) {
 
         //  calculate Score
         $scope.calculateScores = function (response) {
-            var fragen = response[0][0];
-            var antworten = response[0][1];
+            var fragen = response[0];
+            var antworten = response[1];
 
             // Do SKILLS-Calculation
             $scope.skillScore = 0;
@@ -199,24 +199,14 @@ app.config(function ($translateProvider) {
                 "overall": $scope.score
             };
         };
-        //Neues Mapping für Features
-        var featureMapping = {
-            "never": 0,
-            "rarely": 1,
-            "sometimes": 2,
-            "frequently": 3,
-            "all the time": 4
-        };
 
         // Save Response to Database
         ctrl.saveResponse = function () {
-            //var response = ctrl.getResponseSheet();
-
-
-            var response = surveyModel.fakeResponse;
+            var response = ctrl.getResponseSheet();
+            //var response = surveyModel.fakeResponse[0]; // Response-Mock
             console.log("Erhaltene Antworten: ", response);
-            var fragen = response[0][0];
-            var antworten = response[0][1];
+            var fragen = response[0];
+            var antworten = response[1];
 
             var adjustedResponse = {};
             adjustedResponse["alias"] = antworten[antworten.length - 1];
@@ -226,6 +216,14 @@ app.config(function ($translateProvider) {
             for (var score in scores) {
                 adjustedResponse[score] = scores[score];
             }
+            //Neues Mapping für Features
+            var featureMapping = {
+                "never": 0,
+                "rarely": 1,
+                "sometimes": 2,
+                "frequently": 3,
+                "all the time": 4
+            };
             //Calculate Features
             features.forEach(function (feature) {
                 fragen.forEach(function (frage, index) {
@@ -246,7 +244,6 @@ app.config(function ($translateProvider) {
                 }
             });
 
-
             console.log("Ergebnisse ", adjustedResponse);
 
             //save survey response to database
@@ -255,20 +252,33 @@ app.config(function ($translateProvider) {
             });
         };
 
+        // Calculate conditional Tool Score
+        function calculateToolScore (results) {
+            var scores = {};
+            results.forEach(function(res) {
+                var usageKey = res.tool + " Usage";
+                if (!scores[res.tool]) {
+                    scores[res.tool] = {"toolName": res.tool,"average": res.overall, "count": 1};
+                } else {
+                    var sum = scores[res.tool]["average"] * scores[res.tool]["count"];
+                    var newSum = sum + res.overall;
+                    scores[res.tool]["count"] += 1;
+                    scores[res.tool]["average"] = (newSum / (scores[res.tool]["count"]));
+                }
+            });
+            return scores;
+        }
+
         // Get all Answers
         $scope.calcAndShowResults = function () {
             $scope.showResults = true;
             databaseService.getAllResponses().then(function (res) {
                 $scope.allResults = res.data;
-                $scope.allResults.answers = JSON.parse($scope.allResults.answers);
+                //$scope.allResults.answers = JSON.parse($scope.allResults.answers);
                 console.log("all Results so far", res);
+                $scope.toolScores = calculateToolScore($scope.allResults);
 
-                // TODO Further calculation with all Responses and creation of figures
-                /*
-                 *
-                 *
-                 *
-                 */
+
 
             })
         };
@@ -276,7 +286,12 @@ app.config(function ($translateProvider) {
         $scope.getPersonalResult = function (alias) {
             $scope.personalResult = $scope.allResults.filter(function (res) {
                 return res.alias === alias;
-            })
+            })[0];
+            $scope.conditionalResultsByDecisionType = $scope.allResults.filter(function(res) {
+                return res.decisionType === $scope.personalResult.decisionType;
+            });
+            $scope.conditionalToolScores = calculateToolScore($scope.conditionalResultsByDecisionType);
+
         };
 
         // Empty DB
@@ -331,4 +346,14 @@ app.config(function ($translateProvider) {
             });
             return deferred.promise;
         };
+    })
+
+    .filter('object2Array', function() {
+        return function(input) {
+            var out = [];
+            for(i in input){
+                out.push(input[i]);
+            }
+            return out;
+        }
     });

@@ -2,8 +2,11 @@
     <div class="results">
         <h2>Results</h2>
         <h3>Anzahl der Antworten: {{allResults.length}}</h3>
-        <h3>Plain Data:</h3>
-        {{allResults}}
+        <h3>Hier können später allgemeine Infos angezeigt werden!</h3>
+        <ul ng-repeat="tool in toolScores">
+           <li>{{tool.toolName}} hat den Score: {{tool.average.toFixed(3)}} mit der Anzahl {{tool.count}}</li>
+        </ul>
+
     </div>
 
     <div class="personalResult">
@@ -13,7 +16,17 @@
             <input id="alias" class="form-control" ng-model="alias" type="text"/>
             <button class="btn" type="submit">Ergebnis abfragen</button>
         </form>
-        <span>{{personalResult}}</span>
+        <div class="personalInfo" ng-if="personalResult">
+            <span>Hallo {{personalResult.alias}}! Ihr decisionType ist: {{personalResult.decisionType}}</span>
+            <span>Außer Ihnen haben {{conditionalResultsByDecisionType.length - 1}} Personen denselben DecisionType wie sie!</span>
+            <div>
+                <span>Die besten Tools waren: </span>
+                <ul>
+                    <li ng-repeat="tool in conditionalToolScores | object2Array | orderBy:'average':true">
+                        {{tool.toolName}} - Av: {{tool.average.toFixed(3)}} - Us: {{tool.count}}
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-
 </div>
