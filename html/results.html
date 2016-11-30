@@ -1,31 +1,53 @@
 <div class="content">
     <div class="results">
         <h2>Results</h2>
-        <h3>Anzahl der Antworten: {{allResults.length}}</h3>
-        <h3>Hier können später allgemeine Infos angezeigt werden!</h3>
+        <h3>Number of Respondents: {{allResults.length}}</h3>
+        <h3>Overall Tool Scores:</h3>
         <ul ng-repeat="tool in toolScores">
-           <li>{{tool.toolName}} hat den Score: {{tool.average.toFixed(3)}} mit der Anzahl {{tool.count}}</li>
+            <li>{{tool.toolName}}: {{tool.average.toFixed(3)}} (n= {{tool.count}})</li>
         </ul>
 
     </div>
 
     <div class="personalResult">
-        <h3>Abfrage Ihres persönlichen Ergebnisses:</h3>
+        <h3>Request Personal Results:</h3>
         <label>Alias: </label>
         <form ng-submit="getPersonalResult(alias)">
             <input id="alias" class="form-control" ng-model="alias" type="text"/>
-            <button class="btn" type="submit">Ergebnis abfragen</button>
+            <button class="btn" type="submit">Request Results</button>
         </form>
         <div class="personalInfo" ng-if="personalResult">
-            <span>Hallo {{personalResult.alias}}! Ihr decisionType ist: {{personalResult.decisionType}}</span>
-            <span>Außer Ihnen haben {{conditionalResultsByDecisionType.length - 1}} Personen denselben DecisionType wie sie!</span>
+            <span>Hello {{personalResult.alias}}! Your decision type is: {{personalResult.decisionType}}!</span></br>
+            <span>{{conditionalResultsByDecisionType.length - 1}} other people make the same type of decisions.</span></br>
+            <span>The best Tools for these decisions are: </span>
+            <ul>
+                <li ng-repeat="tool in conditionalToolScores | object2Array | orderBy:'average':true">
+                    {{tool.toolName}} - Rating: {{tool.average.toFixed(3)}} - (n = {{tool.count}})
+                </li>
+            </ul>
             <div>
-                <span>Die besten Tools waren: </span>
+                <span>You selected to support the following business processes with {{personalResult.tool}}:</span>
                 <ul>
-                    <li ng-repeat="tool in conditionalToolScores | object2Array | orderBy:'average':true">
-                        {{tool.toolName}} - Av: {{tool.average.toFixed(3)}} - Us: {{tool.count}}
+                    <li ng-repeat="process in personalProcesses">
+                        {{process}}
                     </li>
                 </ul>
+            </div>
+            <div>
+
+                <span ng-repeat="process in personalProcesses">The best tools for {{process}} are:
+                <ul>
+                    <li ng-repeat="tool in processToolScores[process] | object2Array | orderBy:'average':true">
+                        {{tool.toolName}} - Rating: {{tool.average.toFixed(3)}} - (n = {{tool.count}})
+                    </li>
+                </ul>
+                </span>
+             <!--   <span>Ihre Prozesse sind: </span>
+                <ul>
+                    <li ng-repeat="process in personalProcesses | object2Array | orderBy:'average':true">
+                        {{process}}
+                    </li>
+                </ul>-->
             </div>
         </div>
     </div>

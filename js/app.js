@@ -10,7 +10,7 @@ app.config(function ($translateProvider) {
 })
     .controller('MainCtrl', ['$scope', '$q', '$http', '$translate', 'mwFormResponseUtils', 'databaseService', function ($scope, $q, $http, $translate, mwFormResponseUtils, databaseService) {
         console.log("bi-assessment tool running");
-        $scope.showResults = true; // false;
+        $scope.showResults = false; // false;
         var umfrage = surveyModel.model;
         var fakeResponse = surveyModel.fakeResponse;
         var businessProcesses = ["Regular financial & tax reporting (external reporting)", "Assurance & special compliance support (e.g. SOX)", "Cost Analysis", "Group Consolidation", "Operational Planning & Budgeting", "Other internal financial reporting", "Strategic Planning", "Market & Sales planning & analysis", "Campaign Management", "Production Planning & Control", "Supply-Chain-Analysis", "Supplier Analysis", "HR Analysis"];
@@ -250,12 +250,14 @@ app.config(function ($translateProvider) {
             databaseService.saveResponse(adjustedResponse).then(function (res) {
                 console.log("Antwort gespeichert!", res);
             });
+            $scope.showResults = true;
         };
 
         // Calculate conditional Tool Score
         function calculateToolScore (results) {
             var scores = {};
             results.forEach(function(res) {
+                if (res.tool!==""){
                 var usageKey = res.tool + " Usage";
                 if (!scores[res.tool]) {
                     scores[res.tool] = {"toolName": res.tool,"average": res.overall, "count": 1};
@@ -264,7 +266,7 @@ app.config(function ($translateProvider) {
                     var newSum = sum + res.overall;
                     scores[res.tool]["count"] += 1;
                     scores[res.tool]["average"] = (newSum / (scores[res.tool]["count"]));
-                }
+                }}
             });
             return scores;
         }
@@ -283,6 +285,14 @@ app.config(function ($translateProvider) {
             })
         };
 
+/*        $scope.getPersonalProcesses = function(alias){
+            var prozesse = ["StrategicPlanning", "MarketAnalysis", "GroupConsolidation"];
+            $scope.personalProcesses = new Array();
+            prozesse.each
+
+
+        }*/
+
         $scope.getPersonalResult = function (alias) {
             $scope.personalResult = $scope.allResults.filter(function (res) {
                 return res.alias === alias;
@@ -292,7 +302,33 @@ app.config(function ($translateProvider) {
             });
             $scope.conditionalToolScores = calculateToolScore($scope.conditionalResultsByDecisionType);
 
+            var prozesse = ["Assurance", "CampaignManagement", "CostAnalysis", "HRAnalysis","StrategicPlanning", "MarketAnalysis", "GroupConsolidation", "OperationalPlanning", "OtherReporting", "ProductionPlanning", "RegularReporting", "SupplierAnalysis", "SupplyChain"];
+            $scope.personalProcesses = new Array();
+            $scope.processToolResults = new Array();
+            $scope.processToolScores = new Array();
+            prozesse.forEach(function(process){
+                if($scope.personalResult[process] === 1) {
+                    $scope.personalProcesses.push(process);
+                    console.log(process);
+                    $scope.processToolResults[process] = $scope.allResults.filter(function(res) {
+                        return res[process] === 1;
+                    });
+                    $scope.processToolScores[process] = calculateToolScore($scope.processToolResults[process]);
+
+                }
+            });
+
+
+
         };
+        $scope.getprocessResults = function (process) {
+
+
+
+        };
+
+
+
 
         // Empty DB
         $scope.emptyDB = function () {
