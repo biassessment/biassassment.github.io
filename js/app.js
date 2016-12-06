@@ -13,7 +13,7 @@ app.config(function ($translateProvider) {
         $scope.showResults = false; // false;
         var umfrage = surveyModel.model;
         var fakeResponse = surveyModel.fakeResponse;
-        var businessProcesses = ["Regular financial & tax reporting (external reporting)", "Assurance & special compliance support (e.g. SOX)", "Cost Analysis", "Group Consolidation", "Operational Planning & Budgeting", "Other internal financial reporting", "Strategic Planning", "Market & Sales planning & analysis", "Campaign Management", "Production Planning & Control", "Supply-Chain-Analysis", "Supplier Analysis", "HR Analysis"];
+        var businessProcesses = ["Regular Financial and Tax Reporting (External Reporting)", "Assurance and Special Compliance Support (e.g. SOX)", "Cost Analysis", "Group Consolidation", "Operational Planning and Budgeting", "Other Internal Financial Reporting", "Strategic Planning", "Market and Sales Planning and Analysis", "Campaign Management", "Production Planning and Control", "Supply-Chain-Analysis", "Supplier Analysis", "HR Analysis"];
         var features = ["Business Query", "Visual Data Discovery", "Interactive Reports","Dashboards", "Advanced Visualization", "Statistical Methods", "Drill-Down", "Calculations", "Spreadsheet", "Collaboration", "Scheduled Reporting", "Mobile BI", "ETL", "In-Memory-Analysis", "Predictive Analysis"];
 
         // Settings for Survey
@@ -250,7 +250,7 @@ app.config(function ($translateProvider) {
             databaseService.saveResponse(adjustedResponse).then(function (res) {
                 console.log("Antwort gespeichert!", res);
             });
-            $scope.showResults = true;
+            $scope.calcAndShowResults();
         };
 
         // Calculate conditional Tool Score
@@ -303,9 +303,9 @@ app.config(function ($translateProvider) {
             $scope.conditionalToolScores = calculateToolScore($scope.conditionalResultsByDecisionType);
 
             var prozesse = ["Assurance", "CampaignManagement", "CostAnalysis", "HRAnalysis","StrategicPlanning", "MarketAnalysis", "GroupConsolidation", "OperationalPlanning", "OtherReporting", "ProductionPlanning", "RegularReporting", "SupplierAnalysis", "SupplyChain"];
-            $scope.personalProcesses = new Array();
-            $scope.processToolResults = new Array();
-            $scope.processToolScores = new Array();
+            $scope.personalProcesses = [];
+            $scope.processToolResults = [];
+            $scope.processToolScores = [];
             prozesse.forEach(function(process){
                 if($scope.personalResult[process] === 1) {
                     $scope.personalProcesses.push(process);

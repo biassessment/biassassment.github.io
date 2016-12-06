@@ -2,8 +2,8 @@
     <div class="results">
         <h2>Results</h2>
         <h3>Number of Respondents: {{allResults.length}}</h3>
-        <h3>Overall Tool Scores:</h3>
-        <ul ng-repeat="tool in toolScores">
+        <h3>Top 10 Overall Tools:</h3>
+        <ul ng-repeat="tool in toolScores | object2Array | orderBy:'average':true |limitTo:100">
             <li>{{tool.toolName}}: {{tool.average.toFixed(3)}} (n= {{tool.count}})</li>
         </ul>
 
@@ -37,7 +37,7 @@
 
                 <span ng-repeat="process in personalProcesses">The best tools for {{process}} are:
                 <ul>
-                    <li ng-repeat="tool in processToolScores[process] | object2Array | orderBy:'average':true">
+                    <li ng-repeat="tool in processToolScores[process] | object2Array | orderBy:'average':true | limitTo:5">
                         {{tool.toolName}} - Rating: {{tool.average.toFixed(3)}} - (n = {{tool.count}})
                     </li>
                 </ul>
