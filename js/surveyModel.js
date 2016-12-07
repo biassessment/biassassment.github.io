@@ -2098,7 +2098,7 @@ var surveyModel = {
                 "neutral",
                 "basti@basti.de"]
         ]
-    ],
+    ]
 };
 
 

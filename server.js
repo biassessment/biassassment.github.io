@@ -208,4 +208,26 @@ app.get('/emptyDB', function (req, res) {
         });
 });
 
+
+app.post('/deleteResponseById', function (req, res) {
+    console.log("delete Response", req.body);
+    db.run(
+      "DELETE FROM responses WHERE id=(?)",
+      [
+          req.body['id']
+
+      ], function (err) {
+          if (err) {
+              console.log(err);
+              res.status(500);
+          }
+          else {
+              console.log("DELETED! mit ID: " + this.lastID);
+              res.status(202);
+          }
+          res.json({"id": this.lastID});
+          res.end();
+      });
+});
+
 app.listen(process.env.PORT || 8080);
