@@ -41,11 +41,11 @@
             </div>
             <div>
                 <span ng-repeat="process in personalProcesses">The best tools for {{process}} are:
-                <ul>
-                    <li ng-repeat="tool in processToolScores[process] | object2Array | orderBy:'average':true | limitTo:5">
-                        {{tool.toolName}} - Rating: {{tool.average.toFixed(3)}} - (n = {{tool.count}})
-                    </li>
-                </ul>
+                    <ul>
+                        <li ng-repeat="tool in processToolScores[process] | object2Array | orderBy:'average':true | limitTo:5">
+                            {{tool.toolName}} - Rating: {{tool.average.toFixed(3)}} - (n = {{tool.count}})
+                        </li>
+                    </ul>
                 </span>
                 <div class="scatterChart" id="scatterChart"></div>
 

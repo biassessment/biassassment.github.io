@@ -272,7 +272,7 @@ app.config(function ($translateProvider) {
 
 
     // VERARBEITEN DER ERGEBNISSE (Berechnungen)
-    function calculateToolScore(results) {
+    function calculateToolScores(results) {
       var scores = {};
       results.forEach(function (res) {
         if (res.tool !== "") {
@@ -289,6 +289,23 @@ app.config(function ($translateProvider) {
       });
       return scores;
     }
+    
+    function calculateBestToolsForProcess () {
+      var prozesse = ["Assurance", "CampaignManagement", "CostAnalysis", "HRAnalysis", "StrategicPlanning", "MarketAnalysis", "GroupConsolidation", "OperationalPlanning", "OtherReporting", "ProductionPlanning", "RegularReporting", "SupplierAnalysis", "SupplyChain"];
+      $scope.personalProcesses = [];
+      $scope.processToolResults = [];
+      $scope.processToolScores = [];
+      prozesse.forEach(function (process) {
+        if ($scope.personalResult[process] === 1) {
+          $scope.personalProcesses.push(process);
+          //console.log(process);
+          $scope.processToolResults[process] = $scope.allResults.filter(function (res) {
+            return res[process] === 1;
+          });
+          $scope.processToolScores[process] = calculateToolScores($scope.processToolResults[process]);
+        }
+      });
+    }
 
 
     // ALLE ERGEBNISSE
@@ -298,7 +315,7 @@ app.config(function ($translateProvider) {
         $scope.allResults = res.data;
         //$scope.allResults.answers = JSON.parse($scope.allResults.answers);
         console.log("all Results so far", res);
-        $scope.toolScores = calculateToolScore($scope.allResults);
+        $scope.toolScores = calculateToolScores($scope.allResults);
 
         // Donut Chart Example
         var overviewChartData = [
@@ -332,22 +349,9 @@ app.config(function ($translateProvider) {
       $scope.conditionalResultsByDecisionType = $scope.allResults.filter(function (res) {
         return res.decisionType === $scope.personalResult.decisionType;
       });
-      $scope.conditionalToolScores = calculateToolScore($scope.conditionalResultsByDecisionType);
-
-      var prozesse = ["Assurance", "CampaignManagement", "CostAnalysis", "HRAnalysis", "StrategicPlanning", "MarketAnalysis", "GroupConsolidation", "OperationalPlanning", "OtherReporting", "ProductionPlanning", "RegularReporting", "SupplierAnalysis", "SupplyChain"];
-      $scope.personalProcesses = [];
-      $scope.processToolResults = [];
-      $scope.processToolScores = [];
-      prozesse.forEach(function (process) {
-        if ($scope.personalResult[process] === 1) {
-          $scope.personalProcesses.push(process);
-          //console.log(process);
-          $scope.processToolResults[process] = $scope.allResults.filter(function (res) {
-            return res[process] === 1;
-          });
-          $scope.processToolScores[process] = calculateToolScore($scope.processToolResults[process]);
-        }
-      });
+      $scope.conditionalToolScores = calculateToolScores($scope.conditionalResultsByDecisionType);
+      $scope.calculateBestToolsForProcess();
+      
 
       // Scatter Chart (personal)
       var scatterChartData = [
