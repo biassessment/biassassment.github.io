@@ -256,7 +256,7 @@ app.config(function ($translateProvider) {
     // Empty DB
     $scope.deleteEmptyEntries = function () {
       $scope.allResults.forEach(function(result) {
-        if (result.tool === "") {
+        if (result.easeOfUse === null) {
           databaseService.deleteById(result.id).then(function () {
             alert("Empty element deleted!");
           })
@@ -271,6 +271,8 @@ app.config(function ($translateProvider) {
     };
 
 
+
+
     // VERARBEITEN DER ERGEBNISSE (Berechnungen)
     function calculateToolScores(results) {
       var scores = {};
@@ -278,34 +280,32 @@ app.config(function ($translateProvider) {
         if (res.tool !== "") {
           var usageKey = res.tool + " Usage";
           if (!scores[res.tool]) {
-            scores[res.tool] = {"toolName": res.tool, "average": res.overall, "count": 1};
+            scores[res.tool] = {"toolName": res.tool, "average": res.overall,
+                                "benefits": res.benefit, "easeOfUse": res.easeOfuse,
+                                "usageIntention": res.usage, "usefulness": res.usefulness, "count": 1};
           } else {
             var sum = scores[res.tool]["average"] * scores[res.tool]["count"];
+            var benefits = scores[res.tool]["benefits"] * scores[res.tool]["count"];
+            var easeOfUse = scores[res.tool]["easeOfUse"] * scores[res.tool]["count"];
+            var usefulness = scores[res.tool]["usefulness"] * scores[res.tool]["count"];
+            var usageIntention = scores[res.tool]["usageIntention"] * scores[res.tool]["count"];
             var newSum = sum + res.overall;
+            var newBenefits = benefits + res.benefits;
+            var newEaseOfUse = easeOfUse + res.easeOfuse;
+            var newUsefulness = usefulness + res.usefulness;
+            var newUsageIntention = usageIntention + res.usage;
             scores[res.tool]["count"] += 1;
             scores[res.tool]["average"] = (newSum / (scores[res.tool]["count"]));
+            scores[res.tool]["benefits"] = (newBenefits / (scores[res.tool]["count"]));
+            scores[res.tool]["easeOfUse"] = (newEaseOfUse / (scores[res.tool]["count"]));
+            scores[res.tool]["usefulness"] = (newUsefulness / (scores[res.tool]["count"]));
+            scores[res.tool]["usageIntention"] = (newUsageIntention / (scores[res.tool]["count"]));
           }
         }
       });
       return scores;
     }
-    
-    function calculateBestToolsForProcess () {
-      var prozesse = ["Assurance", "CampaignManagement", "CostAnalysis", "HRAnalysis", "StrategicPlanning", "MarketAnalysis", "GroupConsolidation", "OperationalPlanning", "OtherReporting", "ProductionPlanning", "RegularReporting", "SupplierAnalysis", "SupplyChain"];
-      $scope.personalProcesses = [];
-      $scope.processToolResults = [];
-      $scope.processToolScores = [];
-      prozesse.forEach(function (process) {
-        if ($scope.personalResult[process] === 1) {
-          $scope.personalProcesses.push(process);
-          //console.log(process);
-          $scope.processToolResults[process] = $scope.allResults.filter(function (res) {
-            return res[process] === 1;
-          });
-          $scope.processToolScores[process] = calculateToolScores($scope.processToolResults[process]);
-        }
-      });
-    }
+
 
 
     // ALLE ERGEBNISSE
@@ -316,6 +316,129 @@ app.config(function ($translateProvider) {
         //$scope.allResults.answers = JSON.parse($scope.allResults.answers);
         console.log("all Results so far", res);
         $scope.toolScores = calculateToolScores($scope.allResults);
+
+        //Variable für Bar Chart mit Tools nach Overall Score
+          var overallBarChartData = [
+              ['Tool', 'Overall Rating']
+          ]
+
+          //Erstellen eines Arrays zum Sortieren
+          var sortable = []
+          for (var key in $scope.toolScores) {
+              sortable.push([$scope.toolScores[key].toolName, $scope.toolScores[key].usefulness, $scope.toolScores[key].easeOfUse,
+              $scope.toolScores[key].benefits, $scope.toolScores[key].usageIntention, $scope.toolScores[key].average]);
+          }
+
+          //sortieren das Array nach Average
+          sortable.sort(function(a,b){return b[5]-a[5]});
+
+          //Beste 5 Tools in das Array fürs Chart pushen
+          for (var i = 0; i<= 4;i++) {
+                  overallBarChartData.push([sortable[i][0], sortable[i][5]]);
+          }
+
+          //console.log(overallBarChartData);
+
+        //Bar Chart
+          google.charts.load('current', {packages: ['corechart', 'bar']});
+          google.charts.load('current', {packages:['bar']});
+          google.charts.setOnLoadCallback(drawStuff);
+
+          function drawStuff() {
+              var data = new google.visualization.arrayToDataTable(overallBarChartData);
+
+              var options = {
+                  width: 800,
+                  chart: {
+                      title: 'Nearby galaxies',
+                      subtitle: 'distance on the left, brightness on the right'
+                  },
+                  bars: 'horizontal', // Required for Material Bar Charts.
+                  series: {
+                      0: { axis: 'distance' }, // Bind series 0 to an axis named 'distance'.
+                      1: { axis: 'brightness' } // Bind series 1 to an axis named 'brightness'.
+                  },
+                  axes: {
+                      x: {
+                          distance: {label: 'parsecs'}, // Bottom x-axis.
+                          brightness: {side: 'top', label: 'apparent magnitude'} // Top x-axis.
+                      }
+                  }
+              };
+
+              var chart = new google.charts.Bar(document.getElementById('overallBarChart'));
+              chart.draw(data, options);
+          };
+
+          //Neues Bar Chart mit allen Metriken
+
+          //Variable für Bar Chart mit allen Erfolgsmetriken
+          var allMetricsBarChartData = [
+              ['Tool', 'Perceived Usefulness', 'Perceived Ease of Use',
+                  'Perceived Net Benefits', 'Intention to Use', 'Overall Rating']
+          ];
+          for (var i = 0; i<= 4;i++) {
+              allMetricsBarChartData.push([sortable[i][0], sortable[i][1], sortable[i][2], sortable[i][3], sortable[i][4], sortable[i][5]]);
+          }
+          console.log(allMetricsBarChartData);
+          /*var sortable = []
+          for (var key in $scope.toolScores) {
+              sortable.push([$scope.toolScores[key].toolName, $scope.toolScores[key].usefulness, $scope.toolScores[key].easeOfUse,
+              $scope.toolScores[key].benefits, $scope.toolScores[key].usageIntention, $scope.toolScores[key].average]);
+          }*/
+          google.charts.load('current', {packages: ['corechart', 'bar']});
+          google.charts.load('current', {packages:['bar']});
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+              var data = google.visualization.arrayToDataTable(overallBarChartData);
+
+              var options = {
+                  width:800,
+                  height:500,
+                  chart: {
+                      title: 'Company Performance',
+                      subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+                      width:800,
+                      height:500,
+                  },
+                  bars: 'horizontal' // Required for Material Bar Charts.
+
+              };
+
+              var chart = new google.charts.Bar(document.getElementById('allMetricsBarChart'));
+              chart.draw(data, options);
+          };
+
+
+
+
+          //Bubble Chart
+        var bubbleChartData = [
+            ['ID', 'Usefulness', 'Ease of Use', 'Tool', 'n']
+        ]
+        for (var key in $scope.toolScores) {
+            bubbleChartData.push(['',$scope.toolScores[key].usefulness, $scope.toolScores[key].easeOfUse,
+                $scope.toolScores[key].toolName, $scope.toolScores[key].count]);
+        }
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawSeriesChart);
+
+          function drawSeriesChart() {
+
+              var data = google.visualization.arrayToDataTable(bubbleChartData);
+
+              var options = {
+                  title: 'Usefulness vs Ease of Use by BI Tool',
+                  hAxis: {title: 'Usefulness', maxvalue:10},
+                  vAxis: {title: 'Ease of Use', maxvalue:10},
+                  bubble: {textStyle: {fontSize: 11}},
+                  width: 800,
+                  height: 500,
+              };
+
+              var chart = new google.visualization.BubbleChart(document.getElementById('bubble'));
+              chart.draw(data, options);
+          }
 
         // Donut Chart Example
         var overviewChartData = [
@@ -350,15 +473,28 @@ app.config(function ($translateProvider) {
         return res.decisionType === $scope.personalResult.decisionType;
       });
       $scope.conditionalToolScores = calculateToolScores($scope.conditionalResultsByDecisionType);
-      $scope.calculateBestToolsForProcess();
-      
+
+        var prozesse = ["Assurance", "CampaignManagement", "CostAnalysis", "HRAnalysis", "StrategicPlanning", "MarketAnalysis", "GroupConsolidation", "OperationalPlanning", "OtherReporting", "ProductionPlanning", "RegularReporting", "SupplierAnalysis", "SupplyChain"];
+        $scope.personalProcesses = [];
+        $scope.processToolResults = [];
+        $scope.processToolScores = [];
+        prozesse.forEach(function (process) {
+            if ($scope.personalResult[process] === 1) {
+                $scope.personalProcesses.push(process);
+                //console.log(process);
+                $scope.processToolResults[process] = $scope.allResults.filter(function (res) {
+                    return res[process] === 1;
+                });
+                $scope.processToolScores[process] = calculateToolScores($scope.processToolResults[process]);
+            }
+        });
 
       // Scatter Chart (personal)
       var scatterChartData = [
         ['Tool Name', 'n']
       ];
       for (var key in $scope.conditionalToolScores) {
-        scatterChartData.push([$scope.conditionalToolScores[key].count, $scope.conditionalToolScores[key].average]);
+        scatterChartData.push([$scope.conditionalToolScores[key].tool, $scope.conditionalToolScores[key].average]);
       }
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);

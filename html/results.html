@@ -10,6 +10,15 @@
         -->
 
         <div class="overviewChart" id="overview"></div>
+        <div class="bubbleChart" id="bubble"></div>
+        <div class="barChart" id="overallBarChart"></div>
+        <div class="barChart" id="allMetricsBarChart"></div>
+
+
+
+
+
+
 
     </div>
 
@@ -28,7 +37,8 @@
             <span>The best Tools for these decisions are: </span>
             <ul>
                 <li ng-repeat="tool in conditionalToolScores | object2Array | orderBy:'average':true">
-                    {{tool.toolName}} - Rating: {{tool.average.toFixed(3)}} - (n = {{tool.count}})
+                    {{tool.toolName}} - Rating: {{tool.average.toFixed(3)}} - Usefulness: {{tool.usefulness.toFixed(3)}}
+                    - Perveived Benefits: {{tool.benefits.toFixed(3)}} Ease of Use: {{tool.easeOfUse.toFixed(3)}}- (n = {{tool.count}})
                 </li>
             </ul>
             <div>
