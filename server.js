@@ -13,6 +13,10 @@ var fs = require("fs");
 var file = 'responses.db';
 var exists = fs.existsSync(file);
 
+var sqliteJSON = require('sqlite-json');
+var exporter = sqliteJSON(file);
+
+
 if (!exists) {
     console.log("Creating DB file.");
     fs.openSync(file, "w");
@@ -208,7 +212,7 @@ app.get('/emptyDB', function (req, res) {
         });
 });
 
-
+// Delete Response by ID
 app.post('/deleteResponseById', function (req, res) {
     console.log("delete Response", req.body);
     db.run(
@@ -229,5 +233,20 @@ app.post('/deleteResponseById', function (req, res) {
           res.end();
       });
 });
+
+// Get POIs to JSON (for csv-Export)
+app.get('/getJson', function(req, res){
+    exporter.json('select * FROM responses', function (err, json) {
+        if (err){
+            console.log(err);
+            res.status(400);
+        }
+        else {
+            console.log(json);
+            res.send(json);
+        }
+    });
+});
+
 
 app.listen(process.env.PORT || 8080);

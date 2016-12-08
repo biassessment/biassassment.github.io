@@ -36,6 +36,9 @@
     <script src="bower_components/angular-surveys/dist/form-builder-material-tpls.min.js"></script>
     <script src="bower_components/angular-surveys/dist/form-viewer.min.js"></script>
     <script src="bower_components/angular-surveys/dist/form-viewer-material-tpls.min.js"></script>
+    <!-- csv import -->
+    <script src="bower_components/ng-csv/build/ng-csv.min.js"></script>
+    <script src="bower_components/angular-csv-import/dist/angular-csv-import.min.js"></script>
     <!-- google charts -->
     <script type="text/javascript" src="http://www.gstatic.com/charts/loader.js"></script>
     <!-- own code -->
@@ -45,19 +48,34 @@
 <div ng-controller="MainCtrl as ctrl">
     <header>
         <h2>UMFRAGE</h2>
-        <!--
-        <h2>Ergebnisse:
-            Skill: {{skillScore.toFixed(2)}} -
-            DecisionType: {{decisionTypeScore.toFixed(2)}} -
-            Usage: {{usageScore.toFixed(2)}} -
-            Benefit: {{benefitScore.toFixed(2)}} -
-            Usefulness: {{usefulnessScore.toFixed(2)}} -
-            easOfUse: {{easeOfUseScore.toFixed(2)}} -
-            OverallScore: {{score.toFixed(2)}}
-        </h2>
-        -->
-        <button class="md-button md-raised" ng-click="calcAndShowResults()">Ergebnisse abfragen</button>
-        <button class="md-button md-raised" ng-click="deleteEmptyEntries()">Delete Empty Entries</button>
+        <div class="buttonWrapper">
+            <div class="csvImport">
+                <ng-csv-import
+                        class="import"
+                        content="csv.content"
+                        header="csv.header"
+                        header-visible="csv.headerVisible"
+                        separator="csv.separator"
+                        separator-visible="csv.separatorVisible"
+                        result="csvResult"
+                        encoding="csv.encoding"
+                        encoding-visible="csv.encodingVisible"
+                        upload-button-label="csv.uploadButtonLabel">
+                </ng-csv-import>
+            </div>
+            <button class="md-button md-raised csvExport"
+                    ng-csv="csvExport()"
+                    filename="ResponsesExport.csv"
+                    field-separator=";"
+                    decimal-separator=","
+                    add-bom="true"
+                    lazy-load="true"
+                    csv-header="config.header">
+                CSV-Export
+            </button>
+            <button class="md-button md-raised" ng-click="calcAndShowResults()">Ergebnisse abfragen</button>
+            <!--<button class="md-button md-raised" ng-click="deleteEmptyEntries()">Delete Empty Entries</button>-->
+        </div>
     </header>
 
     <div ng-hide="showResults" ng-include="'html/survey.html'"></div>

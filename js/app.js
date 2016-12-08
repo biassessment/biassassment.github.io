@@ -1,4 +1,4 @@
-var app = angular.module('bi-assessment', ['ngMaterial', 'mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalprecht.translate', 'monospaced.elastic']);
+var app = angular.module('bi-assessment', ['ngMaterial', 'mwFormBuilder', 'mwFormViewer', 'mwFormUtils', 'pascalprecht.translate', 'monospaced.elastic', 'ngCsv', 'ngCsvImport']);
 
 app.config(function ($translateProvider) {
   // diff languages not used yet
@@ -8,13 +8,29 @@ app.config(function ($translateProvider) {
   });
   $translateProvider.preferredLanguage('en');
 })
-  .controller('MainCtrl', ['$scope', '$q', '$http', '$translate', 'mwFormResponseUtils', 'databaseService', function ($scope, $q, $http, $translate, mwFormResponseUtils, databaseService) {
+  .controller('MainCtrl', ['$scope', '$q', '$http', '$translate', 'mwFormResponseUtils', 'databaseService', 'csvService', function ($scope, $q, $http, $translate, mwFormResponseUtils, databaseService, csvService) {
     console.log("bi-assessment tool running");
     $scope.showResults = false;
     var umfrage = surveyModel.model;
     var fakeResponse = surveyModel.fakeResponse;
     var businessProcesses = ["Regular Financial and Tax Reporting (External Reporting)", "Assurance and Special Compliance Support (e.g. SOX)", "Cost Analysis", "Group Consolidation", "Operational Planning and Budgeting", "Other Internal Financial Reporting", "Strategic Planning", "Market and Sales Planning and Analysis", "Campaign Management", "Production Planning and Control", "Supply-Chain-Analysis", "Supplier Analysis", "HR Analysis"];
     var features = ["Business Query", "Visual Data Discovery", "Interactive Reports", "Dashboards", "Advanced Visualization", "Statistical Methods", "Drill-Down", "Calculations", "Spreadsheet", "Collaboration", "Scheduled Reporting", "Mobile BI", "ETL", "In-Memory-Analysis", "Predictive Analysis"];
+
+    // CSV Import/Export
+    $scope.csvResult = null; // csv-Import Variable
+    $scope.config = surveyModel; // Kopfzeilen Variable
+    $scope.csv = {
+      content: null,
+      header: true,
+      headerVisible: true,
+      separator: ';',
+      separatorVisible: false,
+      accept: ".csv",
+      encoding: 'ISO-8859-1',
+      encodingVisible: false,
+      uploadButtonLabel: "upload a csv file"
+
+    };
 
     // Settings for Survey
     var ctrl = this;
@@ -267,10 +283,23 @@ app.config(function ($translateProvider) {
     $scope.emptyDB = function () {
       databaseService.emptyDB().then(function () {
         console.log("DB cleared!");
+        $scope.calcAndShowResults();
       })
     };
-
-
+    // CSV-Export
+    $scope.csvExport = function () {
+      return csvService.csvExport();
+    };
+    // CSV-Import
+    $scope.$watch("csvResult", function (res) {
+      if (!res) {
+        return;
+      }
+      csvService.csvImport(res).then(function () {
+        $scope.csvResult = null;
+        $scope.calcAndShowResults();
+      });
+    });
 
 
     // VERARBEITEN DER ERGEBNISSE (Berechnungen)
@@ -442,9 +471,9 @@ app.config(function ($translateProvider) {
           ['Tool Name', 'n']
         ];
         for (var key in $scope.toolScores) {
-           overviewChartData.push([$scope.toolScores[key].toolName, $scope.toolScores[key].count]);
+          overviewChartData.push([$scope.toolScores[key].toolName, $scope.toolScores[key].count]);
         }
-        google.charts.load("current", {packages:["corechart"]});
+        google.charts.load("current", {packages: ["corechart"]});
         google.charts.setOnLoadCallback(drawChart);
         function drawChart() {
           var data = google.visualization.arrayToDataTable(overviewChartData);
@@ -493,7 +522,7 @@ app.config(function ($translateProvider) {
       for (var key in $scope.conditionalToolScores) {
         scatterChartData.push([$scope.conditionalToolScores[key].tool, $scope.conditionalToolScores[key].average]);
       }
-      google.charts.load('current', {'packages':['corechart']});
+      google.charts.load('current', {'packages': ['corechart']});
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable(scatterChartData);
@@ -545,8 +574,7 @@ app.config(function ($translateProvider) {
       });
       return deferred.promise;
     };
-
-
+    // Delete all Responses in DB
     this.emptyDB = function () {
       console.log("dbservice empty db");
       var deferred = $q.defer();
@@ -560,7 +588,7 @@ app.config(function ($translateProvider) {
       });
       return deferred.promise;
     };
-    
+
     // delete by ID
     this.deleteById = function (id) {
       var deferred = $q.defer();
@@ -577,7 +605,47 @@ app.config(function ($translateProvider) {
           });
       return deferred.promise;
     };
+
+    // Get JSON Export
+    this.getResponsesJson = function () {
+      var deferred = $q.defer();
+      $http({
+        method: 'GET',
+        url: '/getJson'
+      }).success(function (data) {
+        console.log("GET JSON", data);
+        deferred.resolve(data);
+      }).error(function () {
+        window.alert("JSON GET failure!");
+      });
+      return deferred.promise;
+    };
   })
+
+  .service('csvService', ['databaseService', '$q', function (databaseService, $q) {
+    //CSV export
+    this.csvExport = function () {
+      return databaseService.getResponsesJson();
+    };
+    //CSV import
+    this.csvImport = function (csv) {
+      var importFinished = $q.defer();
+      var databasePromises = [];
+      csv.forEach(function (response) {
+        console.log("Import Response: ", response);
+        var deferred = $q.defer();
+        databaseService.saveResponse(response).then(function () {
+          console.log("saved Response", response);
+          deferred.resolve();
+        });
+        databasePromises.push(deferred);
+      });
+      $q.all(databasePromises).then(function () {
+        importFinished.resolve();
+      });
+      return importFinished.promise;
+    }
+  }])
 
   .filter('object2Array', function () {
     return function (input) {
