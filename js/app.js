@@ -337,7 +337,7 @@ app.config(function ($translateProvider) {
                   overallBarChartData.push([sortable[i][0], sortable[i][5]]);
           }
 
-          //console.log(overallBarChartData);
+          console.log(overallBarChartData);
 
         //Bar Chart
           google.charts.load('current', {packages: ['corechart', 'bar']});
@@ -368,7 +368,7 @@ app.config(function ($translateProvider) {
 
               var chart = new google.charts.Bar(document.getElementById('overallBarChart'));
               chart.draw(data, options);
-          };
+          }
 
           //Neues Bar Chart mit allen Metriken
 
@@ -376,7 +376,7 @@ app.config(function ($translateProvider) {
           var allMetricsBarChartData = [
               ['Tool', 'Perceived Usefulness', 'Perceived Ease of Use',
                   'Perceived Net Benefits', 'Intention to Use', 'Overall Rating']
-          ];
+          ]
           for (var i = 0; i<= 4;i++) {
               allMetricsBarChartData.push([sortable[i][0], sortable[i][1], sortable[i][2], sortable[i][3], sortable[i][4], sortable[i][5]]);
           }
@@ -388,26 +388,23 @@ app.config(function ($translateProvider) {
           }*/
           google.charts.load('current', {packages: ['corechart', 'bar']});
           google.charts.load('current', {packages:['bar']});
-          google.charts.setOnLoadCallback(drawChart);
-          function drawChart() {
-              var data = google.visualization.arrayToDataTable(overallBarChartData);
+          google.charts.setOnLoadCallback(drawColumnChart);
+          function drawColumnChart() {
+              var data = google.visualization.arrayToDataTable(allMetricsBarChartData);
 
               var options = {
-                  width:800,
-                  height:500,
                   chart: {
-                      title: 'Company Performance',
-                      subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-                      width:800,
-                      height:500,
+                      title: 'Tool Success by Measure',
                   },
-                  bars: 'horizontal' // Required for Material Bar Charts.
-
+                  width: 800,
+                  height:500,
               };
 
               var chart = new google.charts.Bar(document.getElementById('allMetricsBarChart'));
+
               chart.draw(data, options);
-          };
+          }
+
 
 
 
