@@ -9,10 +9,10 @@
         </ul>
         -->
 
+        <div class="barChart" id="overallBarChart"></div>
         <div class="overviewChart" id="overview"></div>
         <div class="bubbleChart" id="bubble"></div>
         <div class="allMetricsChart" id="allMetricsBarChart"></div>
-        <div class="barChart" id="overallBarChart"></div>
 
 
 
@@ -22,8 +22,6 @@
 
     </div>
 
-    <hr/>
-
     <div class="personalResult">
         <h3>Request Personal Results:</h3>
         <label>Alias: </label>
@@ -32,8 +30,10 @@
             <button class="btn" type="submit">Request Results</button>
         </form>
         <div class="personalInfo" ng-show="personalResult">
+            <div class="gauge" id="gauge"></div>
             <span>Hello {{personalResult.alias}}! Your decision type is: {{personalResult.decisionType}}!</span></br>
             <span>{{conditionalResultsByDecisionType.length - 1}} other people make the same type of decisions.</span></br>
+            <span>Your Tool is: {{personalResult.tool}}</span></br>
             <span>The best Tools for these decisions are: </span>
             <ul>
                 <li ng-repeat="tool in conditionalToolScores | object2Array | orderBy:'average':true">

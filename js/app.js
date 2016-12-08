@@ -362,13 +362,13 @@ app.config(function ($translateProvider) {
           sortable.sort(function(a,b){return b[5]-a[5]});
 
           //Beste 5 Tools in das Array fürs Chart pushen
-          for (var i = 0; i<= 4;i++) {
+          for (var i = 0; i<= 10;i++) {
                   overallBarChartData.push([sortable[i][0], sortable[i][5]]);
           }
 
           console.log(overallBarChartData);
 
-        //Bar Chart
+        //#####Bar Chart######
           google.charts.load('current', {packages: ['corechart', 'bar']});
           google.charts.load('current', {packages:['bar']});
           google.charts.setOnLoadCallback(drawStuff);
@@ -378,9 +378,10 @@ app.config(function ($translateProvider) {
 
               var options = {
                   width: 800,
-                  chart: {
-                      title: 'Nearby galaxies',
-                      subtitle: 'distance on the left, brightness on the right'
+                  height:800,
+                  colors: ['#003397'],
+                  legend: {
+                      position: 'none'
                   },
                   bars: 'horizontal', // Required for Material Bar Charts.
                   series: {
@@ -389,7 +390,7 @@ app.config(function ($translateProvider) {
                   },
                   axes: {
                       x: {
-                          distance: {label: 'parsecs'}, // Bottom x-axis.
+                          distance: {label: 'Overall Rating'}, // Bottom x-axis.
                           brightness: {side: 'top', label: 'apparent magnitude'} // Top x-axis.
                       }
                   }
@@ -425,6 +426,7 @@ app.config(function ($translateProvider) {
                   chart: {
                       title: 'Tool Success by Measure',
                   },
+                  colors: ['#003397', '#008dda'],
                   width: 800,
                   height:500,
               };
@@ -434,11 +436,7 @@ app.config(function ($translateProvider) {
               chart.draw(data, options);
           }
 
-
-
-
-
-          //Bubble Chart
+          //#######Bubble Chart########
         var bubbleChartData = [
             ['ID', 'Usefulness', 'Ease of Use', 'Tool', 'n']
         ]
@@ -466,7 +464,7 @@ app.config(function ($translateProvider) {
               chart.draw(data, options);
           }
 
-        // Donut Chart Example
+        // #########Donut Chart Example##############
         var overviewChartData = [
           ['Tool Name', 'n']
         ];
@@ -498,7 +496,12 @@ app.config(function ($translateProvider) {
       $scope.conditionalResultsByDecisionType = $scope.allResults.filter(function (res) {
         return res.decisionType === $scope.personalResult.decisionType;
       });
+      $scope.conditionalResultsByDecisionTypeAndTool = $scope.allResults.filter(function (res) {
+        return (res.decisionType === $scope.personalResult.decisionType && res.tool === $scope.personalResult.tool);
+      });
       $scope.conditionalToolScores = calculateToolScores($scope.conditionalResultsByDecisionType);
+      $scope.conditionalResultsByDecisionTypeAndTool = calculateToolScores($scope.conditionalResultsByDecisionTypeAndTool);
+      //console.log($scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].average);
 
         var prozesse = ["Assurance", "CampaignManagement", "CostAnalysis", "HRAnalysis", "StrategicPlanning", "MarketAnalysis", "GroupConsolidation", "OperationalPlanning", "OtherReporting", "ProductionPlanning", "RegularReporting", "SupplierAnalysis", "SupplyChain"];
         $scope.personalProcesses = [];
@@ -514,6 +517,52 @@ app.config(function ($translateProvider) {
                 $scope.processToolScores[process] = calculateToolScores($scope.processToolResults[process]);
             }
         });
+
+
+
+      //########GAUGE########
+        var gaugeData = [['Label', 'Value'],
+                        ['Overall', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].average],
+                        ['Usefulness', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].usefulness],
+                        ['Usage', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].usageIntention],
+                        ['Ease of Use', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].easeOfUse]];
+        console.log(gaugeData);
+
+
+        google.charts.load('current', {'packages':['gauge']});
+        google.charts.setOnLoadCallback(drawGauge);
+        function drawGauge() {
+
+            var data = google.visualization.arrayToDataTable(gaugeData);
+
+            var options = {
+                width: 550, height: 180,
+                redFrom: 0, redTo: 0.2,
+                yellowFrom:0.2, yellowTo: 0.5,
+                minorTicks: 5,
+                max:1
+            };
+
+            var chart = new google.visualization.Gauge(document.getElementById('gauge'));
+
+            chart.draw(data, options);
+
+       /*     setInterval(function() {
+                data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
+                chart.draw(data, options);
+            }, 13000);
+            setInterval(function() {
+                data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
+                chart.draw(data, options);
+            }, 5000);
+            setInterval(function() {
+                data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
+                chart.draw(data, options);
+            }, 26000);*/
+        }
+
+
+
 
       // Scatter Chart (personal)
       var scatterChartData = [
