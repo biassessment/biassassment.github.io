@@ -26,6 +26,8 @@
         </form>
         <div class="personalInfo" ng-show="personalResult">
             <div class="gauge" id="gauge"></div>
+            <div class="feature" id="featureChart"></div>
+
             <span>Hello {{personalResult.alias}}! Your decision type is: {{personalResult.decisionType}}!</span></br>
             <span>{{conditionalResultsByDecisionType.length - 1}} other people make the same type of decisions.</span></br>
             <span>Your Tool is: {{personalResult.tool}}</span></br>
@@ -53,6 +55,8 @@
                     </ul>
                 </span>
                 <div class="scatterChart" id="scatterChart"></div>
+                <div class="scatterChart" id="scatter"></div>
+
 
             </div>
         </div>

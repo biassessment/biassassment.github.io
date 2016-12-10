@@ -14,7 +14,7 @@ app.config(function ($translateProvider) {
     var umfrage = surveyModel.model;
     var fakeResponse = surveyModel.fakeResponse;
     var businessProcesses = ["Regular Financial and Tax Reporting (External Reporting)", "Assurance and Special Compliance Support (e.g. SOX)", "Cost Analysis", "Group Consolidation", "Operational Planning and Budgeting", "Other Internal Financial Reporting", "Strategic Planning", "Market and Sales Planning and Analysis", "Campaign Management", "Production Planning and Control", "Supply-Chain-Analysis", "Supplier Analysis", "HR Analysis"];
-    var features = ["Business Query", "Visual Data Discovery", "Interactive Reports", "Dashboards", "Advanced Visualization", "Statistical Methods", "Drill-Down", "Calculations", "Spreadsheet", "Collaboration", "Scheduled Reporting", "Mobile BI", "ETL", "In-Memory-Analysis", "Predictive Analysis"];
+    var features = ["AdvancedVisualization", "BusinessQuery", "Calculations", "Collaboration", "Dashboards", "Drilling", "ETL", "InMemoryAnalysis", "InteractiveReports", "MobileBI", "PredictiveAnalysis", "ScheduledReporting", "Spreadsheet", "StatisticalMethods", "VisualDataDiscovery"];
 
     // CSV Import/Export
     $scope.csvResult = null; // csv-Import Variable
@@ -310,25 +310,77 @@ app.config(function ($translateProvider) {
           var usageKey = res.tool + " Usage";
           if (!scores[res.tool]) {
             scores[res.tool] = {"toolName": res.tool, "average": res.overall,
-                                "benefits": res.benefit, "easeOfUse": res.easeOfuse,
-                                "usageIntention": res.usage, "usefulness": res.usefulness, "count": 1};
+                "benefits": res.benefit, "easeOfUse": res.easeOfuse, "usageIntention": res.usage,
+                "usefulness": res.usefulness, "AdvancedVisualization": res.AdvancedVisualization,
+                "BusinessQuery": res.BusinessQuery, "Calculations": res.Calculations,
+                "Collaboration": res.Collaboration, "Dashboards": res.Dashboards, "Drilling": res.Drilling,
+                "ETL": res.ETL, "InMemoryAnalysis": res.InMemoryAnalysis, "InteractiveReports": res.InteractiveReports,
+                "MobileBI": res.MobileBI, "PredictiveAnalysis": res.PredictiveAnalysis,
+                "ScheduledReporting": res.ScheduledReporting, "Spreadsheet": res.Spreadsheet,
+                "StatisticalMethods": res.StatisticalMethods, "VisualDataDiscovery": res.VisualDataDiscovery, "count": 1};
           } else {
             var sum = scores[res.tool]["average"] * scores[res.tool]["count"];
             var benefits = scores[res.tool]["benefits"] * scores[res.tool]["count"];
             var easeOfUse = scores[res.tool]["easeOfUse"] * scores[res.tool]["count"];
             var usefulness = scores[res.tool]["usefulness"] * scores[res.tool]["count"];
             var usageIntention = scores[res.tool]["usageIntention"] * scores[res.tool]["count"];
+            var BusinessQuery = scores[res.tool]["BusinessQuery"]* scores[res.tool]["count"];
+            var Calculations = scores[res.tool]["Calculations"]* scores[res.tool]["count"];
+            var Collaboration = scores[res.tool]["Collaboration"]* scores[res.tool]["count"];
+            var Dashboards = scores[res.tool]["Dashboards"]* scores[res.tool]["count"];
+            var Drilling = scores[res.tool]["Drilling"]* scores[res.tool]["count"];
+            var ETL = scores[res.tool]["ETL"]* scores[res.tool]["count"];
+            var InMemoryAnalysis = scores[res.tool]["InMemoryAnalysis"]* scores[res.tool]["count"];
+            var InteractiveReports = scores[res.tool]["InteractiveReports"]* scores[res.tool]["count"];
+            var MobileBI = scores[res.tool]["MobileBI"]* scores[res.tool]["count"];
+            var PredictiveAnalysis = scores[res.tool]["PredictiveAnalysis"]* scores[res.tool]["count"];
+            var Spreadsheet = scores[res.tool]["Spreadsheet"]* scores[res.tool]["count"];
+            var VisualDataDiscovery = scores[res.tool]["VisualDataDiscovery"]* scores[res.tool]["count"];
+            var ScheduledReporting = scores[res.tool]["ScheduledReporting"]* scores[res.tool]["count"];
+            var StatisticalMethods = scores[res.tool]["StatisticalMethods"]* scores[res.tool]["count"];
+
             var newSum = sum + res.overall;
-            var newBenefits = benefits + res.benefits;
+            var newBenefits = benefits + res.benefit;
             var newEaseOfUse = easeOfUse + res.easeOfuse;
             var newUsefulness = usefulness + res.usefulness;
             var newUsageIntention = usageIntention + res.usage;
-            scores[res.tool]["count"] += 1;
+            var newBusinessQuery = BusinessQuery + res.BusinessQuery;
+            var newCalculations = Calculations + res.Calculations;
+            var newCollaboration = Collaboration + res.Collaboration;
+            var newDashboards = Dashboards + res.Dashboards;
+            var newDrilling = Drilling + res.Drilling;
+            var newETL = ETL + res.ETL;
+            var newInMemoryAnalysis = InMemoryAnalysis + res.InMemoryAnalysis;
+            var newInteractiveReports = InteractiveReports + res.InteractiveReports;
+            var newMobileBI = MobileBI + res.MobileBI;
+            var newPredictiveAnalysis = PredictiveAnalysis + res.PredictiveAnalysis;
+            var newSpreadsheet = Spreadsheet + res.Spreadsheet;
+            var newVisualDataDiscovery = VisualDataDiscovery + res.VisualDataDiscovery;
+            var newStatisticalMethods = VisualDataDiscovery + res.StatisticalMethods;
+            var newScheduledReporting = VisualDataDiscovery + res.ScheduledReporting;
+
+
+              scores[res.tool]["count"] += 1;
             scores[res.tool]["average"] = (newSum / (scores[res.tool]["count"]));
             scores[res.tool]["benefits"] = (newBenefits / (scores[res.tool]["count"]));
             scores[res.tool]["easeOfUse"] = (newEaseOfUse / (scores[res.tool]["count"]));
             scores[res.tool]["usefulness"] = (newUsefulness / (scores[res.tool]["count"]));
             scores[res.tool]["usageIntention"] = (newUsageIntention / (scores[res.tool]["count"]));
+            scores[res.tool]["BusinessQuery"] = (newBusinessQuery / (scores[res.tool]["count"]));
+            scores[res.tool]["Calculations"] = (newCalculations / (scores[res.tool]["count"]));
+            scores[res.tool]["Dashboards"] = (newDashboards / (scores[res.tool]["count"]));
+            scores[res.tool]["Drilling"] = (newDrilling / (scores[res.tool]["count"]));
+            scores[res.tool]["Collaboration"] = (newCollaboration / (scores[res.tool]["count"]));
+            scores[res.tool]["ETL"] = (newETL / (scores[res.tool]["count"]));
+            scores[res.tool]["InMemoryAnalysis"] = (newInMemoryAnalysis / (scores[res.tool]["count"]));
+            scores[res.tool]["InteractiveReports"] = (newInteractiveReports / (scores[res.tool]["count"]));
+            scores[res.tool]["MobileBI"] = (newMobileBI / (scores[res.tool]["count"]));
+            scores[res.tool]["PredictiveAnalysis"] = (newPredictiveAnalysis / (scores[res.tool]["count"]));
+            scores[res.tool]["Spreadsheet"] = (newSpreadsheet / (scores[res.tool]["count"]));
+            scores[res.tool]["VisualDataDiscovery"] = (newVisualDataDiscovery / (scores[res.tool]["count"]));
+            scores[res.tool]["ScheduledReporting"] = (newScheduledReporting / (scores[res.tool]["count"]));
+            scores[res.tool]["StatisticalMethods"] = (newStatisticalMethods / (scores[res.tool]["count"]));
+
           }
         }
       });
@@ -383,6 +435,7 @@ app.config(function ($translateProvider) {
                   legend: {
                       position: 'none'
                   },
+                  bar: {groupWidth: "115%"},
                   bars: 'horizontal', // Required for Material Bar Charts.
                   series: {
                       0: { axis: 'distance' }, // Bind series 0 to an axis named 'distance'.
@@ -478,7 +531,7 @@ app.config(function ($translateProvider) {
           var options = {
             title: 'My Daily Activities',
             pieHole: 0.4,
-            sliceVisibilityThreshold: .08,
+            sliceVisibilityThreshold: .05,
             is3D: true
           };
           var chart = new google.visualization.PieChart(document.getElementById('overview'));
@@ -518,6 +571,51 @@ app.config(function ($translateProvider) {
             }
         });
 
+        //####Feature Chart#####
+        var featureData = [];
+        var featureChartData = [
+            ['Feature', 'Score']
+        ];
+            features.forEach(function(feature){
+               featureData.push([feature,$scope.conditionalToolScores[$scope.personalResult.tool][feature]]);
+            });
+        featureData.sort(function(a,b){return b[1]-a[1]});
+
+        featureData.forEach(function(el){
+            featureChartData.push(el);
+        });
+
+        google.charts.load('current', {packages: ['corechart', 'bar']});
+        google.charts.load('current', {packages:['bar']});
+        google.charts.setOnLoadCallback(drawFeature);
+
+        function drawFeature() {
+            var data = new google.visualization.arrayToDataTable(featureChartData);
+
+            var options = {
+                width: 800,
+                height:800,
+                colors: ['#003397'],
+                legend: {
+                    position: 'none'
+                },
+                bar: {groupWidth: "115%"},
+                bars: 'horizontal', // Required for Material Bar Charts.
+                series: {
+                    0: { axis: 'distance' }, // Bind series 0 to an axis named 'distance'.
+                    1: { axis: 'brightness' } // Bind series 1 to an axis named 'brightness'.
+                },
+                axes: {
+                    x: {
+                        distance: {label: 'Overall Rating'}, // Bottom x-axis.
+                        brightness: {side: 'top', label: 'apparent magnitude'} // Top x-axis.
+                    }
+                }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('featureChart'));
+            chart.draw(data, options);
+        }
 
 
       //########GAUGE########
@@ -526,8 +624,6 @@ app.config(function ($translateProvider) {
                         ['Usefulness', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].usefulness],
                         ['Usage', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].usageIntention],
                         ['Ease of Use', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].easeOfUse]];
-        console.log(gaugeData);
-
 
         google.charts.load('current', {'packages':['gauge']});
         google.charts.setOnLoadCallback(drawGauge);
@@ -546,44 +642,31 @@ app.config(function ($translateProvider) {
             var chart = new google.visualization.Gauge(document.getElementById('gauge'));
 
             chart.draw(data, options);
-
-       /*     setInterval(function() {
-                data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
-                chart.draw(data, options);
-            }, 13000);
-            setInterval(function() {
-                data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
-                chart.draw(data, options);
-            }, 5000);
-            setInterval(function() {
-                data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
-                chart.draw(data, options);
-            }, 26000);*/
         }
 
 
-
-
-      // Scatter Chart (personal)
+      // Scatter Chart//BubbleChart (personal)
       var scatterChartData = [
-        ['Tool Name', 'n']
+        ['ID', 'n', 'Rating', 'Tool', 'Size']
       ];
       for (var key in $scope.conditionalToolScores) {
-        scatterChartData.push([$scope.conditionalToolScores[key].tool, $scope.conditionalToolScores[key].average]);
+        scatterChartData.push(['',$scope.conditionalToolScores[key].count, $scope.conditionalToolScores[key].average, $scope.conditionalToolScores[key].toolName,0]);
       }
-      google.charts.load('current', {'packages': ['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+      console.log(scatterChartData);
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable(scatterChartData);
-        var options = {
-          title: 'Count vs. Average',
-          width: 800,
-          height: 500,
-          hAxis: {title: 'Count'},
-          vAxis: {title: 'Average'},
-          legend: 'none'
-        };
-        var chart = new google.visualization.ScatterChart(document.getElementById('scatterChart'));
+          var options = {
+              title: 'Usefulness vs Ease of Use by BI Tool',
+              hAxis: {title: 'Rating'},
+              vAxis: {title: 'Times Used'},
+              bubble: {textStyle: {fontSize: 11}},
+              width: 800,
+              height: 500,
+              sizeAxis: {maxSize: 5},
+          };
+        var chart = new google.visualization.BubbleChart(document.getElementById('scatterChart'));
         chart.draw(data, options);
       }
     };
