@@ -75,12 +75,21 @@
             </button>
             <button class="md-button md-raised" ng-click="calcAndShowResults()">Ergebnisse abfragen</button>
             <!--<button class="md-button md-raised" ng-click="deleteEmptyEntries()">Delete Empty Entries</button>-->
+
         </div>
     </header>
+    <div class = "content">
+        <div class = "logos">
+            <li id="kitlogo"></li>
+            <li id="iismlogo"></li>
+        </div>
+    <hr />
+
 
     <div ng-hide="showResults" ng-include="'html/survey.html'"></div>
 
     <div ng-show="showResults" ng-include="'html/results.html'"></div>
+    </div>
 
     <footer><h3>by Basti Classen</h3><button ng-click="emptyDB()" class="md-button md-raised">Empty DB</button></footer>
 </div>

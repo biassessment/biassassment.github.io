@@ -1,7 +1,5 @@
 var surveyModel = {
   "model": {
-    "name": "Bastis Umfrage",
-    "description": "Dear Participant,\n\nthe survey is divided into four sections: In the first part, you are asked to give general information about yourself and your company (optional), the second part will capture your usage of BI Tools and their capabilities, and the third part will categorize the decisions and processes that you support with the tool. The last section will then assess your satisfaction. \n\n\nYour honest response to each question is extremely important to the outcome of this project. You can be assured of complete confidentiality. The survey is completely anonymous, and only aggregate results will be published.\n\nIf you like, you will receive a feedback report after completing the survey. Therefore, please don't forget to enter your email address on the last page of the survey.\n\n\nThank you for your consideration and support,\n\nSincerely,\n\nSebastian Classen",
     "pages": [
       {
         "id": "4625fd3a9bea5374555253cb009623f8",

@@ -1,8 +1,7 @@
-<div class="content">
     <div class="results">
-        <h2>Results</h2>
-        <h3>Number of Respondents: {{allResults.length}}</h3>
-        <h3>Top 10 Overall Tools:</h3>
+        <h2>Hello and welcome to the KIT - Business Intelligence Assessment</h2>
+        <h3>The assessment collects and analyses usage data of BI users. Until now, {{allResults.length}} users have submitted their usage information.</h3>
+        <h3>The 10 best tools are listed below:</h3>
         <!--
         <ul ng-repeat="tool in toolScores | object2Array | orderBy:'average':true |limitTo:100">
             <li>{{$index + 1}}. - {{tool.toolName}}: {{tool.average.toFixed(3)}} (n= {{tool.count}})</li>
@@ -56,9 +55,6 @@
                 </span>
                 <div class="scatterChart" id="scatterChart"></div>
                 <div class="scatterChart" id="scatter"></div>
-
-
             </div>
         </div>
     </div>
-</div>

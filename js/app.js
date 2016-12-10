@@ -400,7 +400,7 @@ app.config(function ($translateProvider) {
 
         //Variable für Bar Chart mit Tools nach Overall Score
           var overallBarChartData = [
-              ['Tool', 'Overall Rating']
+              ['Tool', 'Overall Rating', { role: "style" }]
           ]
 
           //Erstellen eines Arrays zum Sortieren
@@ -415,7 +415,7 @@ app.config(function ($translateProvider) {
 
           //Beste 5 Tools in das Array fürs Chart pushen
           for (var i = 0; i<= 10;i++) {
-                  overallBarChartData.push([sortable[i][0], sortable[i][5]]);
+                  overallBarChartData.push([sortable[i][0], sortable[i][5], "#003397"]);
           }
 
           console.log(overallBarChartData);
@@ -426,31 +426,33 @@ app.config(function ($translateProvider) {
           google.charts.setOnLoadCallback(drawStuff);
 
           function drawStuff() {
-              var data = new google.visualization.arrayToDataTable(overallBarChartData);
+              var data = google.visualization.arrayToDataTable(overallBarChartData);
+
+              var view = new google.visualization.DataView(data);
+              view.setColumns([0, 1,
+                  { calc: "stringify",
+                      sourceColumn: 1,
+                      type: "string",
+                      role: "annotation" },
+                  2]);
 
               var options = {
-                  width: 800,
-                  height:800,
-                  colors: ['#003397'],
-                  legend: {
-                      position: 'none'
+                  width: 700,
+                  chartArea: {width: '50%'},
+                  height: 400,
+                  bar: {groupWidth: "80%"},
+                  legend: { position: "none" },
+                  hAxis: {
+                      title: 'Overall Rating',
+                      gridlines: {color: 'white', count:0},
                   },
-                  bar: {groupWidth: "115%"},
-                  bars: 'horizontal', // Required for Material Bar Charts.
-                  series: {
-                      0: { axis: 'distance' }, // Bind series 0 to an axis named 'distance'.
-                      1: { axis: 'brightness' } // Bind series 1 to an axis named 'brightness'.
-                  },
-                  axes: {
-                      x: {
-                          distance: {label: 'Overall Rating'}, // Bottom x-axis.
-                          brightness: {side: 'top', label: 'apparent magnitude'} // Top x-axis.
-                      }
+                  haxis: {
+                      side:'top'
                   }
-              };
 
-              var chart = new google.charts.Bar(document.getElementById('overallBarChart'));
-              chart.draw(data, options);
+              };
+              var chart = new google.visualization.BarChart(document.getElementById("overallBarChart"));
+              chart.draw(view, options);
           }
 
           //Neues Bar Chart mit allen Metriken
@@ -480,7 +482,7 @@ app.config(function ($translateProvider) {
                       title: 'Tool Success by Measure',
                   },
                   colors: ['#003397', '#008dda'],
-                  width: 800,
+                  width: 700,
                   height:500,
               };
 
@@ -509,7 +511,7 @@ app.config(function ($translateProvider) {
                   hAxis: {title: 'Usefulness', maxvalue:10},
                   vAxis: {title: 'Ease of Use', maxvalue:10},
                   bubble: {textStyle: {fontSize: 11}},
-                  width: 800,
+                  width: 700,
                   height: 500,
               };
 
@@ -529,7 +531,7 @@ app.config(function ($translateProvider) {
         function drawChart() {
           var data = google.visualization.arrayToDataTable(overviewChartData);
           var options = {
-            title: 'My Daily Activities',
+            title: 'Tool Usage Distribution',
             pieHole: 0.4,
             sliceVisibilityThreshold: .05,
             is3D: true
@@ -594,12 +596,12 @@ app.config(function ($translateProvider) {
 
             var options = {
                 width: 800,
-                height:800,
+                height:500,
                 colors: ['#003397'],
                 legend: {
                     position: 'none'
                 },
-                bar: {groupWidth: "115%"},
+                bar: {width:4},
                 bars: 'horizontal', // Required for Material Bar Charts.
                 series: {
                     0: { axis: 'distance' }, // Bind series 0 to an axis named 'distance'.
