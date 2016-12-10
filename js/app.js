@@ -44,7 +44,7 @@ app.config(function ($translateProvider) {
     ctrl.formData = umfrage;
     ctrl.templateData = {};
     ctrl.formStatus = {};
-    ctrl.formOptions = {autoStart: false};
+    ctrl.formOptions = {autoStart: true};
     ctrl.formViewer = {};
     ctrl.responseData = {};
     ctrl.viewerReadOnly = false;
@@ -673,6 +673,9 @@ app.config(function ($translateProvider) {
       }
     };
 
+      $scope.startSurvey = function () {
+          $scope.start = true;
+      }
 
     // initialisierung
     //$scope.calcAndShowResults();
