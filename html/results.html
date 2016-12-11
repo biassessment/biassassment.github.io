@@ -1,18 +1,41 @@
-    <div class="results">
-        <h2>Hello and welcome to the KIT - Business Intelligence Assessment</h2>
-        <h3>The assessment collects and analyses usage data of BI users. Until now, {{allResults.length}} users have submitted their usage information.</h3>
-        <h3>The 10 best tools are listed below:</h3>
+    <div ng-controller="MainCtrl" class="results">
+        <h3>Hello and welcome to the KIT - Business Intelligence Assessment - Results Page</br>
+            The assessment tool collects and analyses usage data of BI users. Until now, {{allResults.length}}
+            users have submitted their usage information.</h3>
+        <h1>1. General Results</h1>
+        <h3>This section summarizes the collected information of all users of the Assessment Tool.</br>
+            The Tools were evaluated in 4 categories: Usefulness, Ease of Use,
+            Perceived Benefits, and Intention to Use the tool. The below chart shows the top 10 across all categories.</h3>
         <!--
         <ul ng-repeat="tool in toolScores | object2Array | orderBy:'average':true |limitTo:100">
             <li>{{$index + 1}}. - {{tool.toolName}}: {{tool.average.toFixed(3)}} (n= {{tool.count}})</li>
         </ul>
         -->
+        <h3>Please select a category to display the top 10 Tools:
+            <select ng-model="myCategory" ng-options="category.name for category in categories" ng-change="changeDropDown()"></select>
+        </h3>
+
+        <h3>The top 10 BI Tools for the category {{myCategory.name}} are:</h3>
+
         <div class="charts">
-            <div class="barChart" id="overallBarChart"></div>
-            <div class="overviewChart" id="overview"></div>
-            <div class="bubbleChart" id="bubble"></div>
-            <div class="allMetricsChart" id="allMetricsBarChart"></div>
+            <div ng-show = "overall" class="barChart" id="overallBarChart"></div>
+            <div ng-show = "usefulness" class = "barChart" id = "usefulBarChart"></div>
+            <div ng-show = "easeOfUse" class = "barChart" id = "easyBarChart"></div>
+            <div ng-show = "benefits" class = "barChart" id = "beneficialBarChart"></div>
+            <div ng-show = "usage" class = "barChart" id = "intentionalBarChart"></div>
         </div>
+
+        <h3>The following graph shows the popularity distribution of the tools</h3>:
+        <div class="overviewChart" id="overview"></div>
+
+        <h3>To make BI Tools ready for business users, ease of use is getting more and more attention. This sometimes
+        comes at the expense of usefulness, because advanced and very useful features are not programmed into the tool.
+        Therefore, the below chart displays ease of use and usefulness of each tool. The thickness of the bubbles
+        represent how often each tool is used.</h3>:
+
+
+        <div class="bubbleChart" id="bubble"></div>
+        <div class="allMetricsChart" id="allMetricsBarChart"></div>
 
     </div>
 

@@ -139,18 +139,31 @@ footer {
 }
 #kitlogo {
   content:url(../css/KIT.jpg);
-  height: 110px;
+  max-width: 30%;
+  height: auto;
   width: 238px;
   float:left;
   padding-left:15px;
+  display:block;
 }
 
 #iismlogo {
   content:url(../css/IISM.jpg);
-  height: 110px;
+  max-width: 30%;
+  height: auto;
   width: 375px;
   float:right;
   padding-right:15px;
+  display: block;
+}
+#biAssessment {
+  max-width: 30%;
+  float:left;
+  padding-left:15px;
+  padding-right:15px;
+  margin-top:20px;
+  font-size: 40px;
+  text-align: center;
 }
 
 .angular-with-newlines {
@@ -162,15 +175,17 @@ footer {
   padding-right: 15px;
 }
 
-.md-radio-button {
-  md.on {
-  }
-}
-
 .md-radio-button.md-default-theme .md-on, md-radio-button .md-on {
   background-color: #0b3e6f;
 }
 
 .md-radio-group.md-default-theme .md-checked .md-ink-ripple, md-radio-group .md-checked .md-ink-ripple {
-  color: #0b3e6f;
+  border-color: #0b3e6f;
+}
+
+.md-radio-button.md-default-theme .md-on, md-radio-button .md-on {
+  border-color: #0b3e6f;
+}
+md-radio-button , md-radio-button.md-checked .md-off {
+  border-color: blue;
 }
