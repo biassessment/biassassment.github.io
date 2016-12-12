@@ -303,7 +303,7 @@ app.config(function ($translateProvider) {
         fragen.forEach(function (frage, index) {
           if (frage.indexOf(feature) !== -1) {
             adjustedResponse[feature] = featureMapping[antworten[index]] / 4;
-            console.log("answer: ", [antworten[index]], "featuremapping: ", featureMapping[antworten[index]], feature, $scope.feature);
+           // console.log("answer: ", [antworten[index]], "featuremapping: ", featureMapping[antworten[index]], feature, $scope.feature);
           }
         });
 
@@ -311,7 +311,7 @@ app.config(function ($translateProvider) {
       // Calculate Business Processes
       businessProcesses.forEach(function (businessProcess) {
         if (adjustedResponse["answers"].indexOf(businessProcess) !== -1) {
-          console.log("Treffer! ", businessProcess);
+          //console.log("Treffer! ", businessProcess);
           adjustedResponse[businessProcess] = 1;
         } else {
           adjustedResponse[businessProcess] = 0;
@@ -474,11 +474,11 @@ app.config(function ($translateProvider) {
           sortable.sort(function(a,b){return b[5]-a[5]});
 
           //Beste 5 Tools in das Array fürs Chart pushen
-          for (var i = 0; i<= 10;i++) {
+          for (var i = 0; i<= Math.min(9,sortable.length-1);i++) {
                   overallBarChartData.push([sortable[i][0], parseFloat((sortable[i][5]*100).toFixed(1)), "#003397"]);
           }
 
-          //console.log(overallBarChartData);
+          console.log(overallBarChartData);
 
         //#####Bar Chart OVERALL######
           google.charts.load('current', {packages: ['corechart', 'bar']});
@@ -500,14 +500,14 @@ app.config(function ($translateProvider) {
                   title: 'Top 10 BI Tools',
                   width: '60%',
                   chartArea: {width: '60%', height:'100%'},
-                  height: 250,
+                  height: 250*Math.min(10,sortable.length)/10,
                   bar: {groupWidth: "80%"},
                   legend: { position: "none" },
                   hAxis: {
                       title: 'Overall Rating',
                       gridlines: {color: 'white', count:5},
                       viewWindow: {
-                          min: sortable[10][5]*100-5,
+                          min: sortable[Math.min(9,sortable.length-1)][5]*100-5,
                           max: 'auto'
                       }
                   },
@@ -528,7 +528,7 @@ app.config(function ($translateProvider) {
           sortable.sort(function(a,b){return b[1]-a[1]});
 
           //Beste 5 Tools in das Array fürs Chart pushen
-          for (var i = 0; i<= 10;i++) {
+          for (var i = 0; i<= Math.min(9,sortable.length-1);i++) {
               usefulBarChartData.push([sortable[i][0], parseFloat((sortable[i][1]*100).toFixed(1)), "#003397"]);
           }
 
@@ -551,14 +551,14 @@ app.config(function ($translateProvider) {
                   title: 'Top 10 BI Tools',
                   width: '60%',
                   chartArea: {width: '60%', height:'100%'},
-                  height: 250,
+                  height: 250*Math.min(10,sortable.length)/10,
                   bar: {groupWidth: "80%"},
                   legend: { position: "none" },
                   hAxis: {
                       title: 'Overall Rating',
                       gridlines: {color: 'white', count:5},
                       viewWindow: {
-                          min: sortable[10][1]*100-5,
+                          min: sortable[Math.min(9,sortable.length-1)][1]*100-5,
                           max: 'auto'
                       }
                   },
@@ -580,7 +580,7 @@ app.config(function ($translateProvider) {
           sortable.sort(function(a,b){return b[2]-a[2]});
 
           //Beste 5 Tools in das Array fürs Chart pushen
-          for (var i = 0; i<= 10;i++) {
+          for (var i = 0; i<= Math.min(9,sortable.length-1);i++) {
               easyBarChartData.push([sortable[i][0], parseFloat((sortable[i][2]*100).toFixed(1)), "#003397"]);
           }
 
@@ -603,14 +603,14 @@ app.config(function ($translateProvider) {
                   title: 'Top 10 BI Tools',
                   width: '60%',
                   chartArea: {width: '60%', height:'100%'},
-                  height: 250,
+                  height: 250*Math.min(10,sortable.length)/10,
                   bar: {groupWidth: "80%"},
                   legend: { position: "none" },
                   hAxis: {
                       title: 'Overall Rating',
                       gridlines: {color: 'white', count:5},
                       viewWindow: {
-                          min: sortable[10][2]*100-5,
+                          min: sortable[Math.min(9,sortable.length-1)][2]*100-5,
                           max: 'auto'
                       }
                   },
@@ -632,7 +632,7 @@ app.config(function ($translateProvider) {
           sortable.sort(function(a,b){return b[3]-a[3]});
 
           //Beste 5 Tools in das Array fürs Chart pushen
-          for (var i = 0; i<= 10;i++) {
+          for (var i = 0; i<= Math.min(9,sortable.length-1);i++) {
               beneficialBarChartData.push([sortable[i][0], parseFloat((sortable[i][3]*100).toFixed(1)), "#003397"]);
           }
 
@@ -655,14 +655,14 @@ app.config(function ($translateProvider) {
                   title: 'Top 10 BI Tools',
                   width: 'auto',
                   chartArea: {width: '60%', height:'100%'},
-                  height: 250,
+                  height: 250*Math.min(10,sortable.length)/10,
                   bar: {groupWidth: "80%"},
                   legend: { position: "none" },
                   hAxis: {
                       title: 'Overall Rating',
                       gridlines: {color: 'white', count:5},
                       viewWindow: {
-                          min: sortable[10][3]*100-5,
+                          min: sortable[Math.min(9,sortable.length-1)][3]*100-5,
                           max: 'auto'
                       }
                   },
@@ -678,12 +678,12 @@ app.config(function ($translateProvider) {
           //Usage Bar Chart
           //sortieren das Array nach Intention to Use
           var intentionalBarChartData = [
-              ['Tool', ['Intention to Use'], { role: "style" }]
+              ['Tool', 'Intention to Use', { role: "style" }]
           ]
           sortable.sort(function(a,b){return b[4]-a[4]});
 
           //Beste 5 Tools in das Array fürs Chart pushen
-          for (var i = 0; i<= 10;i++) {
+          for (var i = 0; i<= Math.min(9,sortable.length-1);i++) {
               intentionalBarChartData.push([sortable[i][0], parseFloat((sortable[i][4]*100).toFixed(1)), "#003397"]);
           }
           console.log(intentionalBarChartData);
@@ -707,14 +707,14 @@ app.config(function ($translateProvider) {
                   title: 'Top 10 BI Tools',
                   width: '60%',
                   chartArea: {width: '60%', height:'100%'},
-                  height: 250,
+                  height: 250*Math.min(10,sortable.length)/10,
                   bar: {groupWidth: "80%"},
                   legend: { position: "none" },
                   hAxis: {
                       title: 'Overall Rating',
                       gridlines: {color: 'white', count:5},
                       viewWindow: {
-                          min: sortable[10][4]*100-5,
+                          min: sortable[Math.min(9,sortable.length-1)][4]*100-5,
                           max: 'auto'
                       }
                   },
@@ -738,7 +738,7 @@ app.config(function ($translateProvider) {
           ]
           sortable.sort(function(a,b){return b[5]-a[5]});
 
-          for (var i = 0; i<= 4;i++) {
+          for (var i = 0; i<= Math.min(9,sortable.length-1);i++) {
               allMetricsBarChartData.push([sortable[i][0], sortable[i][1], sortable[i][2], sortable[i][3], sortable[i][4], sortable[i][5]]);
           }
           /*var sortable = []
@@ -848,7 +848,6 @@ app.config(function ($translateProvider) {
           var featureAverage = [];
           features.forEach(function(feature) {
               var avg = 0;
-              var count = 0;
               for (var key in $scope.toolScores) {
                   avg += $scope.toolScores[key][feature]*$scope.toolScores[key].count;
               }
@@ -890,7 +889,7 @@ app.config(function ($translateProvider) {
                       title: 'Overall Rating',
                       gridlines: {color: 'white', count:5},
                       viewWindow: {
-                          min: sortable[10][5]*100-5,
+                          min: sortable[Math.min(9,sortable.length-1)][5]*100-5,
                           max: 'auto'
                       }
                   },
@@ -988,7 +987,7 @@ app.config(function ($translateProvider) {
                 title: 'Top 10 BI Tools',
                 width: 800,
                 chartArea: {width: '60%', height:'100%'},
-                height: 250,
+                height: 250*Math.min(10,sortablePersonal.length)/10,
                 bar: {groupWidth: "80%"},
                 legend: { position: "none" },
                 hAxis: {
@@ -1047,7 +1046,7 @@ app.config(function ($translateProvider) {
                 title: 'Top 10 BI Tools',
                 width: 800,
                 chartArea: {width: '60%', height:'100%'},
-                height: 250,
+                height: 250*Math.min(10,sortablePersonal.length)/10,
                 bar: {groupWidth: "80%"},
                 legend: { position: "none" },
                 hAxis: {
@@ -1104,7 +1103,7 @@ app.config(function ($translateProvider) {
                 title: 'Top 10 BI Tools',
                 width: 800,
                 chartArea: {width: '60%', height:'100%'},
-                height: 250,
+                height: 250*Math.min(10,sortablePersonal.length)/10,
                 bar: {groupWidth: "80%"},
                 legend: { position: "none" },
                 hAxis: {
@@ -1161,7 +1160,7 @@ app.config(function ($translateProvider) {
                 title: 'Top 10 BI Tools',
                 width: 800,
                 chartArea: {width: '60%', height:'100%'},
-                height: 250,
+                height: 250*Math.min(10,sortablePersonal.length)/10,
                 bar: {groupWidth: "80%"},
                 legend: { position: "none" },
                 hAxis: {
@@ -1191,10 +1190,9 @@ app.config(function ($translateProvider) {
         for (var i = 0; i<= Math.min(9,sortablePersonal.length-1);i++) {
             usablePersonalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][4]*100).toFixed(1)), "#003397"]);
         }
+        console.log("usable shit");
+        console.log(usablePersonalOverallBarChartData);
 
-
-
-        //console.log(overallBarChartData);
 
         //#####Bar Chart OVERALL######
         google.charts.load('current', {packages: ['corechart', 'bar']});
@@ -1216,7 +1214,7 @@ app.config(function ($translateProvider) {
                 title: 'Top 10 BI Tools',
                 width: 800,
                 chartArea: {width: '60%', height:'100%'},
-                height: 250,
+                height: 250*Math.min(10,sortablePersonal.length)/10,
                 bar: {groupWidth: "80%"},
                 legend: { position: "none" },
                 hAxis: {
@@ -1243,15 +1241,24 @@ app.config(function ($translateProvider) {
         var featureChartData = [
             ['Feature', 'Average', { role: "style" }]
         ];
-            features.forEach(function(feature){
-               featureData.push([feature,parseFloat(($scope.conditionalToolScores[$scope.personalResult.tool][feature]*100).toFixed(1)),"#003397"]);
-            });
+
+        features.forEach(function(feature) {
+            var avg = 0;
+            for (var key in $scope.conditionalToolScores) {
+                avg += $scope.conditionalToolScores[key][feature]*$scope.conditionalToolScores[key].count;
+            }
+            avg = avg / $scope.conditionalResultsByDecisionType.length;
+                featureData.push([feature,parseFloat(avg.toFixed(3)*100),"#003397"]);
+
+        });
+
+
+
         featureData.sort(function(a,b){return b[1]-a[1]});
 
         featureData.forEach(function(el){
             featureChartData.push(el);
         });
-        console.log(featureChartData.length);
 
         google.charts.load('current', {packages: ['corechart', 'bar']});
         google.charts.load('current', {packages:['bar']});
@@ -1326,7 +1333,6 @@ app.config(function ($translateProvider) {
       for (var key in $scope.conditionalToolScores) {
         scatterChartData.push(['',$scope.conditionalToolScores[key].count, $scope.conditionalToolScores[key].average, $scope.conditionalToolScores[key].toolName,0]);
       }
-      console.log(scatterChartData);
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
       function drawChart() {

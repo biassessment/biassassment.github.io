@@ -13,49 +13,50 @@
                 <button class="btn" type="submit">Request Results</button>
         </form>
         </br>
+
         <div class="personal" ng-show="personalResult">
 
         <span>With this assessment we evaluated how you use <b>{{personalResult.tool}}</b>. We categorized the decisions that you
         support with this tool and can provide you with results, tailored especially for your type of decisions.
         The below gauges represent how {{personalResult.tool}} scores among people, who use it for similar decisions like you.
         </span>
-        </br>
+            </br>
 
-        <div class="gauge" id="gauge"></div>
+            <div class="gauge" id="gauge"></div>
 
-        <h4>The top 10 BI Tools in the category <select ng-model="myCategory" ng-options="category.name for category in categories" ng-change="changeDropDown()"></select>
-            are:
-        </h4>
+            <h4>The top 10 BI Tools in the category <select ng-model="myCategory" ng-options="category.name for category in categories" ng-change="changeDropDown()"></select>
+                are:
+            </h4>
 
-        <div ng-show = "overall" class="barChart" id="personalOverallBarChart"></div>
-        <div ng-show = "usefulness" class="barChart" id="usefulPersonalOverallBarChart"></div>
-        <div ng-show = "easeOfUse" class="barChart" id="easyPersonalOverallBarChart"></div>
-        <div ng-show = "benefits" class="barChart" id="beneficialPersonalOverallBarChart"></div>
-        <div ng-show = "usage" class="barChart" id="usablePersonalOverallBarChart"></div>
+            <div ng-show = "overall" class="barChart" id="personalOverallBarChart"></div>
+            <div ng-show = "usefulness" class="barChart" id="usefulPersonalOverallBarChart"></div>
+            <div ng-show = "easeOfUse" class="barChart" id="easyPersonalOverallBarChart"></div>
+            <div ng-show = "benefits" class="barChart" id="beneficialPersonalOverallBarChart"></div>
+            <div ng-show = "usage" class="barChart" id="usablePersonalOverallBarChart"></div>
 
 
 
             <h4>
-            Feature use in your decision category
-        </h4>
+                Feature use in your decision category
+            </h4>
             <div class="barChart" id="featureChart"></div>
-        <span>Hello {{personalResult.alias}}! Your decision type is: {{personalResult.decisionType}}!</span></br>
-        <span>{{conditionalResultsByDecisionType.length - 1}} other people make the same type of decisions.</span></br>
-        <span>Your Tool is: {{personalResult.tool}}</span></br>
-        <span>The best Tools for these decisions are: </span>
-        <ul>
-            <li ng-repeat="tool in conditionalToolScores | object2Array | orderBy:'average':true">
-                {{tool.toolName}} - Rating: {{tool.average.toFixed(3)}} - Usefulness: {{tool.usefulness.toFixed(3)}}
-                - Perveived Benefits: {{tool.benefits.toFixed(3)}} Ease of Use: {{tool.easeOfUse.toFixed(3)}}- Usage:(n = {{tool.count}})
-            </li>
-        </ul>
+            <span>Hello {{personalResult.alias}}! Your decision type is: {{personalResult.decisionType}}!</span></br>
+            <span>{{conditionalResultsByDecisionType.length - 1}} other people make the same type of decisions.</span></br>
+            <span>Your Tool is: {{personalResult.tool}}</span></br>
+            <span>The best Tools for these decisions are: </span>
+            <ul>
+                <li ng-repeat="tool in conditionalToolScores | object2Array | orderBy:'average':true">
+                    {{tool.toolName}} - Rating: {{tool.average.toFixed(3)}} - Usefulness: {{tool.usefulness.toFixed(3)}}
+                    - Perveived Benefits: {{tool.benefits.toFixed(3)}} Ease of Use: {{tool.easeOfUse.toFixed(3)}}- Usage:(n = {{tool.count}})
+                </li>
+            </ul>
             <span>You selected to support the following business processes with {{personalResult.tool}}:</span>
             <ul>
                 <li ng-repeat="process in personalProcesses">
                     {{process}}
                 </li>
             </ul>
-        <span ng-repeat="process in personalProcesses">The best tools for {{process}} are:
+            <span ng-repeat="process in personalProcesses">The best tools for {{process}} are:
             <ul>
                 <li ng-repeat="tool in processToolScores[process] | object2Array | orderBy:'average':true | limitTo:5">
                     {{tool.toolName}} - Rating: {{tool.average.toFixed(3)}} - (n = {{tool.count}})
@@ -65,6 +66,7 @@
             <div class="scatterChart" id="scatterChart"></div>
             <div class="scatterChart" id="scatter"></div>
         </div>
+
 
 
         <div class="overallResults">
