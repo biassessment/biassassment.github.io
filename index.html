@@ -44,7 +44,9 @@
         location.hash = 'Top';
     </script>
     <!-- own code -->
+
     <script src="js/app.js"></script>
+
 </head>
 <body>
 <div ng-controller="MainCtrl as ctrl">
@@ -76,28 +78,47 @@
                 CSV-Export
             </button>
             <button class="md-button md-raised" ng-click="calcAndShowResults()">Ergebnisse abfragen</button>
-            <!--<button class="md-button md-raised" ng-click="deleteEmptyEntries()">Delete Empty Entries</button>-->
+            <button class="md-button md-raised" ng-click="deleteEmptyEntries()">Delete Empty Entries</button>
 
         </div>
     </header>
     <div class = "content">
-        <div class = "logos">
-            <li id="kitlogo"></li>
-            <li id="iismlogo"></li>
-        </div>
-    <hr />
+
+    <div id = "kopfZeile">
+            <span class = "logos">
+            <span class = "logos" id ="kitlogoFrame">
+            <a href="http://www.kit.edu" target="_blank">
+                <img id ="kitlogo">
+            </a>
+            </span>
+            <span class= "logos" id="iismlogoFrame">
+            <a href="http://www.iism.kit.edu" target="_blank">
+                <img id ="iismlogo">
+
+            </a>
+            </span>
+            </span>
+    </div>
+
+
+
+
+
+        <hr />
 
 
     <div ng-hide="showResults" ng-include="'html/survey.html'"></div>
 
     <div ng-show="showResults" ng-include="'html/results.html'"></div>
 
-    <div ng-show="showPersonalResult" ng-include="'html/test.html'"></div>
+    <div ng-show="$parent.showPersonalResult" ng-include="'html/test.html'"></div>
 
 
     </div>
 
     <footer><h3>by Basti Classen</h3><button ng-click="emptyDB()" class="md-button md-raised">Empty DB</button></footer>
+
 </div>
+
 </body>
 </html>
