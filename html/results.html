@@ -1,8 +1,12 @@
     <div ng-controller="MainCtrl" class="results">
+        <h1>
+            Results
+        </h1>
         <div class = "introduction">
             <h4>Hello and welcome to the KIT - Business Intelligence Assessment - Results Page</br>
-                The assessment tool collects and analyses usage data of BI users. Until now, {{allResults.length}}
-                users have submitted their usage information.
+                We have already collected data from {{allResults.length}}
+                BI users. Based on this information we offer you the results so you can compare your BI
+                usage to the benchmark.
             </h4>
             <span>Have you completed the assessment yet? Then it's time to have a look at your personal results. Just enter
                 your alias in the below field to be directed to your personal results.</br></br>
@@ -21,106 +25,147 @@
         Hier beginnt jetzt der persönliche Teil
 -->
 
-        <div class="personal" ng-show="personalResult">
-
-        <span>With this assessment we evaluated how you use <b>{{personalResult.tool}}</b>. With the help of the survey
-            that you filled out, we were able to identify other users, who use their BI tool for similar tasks like you.
-        The below gauges represent how {{personalResult.tool}} scores among people, who use it for similar decisions like you.
-        </span>
-
-        </br>
-
-        <div class="gauge" id="gauge"></div>
-
-        <h4>The top 10 BI Tools in the category <select ng-model="myCategory" ng-options="category.name for category in categories" ng-change="changeDropDown()"></select>
-            are:
-        </h4>
-
-        <div ng-show = "overall" class="barChart" id="personalOverallBarChart"></div>
-        <div ng-show = "usefulness" class="barChart" id="usefulPersonalOverallBarChart"></div>
-        <div ng-show = "easeOfUse" class="barChart" id="easyPersonalOverallBarChart"></div>
-        <div ng-show = "benefits" class="barChart" id="beneficialPersonalOverallBarChart"></div>
-        <div ng-show = "usage" class="barChart" id="usablePersonalOverallBarChart"></div>
-
-
-
-        <h4>
-            Feature use in your decision category
-        </h4>
-        <div class="barChart" id="featureChart"></div>
-        <span>Hello {{personalResult.alias}}! Your decision type is: {{personalResult.decisionType}}!</span></br>
-        <span>{{conditionalResultsByDecisionType.length - 1}} other people make the same type of decisions.</span></br>
-
-        <span>You selected to support the following business processes with {{personalResult.tool}}:</span>
-        <ul>
-            <li ng-repeat="process in personalProcesses">
-                {{process}}
-            </li>
-        </ul>
-        <span ng-repeat="process in personalProcesses">The best tools for {{process}} are:
-        <ul>
-            <li ng-repeat="tool in processToolScores[process] | object2Array | orderBy:'average':true | limitTo:5">
-                {{tool.toolName}} - Rating: {{tool.average.toFixed(3)}} - (n = {{tool.count}})
-            </li>
-        </ul>
-        </span>
-            <div class="scatterChart" id="scatterChart"></div>
-            <div class="scatterChart" id="scatter"></div>
-        </div>
-
-<!--
-        Hier beginnt der allgemeine Teil
--->
-
-        <div class="overallResults">
-            <h2>1. General Results</h2>
-            <span>This section summarizes the collected information of all users of the Assessment Tool.
-                The Tools were evaluated in 4 categories: Usefulness, Ease of Use,
-                Perceived Benefits, and Intention to Use the tool. The maximum score that could  be reached is 100.
-                In the following you can choose one of the evaluation categories or an overall score to display the
-                10 tools with the highest average rating in this category.</span>
-
-            <h4>Choose a category to evaluate the tools:
-                <select ng-model="myCategory" ng-options="category.name for category in categories" ng-change="changeDropDown()"></select>
-            </h4>
-
-            <div class="charts">
-                <div ng-show = "overall" class="barChart" id="overallBarChart"></div>
-                <div ng-show = "usefulness" class = "barChart" id = "usefulBarChart"></div>
-                <div ng-show = "easeOfUse" class = "barChart" id = "easyBarChart"></div>
-                <div ng-show = "benefits" class = "barChart" id = "beneficialBarChart"></div>
-                <div ng-show = "usage" class = "barChart" id = "intentionalBarChart"></div>
+        <div class = "resultsDashboard">
+            <div class="selectBar">
+                <form class="selectButton" ng-submit="selection('generalOverall')">
+                    <button class="btn" id = "scores" type="submit">Scores</button>
+                </form>
+                <form class="selectButton" ng-submit="selection('generalDistribution')">
+                    <button class="btn" id = "distribution" type="submit">Tool Distribution</button>
+                </form>
+                <form class="selectButton" ng-submit="selection('generalFeatures')">
+                    <button class="btn" id = "capabilities" type="submit">BI Capabilities</button>
+                </form>
+                <form class="selectButton" ng-submit="selection('generalEaseVsUse')">
+                    <button class="btn" id = "easevsuse" type="submit">Ease of Use vs Usefulness</button>
+                </form>
             </div>
+            <div class ="chartContainer">
+                <div class = "chartContent" >
+                    <div ng-show = "generalOverall"  class="charts" id="generalOverall">
+                        <div class="selection" >
+                            <h3>
+                                Scores for BI Tools in the category <select ng-model="myCategory" ng-options="category.name for category in categories" ng-change="changeDropDown()"></select>
+                            </h3>
+                        </div>
+                        <div ng-show = "overall" class="barChart" id="overallBarChart"></div>
+                        <div ng-show = "usefulness" class = "barChart" id = "usefulBarChart"></div>
+                        <div ng-show = "easeOfUse" class = "barChart" id = "easyBarChart"></div>
+                        <div ng-show = "benefits" class = "barChart" id = "beneficialBarChart"></div>
+                        <div ng-show = "usage" class = "barChart" id = "intentionalBarChart"></div>
+                    </div>
+                    <div ng-show = "generalDistribution" class="charts" id = "generalDistribution">
+                        <div class="selection" >
+                            <h2>
+                                Distribution of different BI Tools in this Data Set
+                            </h2>
+                        </div>
+                        <div class="overviewChart" id="overview"></div>
+                    </div>
+                    <div ng-show = "generalFeatures" class="charts">
+                        <div class="selection" >
+                            <h2>
+                                Usage of BI Capabilities:
+                            </h2>
+                        </div>
+                        <div class="barChart" id="overallFeatureChart"></div>
+                    </div>
+                    <div ng-show = "generalEaseVsUse" class="charts">
+                        <div class="selection" >
+                            <h2>
+                                Ease of Use vs. Usefulness
+                            </h2>
+                        </div>
+                        <div class="bubbleChart" id="bubble"></div>
+                    </div>
 
-            <h4>Frequency Distribution of BI Tools in this Data Set</h4>:
-            <div class="overviewChart" id="overview"></div>
+                </div>
 
-            <h4>Usage of BI Capabilities</h4>:
 
-            <div class="charts">
-                <div class="barChart" id="overallFeatureChart"></div>
+                <div>
+                    <!--<span>To make BI Tools ready for business users, it is important that they are easy to use. Ease of use however sometimes
+                    comes at the expense of usefulness, because advanced and very useful features are not programmed into the tool
+                    to not confuse the user.
+                    Therefore, the below chart displays ease of use and usefulness of each tool. The thickness of the bubbles
+                    represents how often each tool is used.
+                    </span>
+                    <h4>Ease of Use vs Usefulness by BI Tool
+                    </h4>-->
+                </div>
+
+
+                <div class="allMetricsChart" id="allMetricsBarChart"></div>
             </div>
-            <h4>
+            <div ng-show = "personalResult">
+                <h1>
+                    Personal Results
+                </h1>
 
-            </h4>
 
-            <div>
-                <span>To make BI Tools ready for business users, it is important that they are easy to use. Ease of use however sometimes
-                comes at the expense of usefulness, because advanced and very useful features are not programmed into the tool
-                to not confuse the user.
-                Therefore, the below chart displays ease of use and usefulness of each tool. The thickness of the bubbles
-                represents how often each tool is used.
+                <span>With this assessment we evaluated how you use <b>{{personalResult.tool}}</b>. With the help of the survey
+                    that you filled out, we were able to identify other users, who use their BI tool for similar tasks like you.
+                The below gauges represent how {{personalResult.tool}} scores among people, who use it for similar decisions like you.
                 </span>
-            <h4>Ease of Use vs Usefulness by BI Tool
-            </h4>
+
+                </br>
+
+                <div class="gauge" id="gauge"></div>
+
+                <h4>The top 10 BI Tools in the category <select ng-model="myCategory" ng-options="category.name for category in categories" ng-change="changeDropDown()"></select>
+                    are:
+                </h4>
+                <div class="charts">
+                    <div ng-show = "overall" class="barChart" id="personalOverallBarChart"></div>
+                    <div ng-show = "usefulness" class="barChart" id="usefulPersonalOverallBarChart"></div>
+                    <div ng-show = "easeOfUse" class="barChart" id="easyPersonalOverallBarChart"></div>
+                    <div ng-show = "benefits" class="barChart" id="beneficialPersonalOverallBarChart"></div>
+                    <div ng-show = "usage" class="barChart" id="usablePersonalOverallBarChart"></div>
+                </div>
 
 
+                <h4>
+                    Feature use in your decision category
+                </h4>
+                <div class="barChart" id="featureChart"></div>
+
+
+
+                <!--<span>Hello {{personalResult.alias}}! Your decision type is: {{personalResult.decisionType}}!</span></br>
+                <span>{{conditionalResultsByDecisionType.length - 1}} other people make the same type of decisions.</span></br>
+
+                <span>You selected to support the following business processes with {{personalResult.tool}}:</span>
+                <ul>
+                    <li ng-repeat="process in personalProcesses">
+                        {{process}}
+                    </li>
+                </ul>
+                <span ng-repeat="process in personalProcesses">The best tools for {{process}} are:
+                <ul>
+                    <li ng-repeat="tool in processToolScores[process] | object2Array | orderBy:'average':true | limitTo:5">
+                        {{tool.toolName}} - Rating: {{tool.average.toFixed(3)}} - (n = {{tool.count}})
+                    </li>
+                </ul>
+                </span>
+                    <div class="scatterChart" id="scatterChart"></div>
+                    <div class="scatterChart" id="scatter"></div>-->
             </div>
 
+    <!--
+            Hier beginnt der allgemeine Teil
+    -->
 
-            <div class="bubbleChart" id="bubble"></div>
-            <div class="allMetricsChart" id="allMetricsBarChart"></div>
+<!--            <div class="overallResults">
+                <h2>General Results</h2>
+                <span>This section summarizes the collected information of all users of the Assessment Tool.
+                    The Tools were evaluated in 4 categories: Usefulness, Ease of Use,
+                    Perceived Benefits, and Intention to Use the tool. The maximum score that could  be reached is 100.
+                    In the following you can choose one of the evaluation categories or an overall score to display the
+                    10 tools with the highest average rating in this category.</span>
+
+
+            </div>-->
         </div>
+
 
 
     </div>

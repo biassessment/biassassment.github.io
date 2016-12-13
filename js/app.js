@@ -13,7 +13,7 @@ app.config(function ($translateProvider) {
     $scope.showResults = false;
     $scope.showPersonalResult = false;
     var umfrage = surveyModel.model;
-    var fakeResponse = surveyModel.fakeResponse;
+    //var fakeResponse = surveyModel.fakeResponse;
     var features = ["AdvancedVisualization", "BusinessQuery", "Calculations", "Collaboration", "Dashboards", "Drilling", "ETL", "InMemoryAnalysis", "InteractiveReports", "MobileBI", "PredictiveAnalysis", "ScheduledReporting", "Spreadsheet", "StatisticalMethods", "VisualDataDiscovery"];
     var businessProcesses = ["Regular Financial and Tax Reporting (External Reporting)", "Assurance and Special Compliance Support (e.g. SOX)", "Cost Analysis", "Group Consolidation", "Operational Planning and Budgeting", "Other Internal Financial Reporting", "Strategic Planning", "Market and Sales Planning and Analysis", "Campaign Management", "Production Planning and Control", "Supply-Chain-Analysis", "Supplier Analysis", "HR Analysis"];
     var surveyFeatures = ["Advanced Visualization", "Business Query", "Calculations", "Collaboration", "Dashboards", "Drill-Down", "ETL", "In-Memory-Analysis", "Interactive Reports", "Mobile BI", "Predictive Analysis", "Scheduled Reporting", "Spreadsheet", "Statistical Methods", "Visual Data Discovery"];
@@ -120,6 +120,70 @@ app.config(function ($translateProvider) {
           }
           $scope.calcAndShowResults();
       }
+
+      $scope.generalOverall = true;
+      $scope.generalDistribution = false;
+      $scope.generalFeatures = false;
+      $scope.generalEaseVsUse = false;
+
+
+      $scope.selection = function(key) {
+          if (key === 'generalOverall') {
+              $scope.generalOverall = true;
+              $scope.generalDistribution = false;
+              $scope.generalFeatures = false;
+              $scope.generalEaseVsUse = false;
+
+
+          }
+          else if (key ==='generalDistribution') {
+              $scope.generalDistribution = true;
+              $scope.generalOverall = false;
+              $scope.generalFeatures = false;
+              $scope.generalEaseVsUse = false;
+
+
+          }
+          else if (key === 'generalFeatures') {
+              $scope.generalOverall = false;
+              $scope.generalDistribution = false;
+              $scope.generalFeatures = true;
+              $scope.generalEaseVsUse = false;
+
+
+          }
+          else if (key =='generalEaseVsUse') {
+              $scope.generalEaseVsUse = true;
+              $scope.generalOverall = false;
+              $scope.generalDistribution = false;
+              $scope.generalFeatures = false;
+          }
+              $scope.calcAndShowResults();
+      };
+
+      window.onresize = $scope.calcAndShowResults;
+
+
+      /*$scope.biScope = [
+          {name:'External Financial/Tax Reporting'},
+          {name:'Assurance & Special Compliance Support (e.g. SOX)'},
+          {name:'Group Consolidation'},
+          {name:'Cost Analysis'},
+          {name:'Operational Planning and Budgeting'},
+          {name:'Internal Financial Reporting'},
+          {name:'Strategic Planning'},
+          {name:'Market/Sales Planning & Analysis'},
+          {name:'Campaign Management'},
+          {name:'Campaign Management'},
+          {name:'Campaign Management'},
+          {name:'Campaign Management'},
+          {name:'Campaign Management'},
+
+
+
+          {name:'Intention to Use'}
+      ];*/
+
 
 
 
@@ -578,7 +642,7 @@ app.config(function ($translateProvider) {
 
           //Beste 5 Tools in das Array fürs Chart pushen
           for (var i = 0; i<= Math.min(1000,sortable.length-1);i++) {
-                  overallBarChartData.push([sortable[i][0], parseFloat((sortable[i][5]*100).toFixed(1)), "#003397"]);
+                  overallBarChartData.push([sortable[i][0], parseFloat((sortable[i][5]*100).toFixed(1)), "#2F9682"]);
           }
 
           overallBarChartData.push(['Average', parseFloat(($scope.overallAverage*100).toFixed(1)), "#ff0000"]);
@@ -604,8 +668,8 @@ app.config(function ($translateProvider) {
 
               var options = {
                   title: 'Top 10 BI Tools',
-                  width: '60%',
-                  chartArea: {width: '60%', height:'100%'},
+                  width: '100%',
+                  chartArea: {width: '50%', height:'100%'},
                   height: 250/10*Math.min(1000,sortable.length-1),
                   bar: {groupWidth: "80%"},
                   legend: { position: "none" },
@@ -624,18 +688,19 @@ app.config(function ($translateProvider) {
               };
               var chart = new google.visualization.BarChart(document.getElementById("overallBarChart"));
               chart.draw(view, options);
+              //create trigger to resizeEnd event
           }
 
           //Usefulness Bar Chart
           //sortieren das Array nach Usefulness
           var usefulBarChartData = [
               ['Tool', 'Usefulness', { role: "style" }]
-          ]
+          ];
           sortable.sort(function(a,b){return b[1]-a[1]});
 
           //Beste 5 Tools in das Array fürs Chart pushen
           for (var i = 0; i<= Math.min(1000,sortable.length-1);i++) {
-              usefulBarChartData.push([sortable[i][0], parseFloat((sortable[i][1]*100).toFixed(1)), "#003397"]);
+              usefulBarChartData.push([sortable[i][0], parseFloat((sortable[i][1]*100).toFixed(1)), "#2F9682"]);
           }
           usefulBarChartData.push(['Average', parseFloat(($scope.usefulnessAverage*100).toFixed(1)), "#ff0000"]);
 
@@ -658,8 +723,8 @@ app.config(function ($translateProvider) {
 
               var options = {
                   title: 'Top 10 BI Tools',
-                  width: '60%',
-                  chartArea: {width: '60%', height:'100%'},
+                  width: '100%',
+                  chartArea: {width: '40%', height:'100%'},
                   height: 250*Math.min(1000,sortable.length)/10,
                   bar: {groupWidth: "80%"},
                   legend: { position: "none" },
@@ -685,12 +750,12 @@ app.config(function ($translateProvider) {
           //sortieren das Array nach Usefulness
           var easyBarChartData = [
               ['Tool', 'Ease of Use', { role: "style" }]
-          ]
+          ];
           sortable.sort(function(a,b){return b[2]-a[2]});
 
           //Beste 5 Tools in das Array fürs Chart pushen
           for (var i = 0; i<= Math.min(1000,sortable.length-1);i++) {
-              easyBarChartData.push([sortable[i][0], parseFloat((sortable[i][2]*100).toFixed(1)), "#003397"]);
+              easyBarChartData.push([sortable[i][0], parseFloat((sortable[i][2]*100).toFixed(1)), "#2F9682"]);
           }
 
           easyBarChartData.push(['Average', parseFloat(($scope.easeOfUseAverage*100).toFixed(1)), "#ff0000"]);
@@ -715,7 +780,7 @@ app.config(function ($translateProvider) {
               var options = {
                   title: 'Top 10 BI Tools',
                   width: '100%',
-                  chartArea: {width: '60%', height:'100%'},
+                  chartArea: {width: '40%', height:'100%'},
                   height: 250*Math.min(1000,sortable.length)/10,
                   bar: {groupWidth: "80%"},
                   legend: { position: "none" },
@@ -729,7 +794,7 @@ app.config(function ($translateProvider) {
                   },
                   haxis: {
 
-                  },
+                  }
               };
               var chart = new google.visualization.BarChart(document.getElementById("easyBarChart"));
               chart.draw(view, options);
@@ -740,12 +805,12 @@ app.config(function ($translateProvider) {
           //sortieren das Array nach Net Benefits
           var beneficialBarChartData = [
               ['Tool', 'Net Benefits', { role: "style" }]
-          ]
+          ];
           sortable.sort(function(a,b){return b[3]-a[3]});
 
           //Beste 5 Tools in das Array fürs Chart pushen
           for (var i = 0; i<= Math.min(1000,sortable.length-1);i++) {
-              beneficialBarChartData.push([sortable[i][0], parseFloat((sortable[i][3]*100).toFixed(1)), "#003397"]);
+              beneficialBarChartData.push([sortable[i][0], parseFloat((sortable[i][3]*100).toFixed(1)), "#2F9682"]);
           }
 
           beneficialBarChartData.push(['Average', parseFloat(($scope.benefitsAverage*100).toFixed(1)), "#ff0000"]);
@@ -769,8 +834,8 @@ app.config(function ($translateProvider) {
 
               var options = {
                   title: 'Top 10 BI Tools',
-                  width: 'auto',
-                  chartArea: {width: '60%', height:'100%'},
+                  width: '100%',
+                  chartArea: {width: '40%', height:'100%'},
                   height: 250*Math.min(100,sortable.length)/10,
                   bar: {groupWidth: "80%"},
                   legend: { position: "none" },
@@ -795,12 +860,12 @@ app.config(function ($translateProvider) {
           //sortieren das Array nach Intention to Use
           var intentionalBarChartData = [
               ['Tool', 'Intention to Use', { role: "style" }]
-          ]
+          ];
           sortable.sort(function(a,b){return b[4]-a[4]});
 
           //Beste 5 Tools in das Array fürs Chart pushen
           for (var i = 0; i<= Math.min(1000,sortable.length-1);i++) {
-              intentionalBarChartData.push([sortable[i][0], parseFloat((sortable[i][4]*100).toFixed(1)), "#003397"]);
+              intentionalBarChartData.push([sortable[i][0], parseFloat((sortable[i][4]*100).toFixed(1)), "#2F9682"]);
           }
 
           intentionalBarChartData.push(['Average', parseFloat(($scope.usageAverage*100).toFixed(1)), "#ff0000"]);
@@ -824,8 +889,8 @@ app.config(function ($translateProvider) {
 
               var options = {
                   title: 'Top 10 BI Tools',
-                  width: '60%',
-                  chartArea: {width: '60%', height:'100%'},
+                  width: '100%',
+                  chartArea: {width: '40%', height:'100%'},
                   height: 250*Math.min(1000,sortable.length)/10,
                   bar: {groupWidth: "80%"},
                   legend: { position: "none" },
@@ -854,7 +919,7 @@ app.config(function ($translateProvider) {
           var allMetricsBarChartData = [
               ['Tool', 'Perceived Usefulness', 'Perceived Ease of Use',
                   'Perceived Net Benefits', 'Intention to Use', 'Overall Rating']
-          ]
+          ];
           sortable.sort(function(a,b){return b[5]-a[5]});
 
           for (var i = 0; i<= Math.min(9,sortable.length-1);i++) {
@@ -873,11 +938,11 @@ app.config(function ($translateProvider) {
 
               var options = {
                   chart: {
-                      title: 'Tool Success by Measure',
+                      title: 'Tool Success by Measure'
                   },
-                  colors: ['#003397', '#008dda'],
+                  colors: ['#2F9682', '#008dda'],
                   width: '60%',
-                  height:200,
+                  height:200
               };
 
               var chart = new google.charts.Bar(document.getElementById('allMetricsBarChart'));
@@ -899,7 +964,7 @@ app.config(function ($translateProvider) {
 
           var bubbleChartData = [
             ['ID', 'Usefulness', 'Ease of Use', 'Tool', 'n']
-        ]
+        ];
         for (var key in $scope.toolScores) {
             bubbleChartData.push(['',$scope.toolScores[key].usefulness*100, $scope.toolScores[key].easeOfUse*100,
                 $scope.toolScores[key].toolName, $scope.toolScores[key].count]);
@@ -925,7 +990,7 @@ app.config(function ($translateProvider) {
                   bubble: {textStyle: {fontSize: 11}},
                   chartArea:{left:'8%', top:'0%', bottom:'8%', width:'60%'},
                   width: '100%',
-                  explorer:{},
+                  //explorer:{},
                   height: 400
               };
 
@@ -952,8 +1017,8 @@ app.config(function ($translateProvider) {
             pieHole: 0.8,
             sliceVisibilityThreshold: .045,
             is3D: true,
-            width: '60%',
-            height: 'auto'
+            width: '100%',
+            height: 400
           };
           var chart = new google.visualization.PieChart(document.getElementById('overview'));
           chart.draw(data, options);
@@ -971,7 +1036,7 @@ app.config(function ($translateProvider) {
                   avg += $scope.toolScores[key][feature]*$scope.toolScores[key].count;
               }
               avg = avg/$scope.allResults.length;
-              featureAverage.push([feature, parseFloat(avg.toFixed(3)*100), "#003397"]);
+              featureAverage.push([feature, parseFloat(avg.toFixed(3)*100), "#2F9682"]);
           });
           //console.log(featureAverage);
 
@@ -1020,20 +1085,14 @@ app.config(function ($translateProvider) {
               var chart = new google.visualization.BarChart(document.getElementById('overallFeatureChart'));
               chart.draw(view, options);
           }
-
-
-
-
-
-
-
-
-
       })
     };
 
 
+
     // PERSONALISIERTE ERGEBNISSE
+
+
     $scope.getPersonalResult = function (alias) {
       $scope.showPersonalResult = true;
       $scope.personalResult = $scope.allResults.filter(function (res) {
@@ -1085,7 +1144,7 @@ app.config(function ($translateProvider) {
 
         //Beste 5 Tools in das Array fürs Chart pushen
         for (var i = 0; i<= Math.min(1000,sortablePersonal.length-1);i++) {
-            personalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][5]*100).toFixed(1)), "#003397"]);
+            personalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][5]*100).toFixed(1)), "#2F9682"]);
         }
 
         personalOverallBarChartData.push(['Average', parseFloat(($scope.personaloverallAverage*100).toFixed(1)), "#ff0000"]);
@@ -1110,8 +1169,8 @@ app.config(function ($translateProvider) {
 
             var options = {
                 title: 'Top 10 BI Tools',
-                width: 800,
-                chartArea: {width: '60%', height:'100%'},
+                width: '100%',
+                chartArea: {width: '40%', height:'100%'},
                 height: 250*Math.min(1000,sortablePersonal.length)/10,
                 bar: {groupWidth: "80%"},
                 legend: { position: "none" },
@@ -1144,7 +1203,7 @@ app.config(function ($translateProvider) {
 
         //Beste 5 Tools in das Array fürs Chart pushen
         for (var i = 0; i<= Math.min(1000,sortablePersonal.length-1);i++) {
-            usefulPersonalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][1]*100).toFixed(1)), "#003397"]);
+            usefulPersonalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][1]*100).toFixed(1)), "#2F9682"]);
         }
         usefulPersonalOverallBarChartData.push(['Average', parseFloat(($scope.personalUsefulnessAverage*100).toFixed(1)), "#ff0000"]);
         usefulPersonalOverallBarChartData.sort(function(a,b){return b[1]-a[1]});
@@ -1199,7 +1258,7 @@ app.config(function ($translateProvider) {
 
         //Beste 5 Tools in das Array fürs Chart pushen
         for (var i = 0; i<= Math.min(1000,sortablePersonal.length-1);i++) {
-            easyPersonalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][2]*100).toFixed(1)), "#003397"]);
+            easyPersonalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][2]*100).toFixed(1)), "#2F9682"]);
         }
 
         easyPersonalOverallBarChartData.push(['Average', parseFloat(($scope.personalEaseOfUseAverage*100).toFixed(1)), "#ff0000"]);
@@ -1259,7 +1318,7 @@ app.config(function ($translateProvider) {
 
         //Beste 5 Tools in das Array fürs Chart pushen
         for (var i = 0; i<= Math.min(1000,sortablePersonal.length-1);i++) {
-            beneficialPersonalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][3]*100).toFixed(1)), "#003397"]);
+            beneficialPersonalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][3]*100).toFixed(1)), "#2F9682"]);
         }
         beneficialPersonalOverallBarChartData.push(['Average', parseFloat(($scope.personalBenefitsAverage*100).toFixed(1)), "#ff0000"]);
         beneficialPersonalOverallBarChartData.sort(function(a,b){return b[1]-a[1]});
@@ -1315,7 +1374,7 @@ app.config(function ($translateProvider) {
 
         //Beste 5 Tools in das Array fürs Chart pushen
         for (var i = 0; i<= Math.min(1000,sortablePersonal.length-1);i++) {
-            usablePersonalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][4]*100).toFixed(1)), "#003397"]);
+            usablePersonalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][4]*100).toFixed(1)), "#2F9682"]);
         }
 
         usablePersonalOverallBarChartData.push(['Average', parseFloat(($scope.personalUsageAverage*100).toFixed(1)), "#ff0000"]);
@@ -1373,7 +1432,7 @@ app.config(function ($translateProvider) {
                 avg += $scope.conditionalToolScores[key][feature]*$scope.conditionalToolScores[key].count;
             }
             avg = avg / $scope.conditionalResultsByDecisionType.length;
-                featureData.push([feature,parseFloat(avg.toFixed(3)*100),"#003397"]);
+                featureData.push([feature,parseFloat(avg.toFixed(3)*100),"#2F9682"]);
 
         });
 

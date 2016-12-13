@@ -1,9 +1,9 @@
 @import url("charts.less");
+@import url("results.less");
 
 html.md-default-theme, html {
   width: 70%;
   height: 100%;
-  max-width: 1268px;
   background-image: url(../css/logo_preview.png);
   font-size: 12px;
   display: inline-block;
@@ -18,7 +18,6 @@ body.md-default-theme, body {
 }
 
 header {
-  position: fixed;
   height: 50px;
   z-index: 100;
   top: 0;
@@ -60,16 +59,15 @@ footer {
 }
 
 #kopfZeile {
-  margin-bottom: 1em;
-  margin-top: 1em;
   width: 100%;
   background-color: white;
   hight:120px;
+  padding-bottom: 15px;
 }
 
 
 .content {
-  padding-top:7%;
+  padding-top:15px;
   padding-bottom:7%;
   background-color: white;
   hr {
@@ -87,7 +85,6 @@ footer {
 .results {
   background-color: white;
   padding: 15px;
-  overflow:auto;
   clear:left;
 }
 
@@ -189,12 +186,16 @@ float:left;
   width: 60%;
   min-width: 30%;
   padding-left:15px;
+  max-height: 100px;
+  max-width:216px;
 
 }
 
 #iismlogo {
   content:url(../css/IISM.jpg);
   height: auto;
+  max-height: 100px;
+  max-width: 341px;
   width: 60%;
   padding-right:15px;
   min-width: 30%;
@@ -232,3 +233,4 @@ float:left;
 md-radio-button , md-radio-button.md-checked .md-off {
   border-color: blue;
 }
+
