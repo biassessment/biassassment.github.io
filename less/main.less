@@ -1,5 +1,6 @@
 @import url("charts.less");
 @import url("results.less");
+@import url("home.less");
 
 html.md-default-theme, html {
   width: 70%;
@@ -38,7 +39,6 @@ header {
 
 footer {
   position: fixed;
-  height: 21px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -61,8 +61,9 @@ footer {
 #kopfZeile {
   width: 100%;
   background-color: white;
-  hight:120px;
+  padding-top: 15px;
   padding-bottom: 15px;
+  border-bottom: 1px solid grey;
 }
 
 
@@ -148,21 +149,6 @@ footer {
   height: 100px;
 }
 
-.kopfZeile {
-  padding-top:0.5%;
-  padding-bottom:7%;
-  background-color: white;
-  hr {
-    background: black;
-    padding:0%;
-    height:1px;
-    color: black;
-    -webkit-margin-before: 0em;
-    -webkit-margin-after: 0em;
-  }
-  display: inline-block;
-
-}
 .logos {
   display: inline-block;
   width:100%;

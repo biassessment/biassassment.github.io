@@ -17,6 +17,7 @@
     <script src="js/surveyModel.js"></script>
     <!-- angular -->
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-aria/angular-aria.min.js"></script>
     <script src="bower_components/angular-messages/angular-messages.min.js"></script>
@@ -79,43 +80,34 @@
             </button>
             <button class="md-button md-raised" ng-click="calcAndShowResults()">Ergebnisse abfragen</button>
             <button class="md-button md-raised" ng-click="deleteEmptyEntries()">Delete Empty Entries</button>
-
         </div>
     </header>
-    <div class = "content">
-
-    <div id = "kopfZeile">
-            <span class = "logos">
-            <span class = "logos" id ="kitlogoFrame">
+    <div id="kopfZeile">
+            <span class="logos">
+            <span class="logos" id="kitlogoFrame">
             <a href="http://www.kit.edu" target="_blank">
-                <img id ="kitlogo">
+                <img id="kitlogo">
             </a>
             </span>
-            <span class= "logos" id="iismlogoFrame">
+            <span class="logos" id="iismlogoFrame">
             <a href="http://www.iism.kit.edu" target="_blank">
-                <img id ="iismlogo">
-
+                <img id="iismlogo">
             </a>
             </span>
             </span>
     </div>
 
+    <div class="content" ui-view></div>
 
 
 
-
-        <hr />
-
-
-    <div ng-hide="showResults" ng-include="'html/survey.html'"></div>
-
-    <div ng-show="showResults" ng-include="'html/results.html'"></div>
-
-
-
-    </div>
-
-    <footer><h3>by Basti Classen</h3><button ng-click="emptyDB()" class="md-button md-raised">Empty DB</button></footer>
+    <footer><h3>by Basti Classen</h3>
+        <button ng-click="emptyDB()" class="md-button md-raised">Empty DB</button>
+        <button class="md-button md-raised" ui-sref="home">Home</button>
+        <button class="md-button md-raised" ui-sref="survey">Survey</button>
+        <button class="md-button md-raised" ui-sref="results">Results</button>
+        <button class="md-button md-raised" ui-sref="decisionTypeSurvey">DecisionType</button>
+    </footer>
 
 </div>
 
