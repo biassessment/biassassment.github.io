@@ -388,6 +388,7 @@ app.config(function ($translateProvider) {
         console.log("Antwort gespeichert!", res);
       });
       $scope.calcAndShowResults();
+      $scope.showResults=true;
     };
     // Empty DB
     $scope.deleteEmptyEntries = function () {
@@ -613,7 +614,6 @@ app.config(function ($translateProvider) {
 
     // ALLE ERGEBNISSE
     $scope.calcAndShowResults = function () {
-      $scope.showResults = true;
       databaseService.getAllResponses().then(function (res) {
         $scope.allResults = res.data;
         //$scope.allResults.answers = JSON.parse($scope.allResults.answers);
