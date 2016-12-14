@@ -26,35 +26,41 @@
 -->
 
         <div class = "resultsDashboard">
-            <div class="selectBar">
-                <form class="selectButton" ng-submit="selection('generalOverall')">
-                    <button class="btn" id = "scores" type="submit">Scores</button>
+            <div class="selectBar" ng-model="chosenView" ng-init="chosenView = 'generalOverall'">
+                <form class="selectButton">
+                    <button class="btn" ng-click="chosenView = 'generalOverall'; calcAndShowResults()" id = "scores" type="submit">Scores</button>
                 </form>
-                <form class="selectButton" ng-submit="selection('generalDistribution')">
-                    <button class="btn" id = "distribution" type="submit">Tool Distribution</button>
+                <form class="selectButton">
+                    <button class="btn" ng-click="chosenView = 'generalDistribution'; calcAndShowResults()" id = "distribution" type="submit">Tool Distribution</button>
                 </form>
-                <form class="selectButton" ng-submit="selection('generalFeatures')">
-                    <button class="btn" id = "capabilities" type="submit">BI Capabilities</button>
+                <form class="selectButton">
+                    <button class="btn" ng-click="chosenView = 'generalFeatures'; calcAndShowResults()" id = "capabilities" type="submit">BI Capabilities</button>
                 </form>
-                <form class="selectButton" ng-submit="selection('generalEaseVsUse')">
-                    <button class="btn" id = "easevsuse" type="submit">Ease of Use vs Usefulness</button>
+                <form class="selectButton">
+                    <button class="btn" ng-click="chosenView = 'generalEaseVsUse'; calcAndShowResults()" id = "easevsuse" type="submit">Ease of Use vs Usefulness</button>
                 </form>
             </div>
             <div class ="chartContainer">
                 <div class = "chartContent" >
-                    <div ng-show = "generalOverall"  class="charts" id="generalOverall">
+                    <div ng-show = "chosenView == 'generalOverall'"  class="charts" id="generalOverall">
                         <div class="selection" >
                             <h3>
-                                Scores for BI Tools in the category <select ng-model="myCategory" ng-options="category.name for category in categories" ng-change="changeDropDown()"></select>
+                                Scores for BI Tools in the category
+                                <select ng-model="myCategory"
+                                        ng-init="myCategory = 'Overall'"
+                                        ng-options="category as category for category in categories"
+                                        ng-change="calcAndShowResults()">
+                                </select>
                             </h3>
                         </div>
-                        <div ng-show = "overall" class="barChart" id="overallBarChart"></div>
-                        <div ng-show = "usefulness" class = "barChart" id = "usefulBarChart"></div>
-                        <div ng-show = "easeOfUse" class = "barChart" id = "easyBarChart"></div>
-                        <div ng-show = "benefits" class = "barChart" id = "beneficialBarChart"></div>
-                        <div ng-show = "usage" class = "barChart" id = "intentionalBarChart"></div>
+                        <div ng-show = "myCategory == 'Overall'" class="barChart" id="overallBarChart"></div>
+                        <div ng-show = "myCategory == 'Usefulness'" class = "barChart" id = "usefulBarChart"></div>
+                        <div ng-show = "myCategory == 'Ease Of Use'" class = "barChart" id = "easyBarChart"></div>
+                        <div ng-show = "myCategory == 'Net Benefits'" class = "barChart" id = "beneficialBarChart"></div>
+                        <div ng-show = "myCategory == 'Intention to Use'" class = "barChart" id = "intentionalBarChart"></div>
                     </div>
-                    <div ng-show = "generalDistribution" class="charts" id = "generalDistribution">
+
+                    <div ng-show = "chosenView == 'generalDistribution'" class="charts" id = "generalDistribution">
                         <div class="selection" >
                             <h2>
                                 Distribution of different BI Tools in this Data Set
@@ -62,7 +68,7 @@
                         </div>
                         <div class="overviewChart" id="overview"></div>
                     </div>
-                    <div ng-show = "generalFeatures" class="charts">
+                    <div ng-show = "chosenView == 'generalFeatures'" class="charts">
                         <div class="selection" >
                             <h2>
                                 Usage of BI Capabilities:
@@ -70,7 +76,7 @@
                         </div>
                         <div class="barChart" id="overallFeatureChart"></div>
                     </div>
-                    <div ng-show = "generalEaseVsUse" class="charts">
+                    <div ng-show = "chosenView == 'generalEaseVsUse'" class="charts">
                         <div class="selection" >
                             <h2>
                                 Ease of Use vs. Usefulness
@@ -78,10 +84,7 @@
                         </div>
                         <div class="bubbleChart" id="bubble"></div>
                     </div>
-
                 </div>
-
-
                 <div>
                     <!--<span>To make BI Tools ready for business users, it is important that they are easy to use. Ease of use however sometimes
                     comes at the expense of usefulness, because advanced and very useful features are not programmed into the tool
@@ -111,15 +114,17 @@
 
                 <div class="gauge" id="gauge"></div>
 
-                <h4>The top 10 BI Tools in the category <select ng-model="myCategory" ng-options="category.name for category in categories" ng-change="changeDropDown()"></select>
-                    are:
+                <h4>The top 10 BI Tools in the category <select ng-model="myPersonalCategory"
+                                                                ng-init="myPersonalCategory = 'Overall'"
+                                                                ng-options="category as category for category in categories"
+                                                                ng-change="redrawAll()"></select>
                 </h4>
-                <div class="charts">
-                    <div ng-show = "overall" class="barChart" id="personalOverallBarChart"></div>
-                    <div ng-show = "usefulness" class="barChart" id="usefulPersonalOverallBarChart"></div>
-                    <div ng-show = "easeOfUse" class="barChart" id="easyPersonalOverallBarChart"></div>
-                    <div ng-show = "benefits" class="barChart" id="beneficialPersonalOverallBarChart"></div>
-                    <div ng-show = "usage" class="barChart" id="usablePersonalOverallBarChart"></div>
+                <div class="chartContainer">
+                    <div ng-show = "myPersonalCategory == 'Overall'" class="barChart" id="personalOverallBarChart"></div>
+                    <div ng-show = "myPersonalCategory == 'Usefulness'" class="barChart" id="usefulPersonalOverallBarChart"></div>
+                    <div ng-show = "myPersonalCategory == 'Ease Of Use'" class="barChart" id="easyPersonalOverallBarChart"></div>
+                    <div ng-show = "myPersonalCategory == 'Net Benefits'" class="barChart" id="beneficialPersonalOverallBarChart"></div>
+                    <div ng-show = "myPersonalCategory == 'Intention to Use'" class="barChart" id="usablePersonalOverallBarChart"></div>
                 </div>
 
 

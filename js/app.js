@@ -21,9 +21,9 @@ app.config(function ($translateProvider, $stateProvider) {
     templateUrl: '../html/decisionTypeSurvey.html'
   });
 })
-  .controller('MainCtrl', ['$scope', '$q', '$http', '$translate', 'mwFormResponseUtils', 'databaseService', 'csvService', function ($scope, $q, $http, $translate, mwFormResponseUtils, databaseService, csvService) {
+  .controller('MainCtrl', ['$scope', '$q', '$http', '$state', '$translate', 'mwFormResponseUtils', 'databaseService', 'csvService', function ($scope, $q, $http, $state, $translate, mwFormResponseUtils, databaseService, csvService) {
     console.log("bi-assessment tool running");
-    $scope.showResults = false;
+    $state.go('home');
     $scope.showPersonalResult = false;
     var umfrage = surveyModel.model;
     //var fakeResponse = surveyModel.fakeResponse;
@@ -44,7 +44,6 @@ app.config(function ($translateProvider, $stateProvider) {
       encoding: 'ISO-8859-1',
       encodingVisible: false,
       uploadButtonLabel: "upload a csv file"
-
     };
 
     // Settings for Survey
@@ -82,99 +81,12 @@ app.config(function ($translateProvider, $stateProvider) {
     };
 
     //####Variablen für Drop-Down Liste auf Result Page#####
-    $scope.categories = [
-      {name: 'Overall'},
-      {name: 'Usefulness'},
-      {name: 'Ease Of Use'},
-      {name: 'Net Benefits'},
-      {name: 'Intention to Use'}
-    ];
+    $scope.charts = [];
+    $scope.categories = ['Overall', 'Usefulness', 'Ease Of Use', 'Net Benefits', 'Intention to Use'];
     $scope.myCategory = $scope.categories[0];
-    $scope.overall = true;
     $scope.changeDropDown = function () {
-      if ($scope.myCategory.name === "Overall") {
-        $scope.overall = true;
-        $scope.usefulness = false;
-        $scope.easeOfUse = false;
-        $scope.usage = false;
-        $scope.benefits = false;
-      }
-
-      if ($scope.myCategory.name === "Net Benefits") {
-        $scope.benefits = true;
-        $scope.overall = false;
-        $scope.usefulness = false;
-        $scope.easeOfUse = false;
-        $scope.usage = false;
-      }
-
-      if ($scope.myCategory.name === "Usefulness") {
-        $scope.usefulness = true;
-        $scope.overall = false;
-        $scope.easeOfUse = false;
-        $scope.usage = false;
-        $scope.benefits = false;
-      }
-
-      if ($scope.myCategory.name === "Ease Of Use") {
-        $scope.easeOfUse = true;
-        $scope.overall = false;
-        $scope.usefulness = false;
-        $scope.usage = false;
-        $scope.benefits = false;
-      }
-
-      if ($scope.myCategory.name === "Intention to Use") {
-        $scope.usage = true;
-        $scope.overall = false;
-        $scope.usefulness = false;
-        $scope.easeOfUse = false;
-        $scope.benefits = false;
-      }
-      $scope.calcAndShowResults();
-    }
-
-    $scope.generalOverall = true;
-    $scope.generalDistribution = false;
-    $scope.generalFeatures = false;
-    $scope.generalEaseVsUse = false;
-
-
-    $scope.selection = function (key) {
-      if (key === 'generalOverall') {
-        $scope.generalOverall = true;
-        $scope.generalDistribution = false;
-        $scope.generalFeatures = false;
-        $scope.generalEaseVsUse = false;
-
-
-      }
-      else if (key === 'generalDistribution') {
-        $scope.generalDistribution = true;
-        $scope.generalOverall = false;
-        $scope.generalFeatures = false;
-        $scope.generalEaseVsUse = false;
-
-
-      }
-      else if (key === 'generalFeatures') {
-        $scope.generalOverall = false;
-        $scope.generalDistribution = false;
-        $scope.generalFeatures = true;
-        $scope.generalEaseVsUse = false;
-
-
-      }
-      else if (key == 'generalEaseVsUse') {
-        $scope.generalEaseVsUse = true;
-        $scope.generalOverall = false;
-        $scope.generalDistribution = false;
-        $scope.generalFeatures = false;
-      }
       $scope.calcAndShowResults();
     };
-
-    window.onresize = $scope.calcAndShowResults;
 
 
     /*$scope.biScope = [
@@ -397,9 +309,8 @@ app.config(function ($translateProvider, $stateProvider) {
       //save survey response to database
       databaseService.saveResponse(adjustedResponse).then(function (res) {
         console.log("Antwort gespeichert!", res);
+        $state.go('results');
       });
-      $scope.calcAndShowResults();
-      $scope.showResults = true;
     };
     // Empty DB
     $scope.deleteEmptyEntries = function () {
@@ -633,7 +544,6 @@ app.config(function ($translateProvider, $stateProvider) {
         console.log("all Results so far", res);
         $scope.toolScores = calculateToolScores($scope.allResults);
 
-
         $scope.averages();
 
         //Erstellen eines Arrays zum Sortieren mit allen Metriken
@@ -784,7 +694,6 @@ app.config(function ($translateProvider, $stateProvider) {
         easyBarChartData.sort(function (a, b) {
           return b[1] - a[1]
         });
-
 
         google.charts.load('current', {packages: ['corechart', 'bar']});
         google.charts.load('current', {packages: ['bar']});
@@ -1060,13 +969,26 @@ app.config(function ($translateProvider, $stateProvider) {
             chartArea: {width: '80%', height: '100%'},
             pieHole: 0.8,
             sliceVisibilityThreshold: .045,
-            is3D: true,
-            width: '100%',
-            height: 400
+            is3D: true
           };
           var chart = new google.visualization.PieChart(document.getElementById('overview'));
+
+          function resizeChart() {
+            chart.draw(data, options);
+          }
+          if (document.addEventListener) {
+            window.addEventListener('resize', resizeChart);
+          }
+          else if (document.attachEvent) {
+            window.attachEvent('onresize', resizeChart);
+          }
+          else {
+            window.resize = resizeChart;
+          }
           chart.draw(data, options);
         }
+
+
 
 
         //#############    Berechnen der Feature Nutzung über alle Tools    ##############
@@ -1098,7 +1020,6 @@ app.config(function ($translateProvider, $stateProvider) {
 
         function drawOverallFeature() {
           var data = new google.visualization.arrayToDataTable(featureAverageData);
-
           var view = new google.visualization.DataView(data);
           view.setColumns([0, 1,
             {
@@ -1126,16 +1047,13 @@ app.config(function ($translateProvider, $stateProvider) {
             },
             haxis: {}
           };
-
           var chart = new google.visualization.BarChart(document.getElementById('overallFeatureChart'));
           chart.draw(view, options);
         }
-      })
+      });
     };
 
-
     // PERSONALISIERTE ERGEBNISSE
-
 
     $scope.getPersonalResult = function (alias) {
       $scope.showPersonalResult = true;
@@ -1220,7 +1138,7 @@ app.config(function ($translateProvider, $stateProvider) {
         var options = {
           title: 'Top 10 BI Tools',
           width: '100%',
-          chartArea: {width: '40%', height: '100%'},
+          chartArea: {width: '50%', height: '100%'},
           height: 250 * Math.min(1000, sortablePersonal.length) / 10,
           bar: {groupWidth: "80%"},
           legend: {position: "none"},
@@ -1236,6 +1154,7 @@ app.config(function ($translateProvider, $stateProvider) {
 
         };
         var chart = new google.visualization.BarChart(document.getElementById("personalOverallBarChart"));
+        $scope.charts.push({chart: chart, options: options, data: view});
         chart.draw(view, options);
       }
 
@@ -1297,6 +1216,7 @@ app.config(function ($translateProvider, $stateProvider) {
 
         };
         var chart = new google.visualization.BarChart(document.getElementById("usefulPersonalOverallBarChart"));
+        $scope.charts.push({chart: chart, options: options, data: view});
         chart.draw(view, options);
       }
 
@@ -1360,6 +1280,7 @@ app.config(function ($translateProvider, $stateProvider) {
 
         };
         var chart = new google.visualization.BarChart(document.getElementById("easyPersonalOverallBarChart"));
+        $scope.charts.push({chart: chart, options: options, data: view});
         chart.draw(view, options);
       }
 
@@ -1421,6 +1342,7 @@ app.config(function ($translateProvider, $stateProvider) {
 
         };
         var chart = new google.visualization.BarChart(document.getElementById("beneficialPersonalOverallBarChart"));
+        $scope.charts.push({chart: chart, options: options, data: view});
         chart.draw(view, options);
       }
 
@@ -1479,6 +1401,7 @@ app.config(function ($translateProvider, $stateProvider) {
 
         };
         var chart = new google.visualization.BarChart(document.getElementById("usablePersonalOverallBarChart"));
+        $scope.charts.push({chart: chart, options: options, data: view});
         chart.draw(view, options);
       }
 
@@ -1542,6 +1465,7 @@ app.config(function ($translateProvider, $stateProvider) {
         };
 
         var chart = new google.visualization.BarChart(document.getElementById('featureChart'));
+        $scope.charts.push({chart: chart, options: options, data: view});
         chart.draw(view, options);
       }
 
@@ -1569,7 +1493,7 @@ app.config(function ($translateProvider, $stateProvider) {
         };
 
         var chart = new google.visualization.Gauge(document.getElementById('gauge'));
-
+        $scope.charts.push({chart: chart, options: options, data: data});
         chart.draw(data, options);
       }
 
@@ -1592,20 +1516,27 @@ app.config(function ($translateProvider, $stateProvider) {
           bubble: {textStyle: {fontSize: 11}},
           width: '60%',
           height: 150,
-          sizeAxis: {maxSize: 5},
+          sizeAxis: {maxSize: 5}
         };
-        var chart = new google.visualization.BubbleChart(document.getElementById('scatterChart'));
+        var chart = new google.visualization.BubbleChart(document.getElementById('scatterChart'));        
+        $scope.charts.push({chart: chart, options: options, data: view});
         chart.draw(data, options);
       }
     };
 
     $scope.startSurvey = function () {
       $scope.start = true;
-    }
+    };
 
     // initialisierung
-    //$scope.calcAndShowResults();
-
+    $scope.calcAndShowResults();
+    
+    $scope.redrawAll = function () {
+      $scope.charts.forEach(function(el) {
+        console.log("redraw call", el);
+        el.chart.draw(el.data, el.options);
+      });
+    };
   }])
 
 
