@@ -534,14 +534,14 @@ app.config(function ($translateProvider, $stateProvider) {
       //console.log($scope.easeOfUseAverage);
 
 
-    }
+    };
 
     // ALLE ERGEBNISSE
     $scope.calcAndShowResults = function () {
       databaseService.getAllResponses().then(function (res) {
         $scope.allResults = res.data;
+        console.log("all Results so far", $scope.allResults, res);
         //$scope.allResults.answers = JSON.parse($scope.allResults.answers);
-        console.log("all Results so far", res);
         $scope.toolScores = calculateToolScores($scope.allResults);
 
         $scope.averages();
@@ -1563,7 +1563,7 @@ app.config(function ($translateProvider, $stateProvider) {
         url: '/getAllResponses'
       }).then(function (data) {
         console.log("GET Answers", data);
-        deferred.resolve({'data': data});
+        deferred.resolve(data);
       });
       return deferred.promise;
     };
@@ -1575,7 +1575,7 @@ app.config(function ($translateProvider, $stateProvider) {
         method: 'GET',
         url: '/emptyDB'
       }).then(function (data) {
-        deferred.resolve({'data': data});
+        deferred.resolve(data);
       });
       return deferred.promise;
     };
