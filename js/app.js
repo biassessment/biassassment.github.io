@@ -1561,11 +1561,9 @@ app.config(function ($translateProvider, $stateProvider) {
       $http({
         method: 'GET',
         url: '/getAllResponses'
-      }).success(function (data) {
+      }).then(function (data) {
         console.log("GET Answers", data);
         deferred.resolve({'data': data});
-      }).error(function () {
-        window.alert("GetAnswers GET failure!");
       });
       return deferred.promise;
     };
@@ -1576,10 +1574,8 @@ app.config(function ($translateProvider, $stateProvider) {
       $http({
         method: 'GET',
         url: '/emptyDB'
-      }).success(function (data) {
+      }).then(function (data) {
         deferred.resolve({'data': data});
-      }).error(function () {
-        window.alert("EmptyDB GET failure!");
       });
       return deferred.promise;
     };
