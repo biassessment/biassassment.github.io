@@ -540,8 +540,8 @@ app.config(function ($translateProvider, $stateProvider) {
     $scope.calcAndShowResults = function () {
       databaseService.getAllResponses().then(function (res) {
         $scope.allResults = res.data;
-        console.log("all Results so far", $scope.allResults, res);
         //$scope.allResults.answers = JSON.parse($scope.allResults.answers);
+        console.log("all Results so far", $scope.allResults);
         $scope.toolScores = calculateToolScores($scope.allResults);
 
         $scope.averages();
