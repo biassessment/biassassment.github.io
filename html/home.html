@@ -1,5 +1,82 @@
 <div class="home">
-    <button ui-sref="/">Home</button>
+
+    <div class="intro" ui-view>
+        <h1>
+            KIT Business Intelligence Assessment
+        </h1>
+        <p>
+            <strong>Effectively using Business Intelligence (BI) tools</strong> is becoming increasingly important to
+            derive insights from the huge amount of collected data and <strong>make better business decisions.</strong>
+            However, many companies still do not leverage the full potential of these tools. Therefore, this research
+            project, running at Karlsruhe Institute of Technology (KIT), Institute of Information Systems and Marketing
+            (<a title="ISSD" href="http://issd.iism.kit.edu" target="_blank"><span lang="EN-US">Research Group
+                Information Systems and Service Design</span></a>, Prof. Dr. Alexander Mädche), aims to
+            <strong>assess how BI Tools are used</strong> and <strong>identify areas for improvement.
+            </strong>
+        </p>
+        <h4>
+            The KIT BI Assessment Tool offers the following three options:
+        </h4>
+        <h3>
+            1. Rate your own BI Tool
+        </h3>
+        <p>If you are a user of BI tools and would like to find out how your tool rates compared to others for your specific
+            tasks, we would like to invite you to complete a short
+            survey which will just take about <strong>10 minutes. </strong>You can be assured that all of your responses
+            will be treated <strong>absolutely confidentially</strong>. The survey is <strong>completely
+                anonymous</strong> and only aggregate results will be published. Your honest response to each question
+            is extremely important to the outcome of this project.
+        </p>
+        <p>
+            After completing the survey you will <b>get access to your personal results area</b> and see where you can improve.
+        </p>
+        <p>
+            <button class="button" ng-click="startSurvey()">Start the Survey Now</button>
+        </p>
+
+        <h3>
+            2. Find out the best BI Tool for your specific purposes
+        </h3>
+        <p>
+            If <b>you don't have a BI Tool yet</b> and you would like to know, which tool best support your specific needs,
+            you can find the answers by completing a very short survey (2-3 minutes) regarding your business decisions
+            that you would like to support with a BI tool, and we will match your answers against our benchmarking
+            database to provide you with an optimal solution.
+        </p>
+        <p>
+            <button class = "button" ui-sref="decisionTypeSurvey">Find out the best BI Tool for you</button>
+        </p>
+        <h3>
+            3. Look up your personal results
+        </h3>
+        <p>
+            Have you completed the survey yet? Then it's time to look up your personal results in the results area.
+            Since out benchmarking database is constantly growing, the results may change over time. In the results area
+            you can always access the most recent results.
+        </p>
+        <button class="button" ui-sref="results">Results Area</button>
+
+
+
+        <p>If you have any questions regarding this study, please do not hesitate to <a
+                href="mailto:sebastian.classen@student.kit.edu">contact us</a>. </p>
+        <p> </p>
+        <p>Thank you for your consideration and support,</p>
+        <p> </p>
+        Sincerely,
+        <p><img alt="Umfrage" title="Umfrage" src="//www.unipark.de/uc/BI_Assessment/images/Umfrage.jpg" width="95"
+                height="127"/>                              <br/><a
+                href="https://www.xing.com/profile/Sebastian_Classen5?sc_o=mxb_p"> Sebastian Classen<br/></a><a
+                href="mailto:sebastian.classen@student.kit.edu">sebastian.classen@student.kit.edu</a><a
+                href="https://www.xing.com/profile/Sebastian_Classen5?sc_o=mxb_p"></a>   <br/><br/><img alt="Mädche"
+                                                                                                        src="http://issd.iism.kit.edu/img/csm_dekanat_Maedche_Auswahl_9eea8e0161.jpg"
+                                                                                                        width="95"
+                                                                                                        height="127"/> 
+              <br/> Prof. Dr. Alexander Mädche<br/><a title="ISSD" href="http://issd.iism.kit.edu" target="_blank"><span
+                    lang="EN-US">Research Group Information Systems and Service Design</span></a> </p>
+        <span style="color: #000000;"><br/></span>
+    </div>
+    <button ui-sref="home">Home</button>
 
     <button ui-sref="survey">Survey</button>
 
