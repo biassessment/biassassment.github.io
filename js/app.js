@@ -34,7 +34,7 @@ var app = angular.module('bi-assessment', [
             templateUrl: '../html/results.html'
         })
         .state('results.personal', {
-            url: '/personal',
+            url: '/:alias',
             controller: 'personalCtrl',
             templateUrl: '../html/personal.html'
         })
