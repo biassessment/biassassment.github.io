@@ -1,20 +1,44 @@
-    <div class="intro" ui-view>
-        <p>Dear Participant,<br /><br /></p>
-        <p><strong>Effectively using Business Intelligence (BI) tools</strong> is becoming increasingly important to derive insights from the huge amount of collected data and <strong>make better business decisions.</strong> However, many companies still do not leverage the full potential of these tools. Therefore, this research project, running at Karlsruhe Institute of Technology (KIT), Institute of Information Systems and Marketing (<a title="ISSD" href="http://issd.iism.kit.edu" target="_blank"><span lang="EN-US">Research Group Information Systems and Service Design</span></a>, Prof. Dr. Alexander Mädche), aims to <strong>assess your current usage</strong> of BI tools and <strong>identify areas for improvement.<br /><br /></strong></p>
-        <p>If you are a user of BI tools, we would like to invite you to take part in the project by completing a short survey which will just take about <strong>10 minutes. </strong>You can be assured that all of your responses will be treated <strong>absolutely confidentially</strong>. The survey is <strong>completely anonymous</strong> and only aggregate results will be published. Your honest response to each question is extremely important to the outcome of this project. You can <strong>take breaks at any time</strong> and continue later. The <strong>survey saves your answers</strong> and you can resume where you left off. <br /><br />If you like, we offer to give you feedback with recommendations via a <strong>dedicated feedback report</strong>. To receive the report, please enter your email address on the last page of the survey.<br /><br /></p>
-        <p>If you have any questions regarding this study, please do not hesitate to <a href="mailto:sebastian.classen@student.kit.edu">contact us</a>. </p>
+<div ui-view class="survey">
+    <div ng-hide="start">
+        <p>Dear Participant,<br/><br/></p>
+        <p><strong>Effectively using Business Intelligence (BI) tools</strong> is becoming increasingly important to derive
+            insights from the huge amount of collected data and <strong>make better business decisions.</strong> However,
+            many companies still do not leverage the full potential of these tools. Therefore, this research project,
+            running at Karlsruhe Institute of Technology (KIT), Institute of Information Systems and Marketing (<a
+                    title="ISSD" href="http://issd.iism.kit.edu" target="_blank"><span lang="EN-US">Research Group Information Systems and Service Design</span></a>,
+            Prof. Dr. Alexander Mädche), aims to <strong>assess your current usage</strong> of BI tools and <strong>identify
+                areas for improvement.<br/><br/></strong></p>
+        <p>If you are a user of BI tools, we would like to invite you to take part in the project by completing a short
+            survey which will just take about <strong>10 minutes. </strong>You can be assured that all of your responses
+            will be treated <strong>absolutely confidentially</strong>. The survey is <strong>completely anonymous</strong>
+            and only aggregate results will be published. Your honest response to each question is extremely important to
+            the outcome of this project. You can <strong>take breaks at any time</strong> and continue later. The <strong>survey
+                saves your answers</strong> and you can resume where you left off. <br/><br/>If you like, we offer to give
+            you feedback with recommendations via a <strong>dedicated feedback report</strong>. To receive the report,
+            please enter your email address on the last page of the survey.<br/><br/></p>
+        <p>If you have any questions regarding this study, please do not hesitate to <a
+                href="mailto:sebastian.classen@student.kit.edu">contact us</a>. </p>
         <p> </p>
         <p>Thank you for your consideration and support,</p>
         <p> </p>
         <button class="button" ng-click="startSurvey()">Start the Survey Now</button>
         <p> </p>
         Sincerely,
-        <p><img alt="Umfrage" title="Umfrage" src="//www.unipark.de/uc/BI_Assessment/images/Umfrage.jpg" width="95" height="127" />                              <br /><a href="https://www.xing.com/profile/Sebastian_Classen5?sc_o=mxb_p"> Sebastian Classen<br /></a><a href="mailto:sebastian.classen@student.kit.edu">sebastian.classen@student.kit.edu</a><a href="https://www.xing.com/profile/Sebastian_Classen5?sc_o=mxb_p"></a>   <br /><br /><img alt="Mädche" src="http://issd.iism.kit.edu/img/csm_dekanat_Maedche_Auswahl_9eea8e0161.jpg" width="95" height="127" />    <br /> Prof. Dr. Alexander Mädche<br /><a title="ISSD" href="http://issd.iism.kit.edu" target="_blank"><span lang="EN-US">Research Group Information Systems and Service Design</span></a> </p>
-        <span style="color: #000000;"><br /></span>
+        <p><img alt="Umfrage" title="Umfrage" src="//www.unipark.de/uc/BI_Assessment/images/Umfrage.jpg" width="95"
+                height="127"/>                              <br/><a
+                href="https://www.xing.com/profile/Sebastian_Classen5?sc_o=mxb_p"> Sebastian Classen<br/></a><a
+                href="mailto:sebastian.classen@student.kit.edu">sebastian.classen@student.kit.edu</a><a
+                href="https://www.xing.com/profile/Sebastian_Classen5?sc_o=mxb_p"></a>   <br/><br/><img alt="Mädche"
+                                                                                                        src="http://issd.iism.kit.edu/img/csm_dekanat_Maedche_Auswahl_9eea8e0161.jpg"
+                                                                                                        width="95"
+                                                                                                        height="127"/> 
+              <br/> Prof. Dr. Alexander Mädche<br/><a title="ISSD" href="http://issd.iism.kit.edu" target="_blank"><span
+                    lang="EN-US">Research Group Information Systems and Service Design</span></a> </p>
+        <span style="color: #000000;"><br/></span>
     </div>
 
-    <div ng-show="start">
         <mw-form-viewer
+                ng-show="start"
                 form-data="ctrl.formData"
                 template-data="ctrl.templateData"
                 form-status="ctrl.formStatus"
@@ -24,7 +48,4 @@
                 read-only="ctrl.viewerReadOnly"
                 on-submit="ctrl.saveResponse()">
         </mw-form-viewer>
-    </div>
-
-
-
+</div>
