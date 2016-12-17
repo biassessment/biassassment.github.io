@@ -2140,4 +2140,6 @@ var surveyModel = {
   ]
 };
 
-
+/**
+ * Created by Basti on 17.12.2016.
+ */

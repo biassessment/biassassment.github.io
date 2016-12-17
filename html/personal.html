@@ -1,4 +1,4 @@
-<div class="personalResult">
+<div class= "personalResult">
     <h1>
         Personal Results
     </h1>
@@ -9,67 +9,91 @@
                 </span>
 
     </br>
+    <div class="resultsDashboard">
+        <div class="chartContent">
+            <h4>
+                Rating of {{personalResult.tool}} among similar users like you:
+            </h4>
 
-    <div class="gauge" id="gauge"></div>
 
-    <h4>The top 10 BI Tools in the category <select ng-model="myPersonalCategory"
-                                                    ng-init="myPersonalCategory = 'Overall'"
-                                                    ng-options="category as category for category in categories"
-                                                    ng-change="redrawAll()"></select>
-    </h4>
-    <div class="chartContainer">
-        <div ng-show="myPersonalCategory == 'Overall'" class="barChart" id="personalOverallBarChart"></div>
-        <div ng-show="myPersonalCategory == 'Usefulness'" class="barChart"
-             id="usefulPersonalOverallBarChart"></div>
-        <div ng-show="myPersonalCategory == 'Ease Of Use'" class="barChart"
-             id="easyPersonalOverallBarChart"></div>
-        <div ng-show="myPersonalCategory == 'Net Benefits'" class="barChart"
-             id="beneficialPersonalOverallBarChart"></div>
-        <div ng-show="myPersonalCategory == 'Intention to Use'" class="barChart"
-             id="usablePersonalOverallBarChart"></div>
+            <div class="gauge" id="gauge"></div>
+        </div>
+        <div class="selectBar"  ng-model="personalView" ng-init="personalView = 'personalOverall'">
+            <div class="selectButton" id= "left">
+                <button class="btn" ng-click="personalView = 'personalOverall'; calcAndShowResults()" id="scores"
+                        type="submit">Scores
+                </button>
+            </div>
+            <div class="selectButton">
+                <button class="btn" ng-click="personalView = 'personalDistribution'; calcAndShowResults()"
+                        id="distribution" type="submit">Tool Distribution
+                </button>
+            </div>
+            <div class="selectButton">
+                <button class="btn" ng-click="personalView = 'features'; calcAndShowResults()" id="capabilities"
+                        type="submit">BI Capabilities
+                </button>
+            </div>
+            <div class="selectButton" id = "right">
+                <button class="btn" ng-click="personalView = 'generalEaseVsUse'; calcAndShowResults()" id="easevsuse"
+                        type="submit">Ease of Use vs Usefulness
+                </button>
+            </div>
+        </div>
+        <div class="chartContainer">
+            <div class="chartContent">
+                <div ng-show ="personalView == 'personalOverall'" class = "charts" id = "generalOverall">
+                    <div class = "selecion">
+                        <h4>The top 10 BI Tools in the category <select ng-model="myPersonalCategory"
+                                                                        ng-init="myPersonalCategory = 'Overall'"
+                                                                        ng-options="category as category for category in categories"
+                                                                        ng-change="getPersonalResult()"></select>
+                        </h4>
+                    </div>
+                    <div class="barChart" id="personalOverallBarChart"></div>
+                </div>
+                <div ng-show ="personalView == 'personalDistribution'" class = "charts" id = "personalDistribution">
+                    <div class="selection">
+                        <h2>
+                            Distribution of different BI Tools in this Data Set
+                        </h2>
+                    </div>
+                    <div class="barChart" id="personalOverviewChart"></div>
+                </div>
+
+                <div ng-show ="personalView == 'features'" class = "charts" id = "personalFeatures">
+                    <div class="selection">
+                        <h2>
+                            Distribution of different BI Tools in this Data Set
+                        </h2>
+                    </div>
+                    <div class="barChart" id="featureChart"></div>
+                </div>
+
+            </div>
+        </div>
+
+
     </div>
-
-
-    <h4>
-        Feature use in your decision category
-    </h4>
-    <div class="barChart" id="featureChart"></div>
-
-
-    <!--<span>Hello {{personalResult.alias}}! Your decision type is: {{personalResult.decisionType}}!</span></br>
-    <span>{{conditionalResultsByDecisionType.length - 1}} other people make the same type of decisions.</span></br>
-
-    <span>You selected to support the following business processes with {{personalResult.tool}}:</span>
-    <ul>
-        <li ng-repeat="process in personalProcesses">
-            {{process}}
-        </li>
-    </ul>
-    <span ng-repeat="process in personalProcesses">The best tools for {{process}} are:
-    <ul>
-        <li ng-repeat="tool in processToolScores[process] | object2Array | orderBy:'average':true | limitTo:5">
-            {{tool.toolName}} - Rating: {{tool.average.toFixed(3)}} - (n = {{tool.count}})
-        </li>
-    </ul>
-    </span>
-        <div class="scatterChart" id="scatterChart"></div>
-        <div class="scatterChart" id="scatter"></div>-->
 </div>
 
-<!--
-        Hier beginnt der allgemeine Teil
--->
 
-<!--            <div class="overallResults">
-                <h2>General Results</h2>
-                <span>This section summarizes the collected information of all users of the Assessment Tool.
-                    The Tools were evaluated in 4 categories: Usefulness, Ease of Use,
-                    Perceived Benefits, and Intention to Use the tool. The maximum score that could  be reached is 100.
-                    In the following you can choose one of the evaluation categories or an overall score to display the
-                    10 tools with the highest average rating in this category.</span>
+        <!--<span>Hello {{personalResult.alias}}! Your decision type is: {{personalResult.decisionType}}!</span></br>
+        <span>{{conditionalResultsByDecisionType.length - 1}} other people make the same type of decisions.</span></br>
 
+        <span>You selected to support the following business processes with {{personalResult.tool}}:</span>
+        <ul>
+            <li ng-repeat="process in personalProcesses">
+                {{process}}
+            </li>
+        </ul>
+        <span ng-repeat="process in personalProcesses">The best tools for {{process}} are:
+        <ul>
+            <li ng-repeat="tool in processToolScores[process] | object2Array | orderBy:'average':true | limitTo:5">
+                {{tool.toolName}} - Rating: {{tool.average.toFixed(3)}} - (n = {{tool.count}})
+            </li>
+        </ul>
+        </span>
 
-            </div>-->
-</div>
 
 

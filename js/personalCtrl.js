@@ -102,23 +102,56 @@ var app = angular.module('bi-assessment.personalCtrl', [])
                   $scope.conditionalToolScores[key].count]);
           }
 
-          //#########Top 5 Tool Bar Chart ##########
-
-          //sortieren das Array nach Average
-          sortablePersonal.sort(function (a, b) {
-              return b[5] - a[5]
-          });
-
           var personalOverallBarChartData = [
               ['Tool', 'Overall Rating', {role: "style"}]
           ];
 
-          //Beste 5 Tools in das Array fürs Chart pushen
-          for (var i = 0; i <= Math.min(1000, sortablePersonal.length - 1); i++) {
-              personalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][5] * 100).toFixed(1)), "#2F9682"]);
+          //#########Top 5 Tool Bar Chart ##########
+          var typenumber = 5;
+          var selectedAverage = $scope.personaloverallAverage;
+          switch ($scope.myPersonalCategory) {
+              case 'Overall': {
+                  typenumber = 5;
+                  selectedAverage = $scope.personaloverallAverage;
+              } break;
+              case 'Usefulness': {
+                  typenumber = 1;
+                  selectedAverage = $scope.personalUsefulnessAverage;
+              } break;
+              case 'Ease Of Use': {
+                  typenumber = 2;
+                  selectedAverage = $scope.personalEaseOfUseAverage;
+              } break;
+              case'Net Benefits': {
+                  typenumber = 3;
+                  selectedAverage = $scope.personalBenefitsAverage;
+              }break;
+              case 'Intention to Use': {
+                  typenumber = 4;
+                  selectedAverage = $scope.personalUsageAverage;
+              }
           }
 
-          personalOverallBarChartData.push(['Average', parseFloat(($scope.personaloverallAverage * 100).toFixed(1)), "#ff0000"]);
+          //sortieren das Array nach Average
+          sortablePersonal.sort(function (a, b) {
+              return b[typenumber] - a[typenumber]
+              console.log(typenumber);
+          });
+
+
+
+          //Beste 5 Tools in das Array fürs Chart pushen
+          for (var i = 0; i <= Math.min(1000, sortablePersonal.length - 1); i++) {
+              if (sortablePersonal[i][0] !== $scope.personalResult.tool) {
+                  personalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][typenumber] * 100).toFixed(1)), "#2F9682"]);
+              }
+              else {
+                  personalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][typenumber] * 100).toFixed(1)), "#FF6600"]);
+              }
+
+          }
+
+          personalOverallBarChartData.push(['Average', parseFloat((selectedAverage * 100).toFixed(1)), "#ff0000"]);
           personalOverallBarChartData.sort(function (a, b) {
               return b[1] - a[1]
           });
@@ -153,7 +186,7 @@ var app = angular.module('bi-assessment.personalCtrl', [])
                       title: 'Overall Rating',
                       gridlines: {color: 'white', count: 5},
                       viewWindow: {
-                          min: sortablePersonal[Math.min(1000, sortablePersonal.length - 1)][5] * 100 - 5,
+                          min: sortablePersonal[Math.min(1000, sortablePersonal.length - 1)][typenumber] * 100 - 5,
                           max: 'auto'
                       }
                   },
@@ -164,248 +197,38 @@ var app = angular.module('bi-assessment.personalCtrl', [])
               chart.draw(view, options);
           }
 
-
-          //Usefulness Bar Chart
-
+/*
           sortablePersonal.sort(function (a, b) {
-              return b[1] - a[1]
+              return b[6] - a[6]
           });
 
-
-          var usefulPersonalOverallBarChartData = [
-              ['Tool', 'Overall Rating', {role: "style"}]
+          var personalOverviewChartData = [
+              ['Tool Name', 'n']
           ];
-
-          //Beste 5 Tools in das Array fürs Chart pushen
-          for (var i = 0; i <= Math.min(1000, sortablePersonal.length - 1); i++) {
-              usefulPersonalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][1] * 100).toFixed(1)), "#2F9682"]);
+          for (var key in sortable) {
+              personalOverviewChartData.push([sortablePersonal[key][0], sortablePersonal[key][6]]);
           }
-          usefulPersonalOverallBarChartData.push(['Average', parseFloat(($scope.personalUsefulnessAverage * 100).toFixed(1)), "#ff0000"]);
-          usefulPersonalOverallBarChartData.sort(function (a, b) {
-              return b[1] - a[1]
-          });
-
-          //#####Bar Chart Usefulness######
-          google.charts.load('current', {packages: ['corechart', 'bar']});
-          google.charts.load('current', {packages: ['bar']});
-          google.charts.setOnLoadCallback(drawUsefulStuff);
-
-          function drawUsefulStuff() {
-              var data = google.visualization.arrayToDataTable(usefulPersonalOverallBarChartData);
-
-              var view = new google.visualization.DataView(data);
-              view.setColumns([0, 1,
-                  {
-                      calc: "stringify",
-                      sourceColumn: 1,
-                      type: "string",
-                      role: "annotation"
-                  },
-                  2]);
-
+          google.charts.load("current", {packages: ["corechart"]});
+          google.charts.setOnLoadCallback(drawOverviewChart);
+          function drawOverviewChart() {
+              var data = google.visualization.arrayToDataTable(personalOverviewChartData);
               var options = {
-                  title: 'Top 10 BI Tools',
-                  width: 800,
-                  chartArea: {width: '60%', height: '100%'},
-                  height: 250 * Math.min(100, sortablePersonal.length) / 10,
-                  bar: {groupWidth: "80%"},
-                  legend: {position: "none"},
-                  hAxis: {
-                      title: 'Overall Rating',
-                      gridlines: {color: 'white', count: 5},
-                      viewWindow: {
-                          min: sortablePersonal[Math.min(1000, sortablePersonal.length - 1)][1] * 100 - 5,
-                          max: 'auto'
-                      }
-                  },
-                  haxis: {}
-
+                  title: 'Tool Usage Distribution',
+                  chartArea: {width: '80%', height: '100%'},
+                  pieHole: 0.8,
+                  sliceVisibilityThreshold: .045,
+                  is3D: true,
+                  height: 350
               };
-              var chart = new google.visualization.BarChart(document.getElementById("usefulPersonalOverallBarChart"));
-              chart.draw(view, options);
-          }
+              var chart = new google.visualization.PieChart(document.getElementById('personalOverviewChart'));
+
+              chart.draw(data, options);
+          }*/
 
 
-          sortablePersonal.sort(function (a, b) {
-              return b[2] - a[2]
-          });
 
 
-          var easyPersonalOverallBarChartData = [
-              ['Tool', 'Overall Rating', {role: "style"}]
-          ];
 
-          //Beste 5 Tools in das Array fürs Chart pushen
-          for (var i = 0; i <= Math.min(1000, sortablePersonal.length - 1); i++) {
-              easyPersonalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][2] * 100).toFixed(1)), "#2F9682"]);
-          }
-
-          easyPersonalOverallBarChartData.push(['Average', parseFloat(($scope.personalEaseOfUseAverage * 100).toFixed(1)), "#ff0000"]);
-          easyPersonalOverallBarChartData.sort(function (a, b) {
-              return b[1] - a[1]
-          });
-
-
-          //console.log(overallBarChartData);
-
-          //#####Bar Chart OVERALL######
-          google.charts.load('current', {packages: ['corechart', 'bar']});
-          google.charts.load('current', {packages: ['bar']});
-          google.charts.setOnLoadCallback(drawEasyStuff);
-
-          function drawEasyStuff() {
-              var data = google.visualization.arrayToDataTable(easyPersonalOverallBarChartData);
-
-              var view = new google.visualization.DataView(data);
-              view.setColumns([0, 1,
-                  {
-                      calc: "stringify",
-                      sourceColumn: 1,
-                      type: "string",
-                      role: "annotation"
-                  },
-                  2]);
-
-              var options = {
-                  title: 'Top 10 BI Tools',
-                  width: 800,
-                  chartArea: {width: '60%', height: '100%'},
-                  height: 250 * Math.min(1000, sortablePersonal.length) / 10,
-                  bar: {groupWidth: "80%"},
-                  legend: {position: "none"},
-                  hAxis: {
-                      title: 'Overall Rating',
-                      gridlines: {color: 'white', count: 5},
-                      viewWindow: {
-                          min: sortablePersonal[Math.min(1000, sortablePersonal.length - 1)][2] * 100 - 5,
-                          max: 'auto'
-                      }
-                  },
-                  haxis: {}
-
-              };
-              var chart = new google.visualization.BarChart(document.getElementById("easyPersonalOverallBarChart"));
-              chart.draw(view, options);
-          }
-
-
-          sortablePersonal.sort(function (a, b) {
-              return b[3] - a[3]
-          });
-
-          var beneficialPersonalOverallBarChartData = [
-              ['Tool', 'Overall Rating', {role: "style"}]
-          ];
-
-          //Beste 5 Tools in das Array fürs Chart pushen
-          for (var i = 0; i <= Math.min(1000, sortablePersonal.length - 1); i++) {
-              beneficialPersonalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][3] * 100).toFixed(1)), "#2F9682"]);
-          }
-          beneficialPersonalOverallBarChartData.push(['Average', parseFloat(($scope.personalBenefitsAverage * 100).toFixed(1)), "#ff0000"]);
-          beneficialPersonalOverallBarChartData.sort(function (a, b) {
-              return b[1] - a[1]
-          });
-
-
-          //console.log(overallBarChartData);
-
-          //#####Bar Chart OVERALL######
-          google.charts.load('current', {packages: ['corechart', 'bar']});
-          google.charts.load('current', {packages: ['bar']});
-          google.charts.setOnLoadCallback(drawBeneficialStuff);
-
-          function drawBeneficialStuff() {
-              var data = google.visualization.arrayToDataTable(beneficialPersonalOverallBarChartData);
-
-              var view = new google.visualization.DataView(data);
-              view.setColumns([0, 1,
-                  {
-                      calc: "stringify",
-                      sourceColumn: 1,
-                      type: "string",
-                      role: "annotation"
-                  },
-                  2]);
-
-              var options = {
-                  title: 'Top 10 BI Tools',
-                  width: 800,
-                  chartArea: {width: '60%', height: '100%'},
-                  height: 250 * Math.min(1000, sortablePersonal.length) / 10,
-                  bar: {groupWidth: "80%"},
-                  legend: {position: "none"},
-                  hAxis: {
-                      title: 'Overall Rating',
-                      gridlines: {color: 'white', count: 5},
-                      viewWindow: {
-                          min: sortablePersonal[Math.min(1000, sortablePersonal.length - 1)][3] * 100 - 5,
-                          max: 'auto'
-                      }
-                  },
-                  haxis: {}
-
-              };
-              var chart = new google.visualization.BarChart(document.getElementById("beneficialPersonalOverallBarChart"));
-              chart.draw(view, options);
-          }
-
-          sortablePersonal.sort(function (a, b) {
-              return b[4] - a[4]
-          });
-
-          var usablePersonalOverallBarChartData = [
-              ['Tool', 'Overall Rating', {role: "style"}]
-          ];
-
-          //Beste 5 Tools in das Array fürs Chart pushen
-          for (var i = 0; i <= Math.min(1000, sortablePersonal.length - 1); i++) {
-              usablePersonalOverallBarChartData.push([sortablePersonal[i][0], parseFloat((sortablePersonal[i][4] * 100).toFixed(1)), "#2F9682"]);
-          }
-
-          usablePersonalOverallBarChartData.push(['Average', parseFloat(($scope.personalUsageAverage * 100).toFixed(1)), "#ff0000"]);
-          usablePersonalOverallBarChartData.sort(function (a, b) {
-              return b[1] - a[1]
-          });
-
-          //#####Bar Chart OVERALL######
-          google.charts.load('current', {packages: ['corechart', 'bar']});
-          google.charts.load('current', {packages: ['bar']});
-          google.charts.setOnLoadCallback(drawUsableStuff);
-
-          function drawUsableStuff() {
-              var data = google.visualization.arrayToDataTable(usablePersonalOverallBarChartData);
-
-              var view = new google.visualization.DataView(data);
-              view.setColumns([0, 1,
-                  {
-                      calc: "stringify",
-                      sourceColumn: 1,
-                      type: "string",
-                      role: "annotation"
-                  },
-                  2]);
-
-              var options = {
-                  title: 'Top 10 BI Tools',
-                  width: 800,
-                  chartArea: {width: '60%', height: '100%'},
-                  height: 250 * Math.min(1000, sortablePersonal.length) / 10,
-                  bar: {groupWidth: "80%"},
-                  legend: {position: "none"},
-                  hAxis: {
-                      title: 'Overall Rating',
-                      gridlines: {color: 'white', count: 5},
-                      viewWindow: {
-                          min: sortablePersonal[Math.min(1000, sortablePersonal.length - 1)][4] * 100 - 5,
-                          max: 'auto'
-                      }
-                  },
-                  haxis: {}
-
-              };
-              var chart = new google.visualization.BarChart(document.getElementById("usablePersonalOverallBarChart"));
-              chart.draw(view, options);
-          }
 
           //####Feature Chart for personal Results#####
           var featureData = [];
@@ -521,7 +344,23 @@ var app = angular.module('bi-assessment.personalCtrl', [])
               var chart = new google.visualization.BubbleChart(document.getElementById('scatterChart'));
               chart.draw(data, options);
           }
+
+
+
+
+
+
+
+
+
+
+
       };
+
+
+
+
+
 
       //initialisieren
       $scope.getPersonalResult();

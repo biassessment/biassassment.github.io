@@ -40,6 +40,7 @@ var app = angular.module('bi-assessment', [
         })
         .state('decisionTypeSurvey', {
             url: '/decisionTypeSurvey',
+            controller:'decisionTypeSurveyController',
             templateUrl: '../html/decisionTypeSurvey.html'
         });
   })
