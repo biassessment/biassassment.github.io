@@ -22,27 +22,27 @@
     </div>
 
     <div class="resultsDashboard">
-        <div class="selectBar" ng-model="chosenView" ng-init="chosenView = 'generalOverall'">
-            <form class="selectButton">
+        <div class="selectBar"  ng-model="chosenView" ng-init="chosenView = 'generalOverall'">
+            <div class="selectButton" id= "left">
                 <button class="btn" ng-click="chosenView = 'generalOverall'; calcAndShowResults()" id="scores"
                         type="submit">Scores
                 </button>
-            </form>
-            <form class="selectButton">
+            </div>
+            <div class="selectButton">
                 <button class="btn" ng-click="chosenView = 'generalDistribution'; calcAndShowResults()"
                         id="distribution" type="submit">Tool Distribution
                 </button>
-            </form>
-            <form class="selectButton">
+            </div>
+            <div class="selectButton">
                 <button class="btn" ng-click="chosenView = 'generalFeatures'; calcAndShowResults()" id="capabilities"
                         type="submit">BI Capabilities
                 </button>
-            </form>
-            <form class="selectButton">
+            </div>
+            <div class="selectButton" id = "right">
                 <button class="btn" ng-click="chosenView = 'generalEaseVsUse'; calcAndShowResults()" id="easevsuse"
                         type="submit">Ease of Use vs Usefulness
                 </button>
-            </form>
+            </div>
         </div>
         <div class="chartContainer">
             <div class="chartContent">
