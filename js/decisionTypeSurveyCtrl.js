@@ -1,12 +1,14 @@
-var app = angular.module('bi-assessment.decisionTypeSurveyController', [])
+/**
+ * Created by Basti on 17.12.2016.
+ */
+var app = angular.module('bi-assessment.decisionTypeSurveyCtrl', [])
 
-    .controller('decisionTypeSurveyController', ['$scope', '$q', '$http', '$state', '$translate', 'mwFormResponseUtils', 'databaseService', function ($scope, $q, $http, $state, $translate, mwFormResponseUtils, databaseService) {
+    .controller('decisionTypeSurveyCtrl', ['$scope', '$q', '$http', '$state', '$translate', 'mwFormResponseUtils', 'databaseService', function ($scope, $q, $http, $state, $translate, mwFormResponseUtils, databaseService) {
         console.log("decisionTypeSurveyController running!");
         $scope.start = false;
 
         // Umfrage-Design
         var decisionTypeSurvey = decisionTypeSurveyModel.model;
-        console.log (decisionTypeSurvey);
         //var fakeResponse = surveyModel.fakeResponse;
 
         // Header-Arrays
@@ -212,11 +214,12 @@ var app = angular.module('bi-assessment.decisionTypeSurveyController', [])
             console.log("Erhaltene Antwort: ", response);
             var fragen = response[0];
             var antworten = response[1];
+            $scope.alias = antworten[antworten.length - 1];
 
             var adjustedResponse = {};
             adjustedResponse["alias"] = antworten[antworten.length - 1];
             adjustedResponse["answers"] = JSON.stringify(response, null, 2);
-            adjustedResponse["tool"] = antworten[6];
+            adjustedResponse["tool"] = "";
             var scores = $scope.calculateScores(response);
             for (var score in scores) {
                 adjustedResponse[score] = scores[score];
@@ -255,6 +258,7 @@ var app = angular.module('bi-assessment.decisionTypeSurveyController', [])
             databaseService.saveResponse(adjustedResponse).then(function (res) {
                 console.log("Antwort gespeichert!", res);
                 $state.go('results');
+                console.log($scope.alias);
             });
         };
 

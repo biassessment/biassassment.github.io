@@ -1,5 +1,5 @@
-<div class="survey" ng-controller="decisionTypeSurveyController as ctrl">
-    <div >
+<div class="survey">
+    <div ng-hide="start">
         <p>Dear Participant,<br/><br/></p>
         <p><strong>Effectively using Business Intelligence (BI) tools</strong> is becoming increasingly important to derive
             insights from the huge amount of collected data and <strong>make better business decisions.</strong> However,
@@ -38,6 +38,7 @@
     </div>
 
     <mw-form-viewer
+            ng-show="start"
             form-data="ctrl2.formData"
             template-data="ctrl2.templateData"
             form-status="ctrl2.formStatus"
@@ -45,6 +46,6 @@
             api="ctrl2.formViewer"
             response-data="ctrl2.responseData"
             read-only="ctrl2.viewerReadOnly"
-            on-submit="ctrl2.saveResponse()">
+            on-submit="ctrl2.saveResponse(alias)">
     </mw-form-viewer>
 </div>

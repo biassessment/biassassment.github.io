@@ -3,6 +3,7 @@ var app = angular.module('bi-assessment', [
     'bi-assessment.databaseService',
     'bi-assessment.csvService',
     'bi-assessment.surveyCtrl',
+    'bi-assessment.decisionTypeSurveyCtrl',
     'bi-assessment.resultsCtrl',
     'bi-assessment.personalCtrl',
     'bi-assessment.mainCtrl',
@@ -40,7 +41,7 @@ var app = angular.module('bi-assessment', [
         })
         .state('decisionTypeSurvey', {
             url: '/decisionTypeSurvey',
-            controller:'decisionTypeSurveyController',
+            controller:'decisionTypeSurveyCtrl',
             templateUrl: '../html/decisionTypeSurvey.html'
         });
   })

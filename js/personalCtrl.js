@@ -14,11 +14,15 @@ var app = angular.module('bi-assessment.personalCtrl', [])
       $scope.personalAverages = function () {
 
           $scope.personaloverallAverage = 0;
+          var length = 0;
+          for (var key in $scope.conditionalToolScores) {
+              length+=$scope.conditionalToolScores[key].count;
+          }
 
           for (var key in $scope.conditionalResultsByDecisionType) {
               $scope.personaloverallAverage += $scope.conditionalResultsByDecisionType[key].overall;
           }
-          $scope.personaloverallAverage = $scope.personaloverallAverage / ($scope.conditionalResultsByDecisionType.length - 1)
+          $scope.personaloverallAverage = $scope.personaloverallAverage / length;
           console.log('Test');
           console.log($scope.personaloverallAverage);
 
@@ -29,9 +33,9 @@ var app = angular.module('bi-assessment.personalCtrl', [])
           $scope.personalUsefulnessAverage = 0;
 
           for (var key in $scope.conditionalResultsByDecisionType) {
-              $scope.personalUsefulnessAverage += $scope.conditionalResultsByDecisionType[key].overall;
+              $scope.personalUsefulnessAverage += $scope.conditionalResultsByDecisionType[key].usefulness;
           }
-          $scope.personalUsefulnessAverage = $scope.personalUsefulnessAverage / ($scope.conditionalResultsByDecisionType.length - 1)
+          $scope.personalUsefulnessAverage = $scope.personalUsefulnessAverage / length;
           //console.log($scope.personalUsefulnessAverage);
 
           //Berechnen des AVG über alle Tools EASEOFUSE
@@ -39,25 +43,25 @@ var app = angular.module('bi-assessment.personalCtrl', [])
           $scope.personalEaseOfUseAverage = 0;
 
           for (var key in $scope.conditionalResultsByDecisionType) {
-              $scope.personalEaseOfUseAverage += $scope.conditionalResultsByDecisionType[key].overall;
+              $scope.personalEaseOfUseAverage += $scope.conditionalResultsByDecisionType[key].easeOfuse;
           }
-          $scope.personalEaseOfUseAverage = $scope.personalEaseOfUseAverage / ($scope.conditionalResultsByDecisionType.length - 1)
+          $scope.personalEaseOfUseAverage = $scope.personalEaseOfUseAverage / length;
           //console.log($scope.easeOfUseAverage);
 
           $scope.personalBenefitsAverage = 0;
 
           for (var key in $scope.conditionalResultsByDecisionType) {
-              $scope.personalBenefitsAverage += $scope.conditionalResultsByDecisionType[key].overall;
+              $scope.personalBenefitsAverage += $scope.conditionalResultsByDecisionType[key].benefit;
           }
-          $scope.personalBenefitsAverage = $scope.personalBenefitsAverage / ($scope.conditionalResultsByDecisionType.length - 1)
+          $scope.personalBenefitsAverage = $scope.personalBenefitsAverage / length;
           //console.log($scope.easeOfUseAverage);
 
           $scope.personalUsageAverage = 0;
 
           for (var key in $scope.conditionalResultsByDecisionType) {
-              $scope.personalUsageAverage += $scope.conditionalResultsByDecisionType[key].overall;
+              $scope.personalUsageAverage += $scope.conditionalResultsByDecisionType[key].usage;
           }
-          $scope.personalUsageAverage = $scope.personalUsageAverage / ($scope.conditionalResultsByDecisionType.length - 1)
+          $scope.personalUsageAverage = $scope.personalUsageAverage / length;
           //console.log($scope.easeOfUseAverage);
       };
 
@@ -134,8 +138,7 @@ var app = angular.module('bi-assessment.personalCtrl', [])
 
           //sortieren das Array nach Average
           sortablePersonal.sort(function (a, b) {
-              return b[typenumber] - a[typenumber]
-              console.log(typenumber);
+              return b[typenumber] - a[typenumber];
           });
 
 
@@ -295,54 +298,56 @@ var app = angular.module('bi-assessment.personalCtrl', [])
 
 
           //########GAUGE########
-          var gaugeData = [['Label', 'Value'],
-              ['Overall', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].average],
-              ['Usefulness', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].usefulness],
-              ['Ease of Use', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].easeOfUse],
-              ['Benefits', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].benefits],
-              ['Usage', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].usageIntention]];
+          if ($scope.personalResult.tool !=="") {
+              var gaugeData = [['Label', 'Value'],
+                  ['Overall', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].average],
+                  ['Usefulness', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].usefulness],
+                  ['Ease of Use', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].easeOfUse],
+                  ['Benefits', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].benefits],
+                  ['Usage', $scope.conditionalResultsByDecisionTypeAndTool[$scope.personalResult.tool].usageIntention]];
 
-          google.charts.load('current', {'packages': ['gauge']});
-          google.charts.setOnLoadCallback(drawGauge);
-          function drawGauge() {
+              google.charts.load('current', {'packages': ['gauge']});
+              google.charts.setOnLoadCallback(drawGauge);
+              function drawGauge() {
 
-              var data = google.visualization.arrayToDataTable(gaugeData);
+                  var data = google.visualization.arrayToDataTable(gaugeData);
 
-              var options = {
-                  width: '60%', height: 100,
-                  redFrom: 0, redTo: 0.2,
-                  yellowFrom: 0.2, yellowTo: 0.4,
-                  minorTicks: 5,
-                  max: 1
-              };
+                  var options = {
+                      width: '60%', height: 100,
+                      redFrom: 0, redTo: 0.2,
+                      yellowFrom: 0.2, yellowTo: 0.4,
+                      minorTicks: 5,
+                      max: 1
+                  };
 
-              var chart = new google.visualization.Gauge(document.getElementById('gauge'));
-              chart.draw(data, options);
-          }
+                  var chart = new google.visualization.Gauge(document.getElementById('gauge'));
+                  chart.draw(data, options);
+              }
 
 
-          // Scatter Chart//BubbleChart (personal)
-          var scatterChartData = [
-              ['ID', 'n', 'Rating', 'Tool', 'Size']
-          ];
-          for (var key in $scope.conditionalToolScores) {
-              scatterChartData.push(['', $scope.conditionalToolScores[key].count, $scope.conditionalToolScores[key].average, $scope.conditionalToolScores[key].toolName, 0]);
-          }
-          google.charts.load('current', {'packages': ['corechart']});
-          google.charts.setOnLoadCallback(drawChart);
-          function drawChart() {
-              var data = google.visualization.arrayToDataTable(scatterChartData);
-              var options = {
-                  title: 'Usefulness vs Ease of Use by BI Tool',
-                  hAxis: {title: 'Rating'},
-                  vAxis: {title: 'Times Used'},
-                  bubble: {textStyle: {fontSize: 11}},
-                  width: '60%',
-                  height: 150,
-                  sizeAxis: {maxSize: 5}
-              };
-              var chart = new google.visualization.BubbleChart(document.getElementById('scatterChart'));
-              chart.draw(data, options);
+              // Scatter Chart//BubbleChart (personal)
+              var scatterChartData = [
+                  ['ID', 'n', 'Rating', 'Tool', 'Size']
+              ];
+              for (var key in $scope.conditionalToolScores) {
+                  scatterChartData.push(['', $scope.conditionalToolScores[key].count, $scope.conditionalToolScores[key].average, $scope.conditionalToolScores[key].toolName, 0]);
+              }
+              google.charts.load('current', {'packages': ['corechart']});
+              google.charts.setOnLoadCallback(drawChart);
+              function drawChart() {
+                  var data = google.visualization.arrayToDataTable(scatterChartData);
+                  var options = {
+                      title: 'Usefulness vs Ease of Use by BI Tool',
+                      hAxis: {title: 'Rating'},
+                      vAxis: {title: 'Times Used'},
+                      bubble: {textStyle: {fontSize: 11}},
+                      width: '60%',
+                      height: 150,
+                      sizeAxis: {maxSize: 5}
+                  };
+                  var chart = new google.visualization.BubbleChart(document.getElementById('scatterChart'));
+                  chart.draw(data, options);
+              }
           }
 
 

@@ -47,7 +47,7 @@
                         <h4>The top 10 BI Tools in the category <select ng-model="myPersonalCategory"
                                                                         ng-init="myPersonalCategory = 'Overall'"
                                                                         ng-options="category as category for category in categories"
-                                                                        ng-change="getPersonalResult()"></select>
+                                                                        ng-change="getPersonalResult(); calcAndShowResults()"></select>
                         </h4>
                     </div>
                     <div class="barChart" id="personalOverallBarChart"></div>

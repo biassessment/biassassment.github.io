@@ -225,6 +225,18 @@ var decisionTypeSurveyModel = {
                             },
                             "pageFlowModifier": false
                         }
+                    },
+                    {
+                        "id": "3987b068793c4c2a079fd7aa91860076",
+                        "orderNo": 1,
+                        "type": "question",
+                        "question": {
+                            "id": "a3176530787e137be5fd7903ec3f0844",
+                            "text": "Enter an alias to look up your results later",
+                            "type": "text",
+                            "required": true,
+                            "pageFlowModifier": false
+                        }
                     }
                 ],
                 "namedPage": true

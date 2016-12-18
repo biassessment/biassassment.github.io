@@ -4,7 +4,7 @@
     </h1>
     <div class="introduction">
         <h4>Hello and welcome to the KIT - Business Intelligence Assessment - Results Page</br>
-            We have already collected data from {{allResults.length}}
+            We have already collected data from {{toolScores.length}}
             BI users. Based on this information we offer you the results so you can compare your BI
             usage to the benchmark.
         </h4>
@@ -15,7 +15,7 @@
     </div>
     <div class="alias">
         <label>Alias: </label>
-        <form ng-submit="showPersonalResultFor(alias)">
+        <form ng-submit="calcAndShowResults(); showPersonalResultFor(alias)">
             <input id="alias" class="form-control" ng-model="alias" type="text"/>
             <button class="btn" type="submit">Request Results</button>
         </form>

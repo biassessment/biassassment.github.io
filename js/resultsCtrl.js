@@ -114,6 +114,10 @@ var app = angular.module('bi-assessment.resultsCtrl', [])
 
       //Funktion zu Berechnung der Gesamtdurchscnitte fürs Gesamtergebnis
       $scope.averages = function () {
+          $scope.length = 0;
+          for (var key in $scope.toolScores) {
+              $scope.length+=$scope.toolScores[key].count;
+          }
 
           //Berechnen des AVG über alle Tools OVERALL
           $scope.overallAverage = 0;
@@ -121,7 +125,7 @@ var app = angular.module('bi-assessment.resultsCtrl', [])
           for (var key in $scope.allResults) {
               $scope.overallAverage += $scope.allResults[key].overall;
           }
-          $scope.overallAverage = $scope.overallAverage / ($scope.allResults.length - 1)
+          $scope.overallAverage = $scope.overallAverage /$scope.length;
           //console.log($scope.overallAverage);
 
           //Berechnen des AVG über alle Tools USEFULNESS
@@ -130,9 +134,9 @@ var app = angular.module('bi-assessment.resultsCtrl', [])
           $scope.usefulnessAverage = 0;
 
           for (var key in $scope.allResults) {
-              $scope.usefulnessAverage += $scope.allResults[key].overall;
+              $scope.usefulnessAverage += $scope.allResults[key].usefulness;
           }
-          $scope.usefulnessAverage = $scope.usefulnessAverage / ($scope.allResults.length - 1)
+          $scope.usefulnessAverage = $scope.usefulnessAverage / $scope.length;
           //console.log($scope.usefulnessAverage);
 
           //Berechnen des AVG über alle Tools EASEOFUSE
@@ -140,25 +144,25 @@ var app = angular.module('bi-assessment.resultsCtrl', [])
           $scope.easeOfUseAverage = 0;
 
           for (var key in $scope.allResults) {
-              $scope.easeOfUseAverage += $scope.allResults[key].overall;
+              $scope.easeOfUseAverage += $scope.allResults[key].easeOfuse;
           }
-          $scope.easeOfUseAverage = $scope.easeOfUseAverage / ($scope.allResults.length - 1)
+          $scope.easeOfUseAverage = $scope.easeOfUseAverage / $scope.length;
           //console.log($scope.easeOfUseAverage);
 
           $scope.benefitsAverage = 0;
 
           for (var key in $scope.allResults) {
-              $scope.benefitsAverage += $scope.allResults[key].overall;
+              $scope.benefitsAverage += $scope.allResults[key].benefit;
           }
-          $scope.benefitsAverage = $scope.benefitsAverage / ($scope.allResults.length - 1)
+          $scope.benefitsAverage = $scope.benefitsAverage / $scope.length;
           //console.log($scope.easeOfUseAverage);
 
           $scope.usageAverage = 0;
 
           for (var key in $scope.allResults) {
-              $scope.usageAverage += $scope.allResults[key].overall;
+              $scope.usageAverage += $scope.allResults[key].usage;
           }
-          $scope.usageAverage = $scope.usageAverage / ($scope.allResults.length - 1)
+          $scope.usageAverage = $scope.usageAverage / $scope.length;
           //console.log($scope.easeOfUseAverage);
 
 
@@ -475,10 +479,12 @@ var app = angular.module('bi-assessment.resultsCtrl', [])
 
       // Show personal results
       $scope.showPersonalResultFor = function(alias) {
-          $state.go("results.personal", { "alias": alias});
           $scope.calcAndShowResults();
+          $state.go("results.personal", { "alias": alias});
       };
 
       // initialisierung
       $scope.calcAndShowResults();
+
+
   }]);
