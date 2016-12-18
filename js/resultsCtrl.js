@@ -228,7 +228,7 @@ var app = angular.module('bi-assessment.resultsCtrl', [])
                   overallBarChartData.push([sortable[i][0], parseFloat((sortable[i][typenumber] * 100).toFixed(1)), "#2F9682"]);
               }
 
-              overallBarChartData.push(['Average', parseFloat((selectedAverage * 100).toFixed(1)), "#ff0000"]);
+              overallBarChartData.push(['Average', parseFloat((selectedAverage * 100).toFixed(1)), "#0080FF"]);
 
               overallBarChartData.sort(function (a, b) {
                   return b[1] - a[1]
@@ -316,7 +316,7 @@ var app = angular.module('bi-assessment.resultsCtrl', [])
                   //chart.draw(data, options);
               }
 
-              //#######Bubble Chart########
+              //#######Bubble ChartEase of Use vs Usefulness########
 
               sortable.sort(function (a, b) {
                   return b[1] - a[1]
@@ -363,15 +363,80 @@ var app = angular.module('bi-assessment.resultsCtrl', [])
                           }
                       },
                       bubble: {textStyle: {fontSize: 11}},
-                      chartArea: {left: '8%', top: '0%', bottom: '8%', width: '60%'},
+                      chartArea: {left: '8%', top: '0%', bottom: '10%', width: '60%'},
                       width: '100%',
-                      //explorer:{},
+                      explorer:{},
                       height: 400
                   };
 
                   var chart = new google.visualization.BubbleChart(document.getElementById('bubble'));
                   chart.draw(data, options);
               }
+
+
+              //########Use vs Overall##########
+
+              /*sortable.sort(function (a, b) {
+                  return b[6] - a[6]
+              });
+
+
+              var XMin = sortable[sortable.length - 1][1];
+              var XMax = sortable[0][6];
+
+              sortable.sort(function (a, b) {
+                  return b[2] - a[2]
+              });
+
+              var YMin = sortable[sortable.length - 1][2];
+              var YMax = sortable[0][2];
+
+              var ChartData = [
+                  ['ID', '# of users', 'Rating', 'Tool', 'n']
+              ];
+              for (var key in $scope.toolScores) {
+                  ChartData.push(['', $scope.toolScores[key].count, $scope.toolScores[key].average * 100,
+                      $scope.toolScores[key].toolName, $scope.toolScores[key].count]);
+              }
+              console.log(ChartData);
+              google.charts.load('current', {'packages': ['corechart']});
+              google.charts.setOnLoadCallback(drawUsevsOverall);
+
+              function drawUsevsOverall() {
+
+                  var data = google.visualization.arrayToDataTable(ChartData);
+
+                  var options = {
+                      hAxis: {
+                          title: '# of users',
+                          viewWindow: {
+                              min: XMin  - 5,
+                              max: XMax + 5
+                          }
+                      },
+                      vAxis: {
+                          title: 'Rating',
+                          viewWindow: {
+                              min: YMin*100 -5,
+                              max: YMax * 100 + 5
+                          }
+                      },
+                      sizeAxis: {
+                        minValue: 10000,  maxSize: 20
+                      },
+                      bubble: {textStyle: {fontSize: 11}},
+                      chartArea: {left: '8%', top: '0%', bottom: '10%', width: '60%'},
+                      width: '100%',
+                      explorer:{},
+                      height: 400
+                  };
+
+                  var chart = new google.visualization.BubbleChart(document.getElementById('useVsOverall'));
+                  chart.draw(data, options);
+              }*/
+
+
+
 
               // #########Donut Chart Example##############
               sortable.sort(function (a, b) {

@@ -75,9 +75,20 @@ var decisionTypeSurveyModel = {
                                 ],
                                 "cellInputType": "radio"
                             },
-                            "pageFlowModifier": false
                         }
-                    },
+                    }
+                ],
+                "namedPage": false
+            },
+            {"id": "4625fd3a9bea53745553253cb00962s3f8",
+                "number": 2,
+                "name": "Section 1. Questions about yourself and your Organization",
+                "description": null,
+                "pageFlow": {
+                    "nextPage": true,
+                    "label": "mwForm.pageFlow.goToNextPage"
+                },
+                "elements": [
                     {
                         "id": "e65398a642ccfdb0d3334se69da55e4d1",
                         "orderNo": 2,
@@ -143,10 +154,21 @@ var decisionTypeSurveyModel = {
                                     }
                                 ],
                                 "cellInputType": "radio"
-                            },
-                            "pageFlowModifier": false
+                            }
                         }
-                    },
+                    }
+                ],
+                "namedPage": false
+            },
+            {"id": "4625fd3a9bea537455532538cb00962s3f8",
+                "number": 2,
+                "name": "Section 1. Questions about yourself and your Organization",
+                "description": null,
+                "pageFlow": {
+                    "nextPage": true,
+                    "label": "mwForm.pageFlow.goToNextPage"
+                },
+                "elements": [
                     {
                         "id": "8f426c0e8690626s46ac50eb557e45079",
                         "orderNo": 3,
@@ -239,7 +261,7 @@ var decisionTypeSurveyModel = {
                         }
                     }
                 ],
-                "namedPage": true
+                "namedPage": false
             }
         ],
         "confirmationMessage": "Sehen Sie hier ihre Ergebnisse ein: Link zu Ergebnissen"

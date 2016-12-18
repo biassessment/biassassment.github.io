@@ -1967,8 +1967,8 @@ var surveyModel = {
             "type": "question",
             "question": {
               "id": "a3176530787e137be5fd7903ec3f0844",
-              "text": "Enter you Mail-Adress to look up your results later",
-              "type": "email",
+              "text": "Please enter a personal alias to look up your results later",
+              "type": "text",
               "required": true,
               "pageFlowModifier": false
             }

@@ -154,7 +154,7 @@ var app = angular.module('bi-assessment.personalCtrl', [])
 
           }
 
-          personalOverallBarChartData.push(['Average', parseFloat((selectedAverage * 100).toFixed(1)), "#ff0000"]);
+          personalOverallBarChartData.push(['Average', parseFloat((selectedAverage * 100).toFixed(1)), "#0080FF"]);
           personalOverallBarChartData.sort(function (a, b) {
               return b[1] - a[1]
           });
@@ -200,7 +200,7 @@ var app = angular.module('bi-assessment.personalCtrl', [])
               chart.draw(view, options);
           }
 
-/*
+
           sortablePersonal.sort(function (a, b) {
               return b[6] - a[6]
           });
@@ -208,7 +208,7 @@ var app = angular.module('bi-assessment.personalCtrl', [])
           var personalOverviewChartData = [
               ['Tool Name', 'n']
           ];
-          for (var key in sortable) {
+          for (var key in sortablePersonal) {
               personalOverviewChartData.push([sortablePersonal[key][0], sortablePersonal[key][6]]);
           }
           google.charts.load("current", {packages: ["corechart"]});
@@ -226,7 +226,66 @@ var app = angular.module('bi-assessment.personalCtrl', [])
               var chart = new google.visualization.PieChart(document.getElementById('personalOverviewChart'));
 
               chart.draw(data, options);
-          }*/
+          }
+
+
+          //Ease of Use vs Usefulness
+
+
+          sortablePersonal.sort(function (a, b) {
+              return b[1] - a[1]
+          });
+
+
+          var bubbleXMin = sortablePersonal[sortablePersonal.length - 1][1];
+          var bubbleXMax = sortablePersonal[0][1];
+
+          sortablePersonal.sort(function (a, b) {
+              return b[2] - a[2]
+          });
+
+          var bubbleYMin = sortablePersonal[sortablePersonal.length - 1][2];
+          var bubbleYMax = sortablePersonal[0][2];
+
+          var bubbleChartData = [
+              ['ID', 'Usefulness', 'Ease of Use', 'Tool', 'n']
+          ];
+          for (var key in $scope.conditionalToolScores) {
+              bubbleChartData.push(['', $scope.conditionalToolScores[key].usefulness * 100, $scope.conditionalToolScores[key].easeOfUse * 100,
+                  $scope.conditionalToolScores[key].toolName, $scope.conditionalToolScores[key].count]);
+          }
+          google.charts.load('current', {'packages': ['corechart']});
+          google.charts.setOnLoadCallback(drawSeriesChart);
+
+          function drawSeriesChart() {
+
+              var data = google.visualization.arrayToDataTable(bubbleChartData);
+
+              var options = {
+                  hAxis: {
+                      title: 'Usefulness',
+                      viewWindow: {
+                          min: bubbleXMin * 100 - 5,
+                          max: bubbleXMax * 100 + 5
+                      }
+                  },
+                  vAxis: {
+                      title: 'Ease of Use',
+                      viewWindow: {
+                          min: bubbleYMin * 100 - 5,
+                          max: bubbleYMax * 100 + 5
+                      }
+                  },
+                  bubble: {textStyle: {fontSize: 11}},
+                  chartArea: {left: '8%', top: '0%', bottom: '10%', width: '60%'},
+                  width: '100%',
+                  explorer:{},
+                  height: 400
+              };
+
+              var chart = new google.visualization.BubbleChart(document.getElementById('easy'));
+              chart.draw(data, options);
+          }
 
 
 

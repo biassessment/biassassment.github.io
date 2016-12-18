@@ -50,6 +50,9 @@ var app = angular.module('bi-assessment.mainCtrl', [])
               window.alert("DB cleared!");
           })
       };
+      $scope.scrollToTop = function() {
+          window.scrollTo(0,0);
+      }
 
 
   }]);

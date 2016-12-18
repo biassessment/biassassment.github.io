@@ -35,7 +35,7 @@
                 </button>
             </div>
             <div class="selectButton" id = "right">
-                <button class="btn" ng-click="personalView = 'generalEaseVsUse'; calcAndShowResults()" id="easevsuse"
+                <button class="btn" ng-click="personalView = 'personalEasy'; calcAndShowResults()" id="easevsuse"
                         type="submit">Ease of Use vs Usefulness
                 </button>
             </div>
@@ -43,12 +43,12 @@
         <div class="chartContainer">
             <div class="chartContent">
                 <div ng-show ="personalView == 'personalOverall'" class = "charts" id = "generalOverall">
-                    <div class = "selecion">
-                        <h4>The top 10 BI Tools in the category <select ng-model="myPersonalCategory"
+                    <div class = "selection">
+                        <h3>Rating of BI Tools in the Category <select ng-model="myPersonalCategory"
                                                                         ng-init="myPersonalCategory = 'Overall'"
                                                                         ng-options="category as category for category in categories"
                                                                         ng-change="getPersonalResult(); calcAndShowResults()"></select>
-                        </h4>
+                        </h3>
                     </div>
                     <div class="barChart" id="personalOverallBarChart"></div>
                 </div>
@@ -64,10 +64,18 @@
                 <div ng-show ="personalView == 'features'" class = "charts" id = "personalFeatures">
                     <div class="selection">
                         <h2>
-                            Distribution of different BI Tools in this Data Set
+                            Feature Use of Similar Users
                         </h2>
                     </div>
                     <div class="barChart" id="featureChart"></div>
+                </div>
+                <div ng-show ="personalView == 'personalEasy'" class = "charts" id = "easvsUse">
+                    <div class="selection">
+                        <h2>
+                            Ease of Use vs. Usefulness
+                        </h2>
+                    </div>
+                    <div class="barChart" id="easy"></div>
                 </div>
 
             </div>
